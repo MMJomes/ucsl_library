@@ -114,6 +114,7 @@ class EventController extends Controller
      */
     public function update(EventRequest $request, $slug)
     {
+        dd("Ok");
         $currentTime = Carbon::now();
         $request->merge([
             'updatedat' => $currentTime,

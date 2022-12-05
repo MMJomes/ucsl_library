@@ -2,13 +2,13 @@
 
 namespace App\Repositories\Backend\Interf;
 
-use App\Models\EventImage;
+use App\Models\Author;
 use App\Repositories\BaseRepository;
 
-class  EventImageRepository extends BaseRepository
+class  AuthorRepository extends BaseRepository
 {
     public function model()
     {
-        return EventImage::class;
+        return Author::class;
     }
 }

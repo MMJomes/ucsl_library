@@ -287,5 +287,6 @@ return [
     'exceldownload'=>'Excel Template ကိုဒေါင်းလုဒ်လုပ်ပါ',
     'upload'=>'တင်မည်',
     'chooseexcelfile'=>'Excel File ကိုရွေးပါ',
+    'authorlist'=>'Author Lists',
 
 ];

@@ -2,12 +2,12 @@
 @section('content')
     <div class="row page-titles">
         <div class="col-md-12">
-            <h4 class="text-white">Event Image Lists </h4>
+            <h4 class="text-white">{{ __('message.authorlist') }} </h4>
         </div>
         <div class="col-md-6">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">Home</a></li>
-                <li class="breadcrumb-item active">Event Image List</li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
+                <li class="breadcrumb-item active">{{ __('message.authorlist') }}</li>
             </ol>
         </div>
     </div>
@@ -34,13 +34,13 @@
                                     <th class="text-center">
                                         <input type="checkbox" id="select-all" class="select-checkbox">
                                     </th>
-                                    <th>No</th>
-                                    <th>Status</th>
-                                    <th>Image</th>
-                                    <th>Created Date</th>
-                                    <th>Updated Date</th>
-                                    @canany(['eventimage.edit', 'eventimage.delete'])
-                                        <th>Actions</th>
+                                    <th>{{ __('message.no') }}</th>
+                                    <th>{{ __('message.category') }}</th>
+                                    <th>{{ __('message.author') }}</th>
+                                    <th>{{ __('message.createddate') }}</th>
+                                    <th>{{ __('message.updateddate') }}</th>
+                                    @canany(['author.edit', 'author.delete'])
+                                        <th>{{ __('message.action') }}</th>
                                     @endcanany
                                 </tr>
                             </thead>
@@ -55,22 +55,22 @@
 @endsection
 
 @section('delete_route')
-    {{ route('backend.eventimage.destroy', 'slug') }}
+    {{ route('backend.author.destroy', 'slug') }}
 @endsection
 @section('approve_route')
-    {{ route('backend.eventimage.destroy', 'slug') }}
+    {{ route('backend.author.destroy', 'slug') }}
 @endsection
 @push('scripts')
     <script>
         $(document).ready(function() {
-            @can('eventimage.mass_destroy')
-                window.route_mass_crud_entries_destroy = "{{ route('backend.eventimage.mass.destroy') }}";
+            @can('author.mass_destroy')
+                window.route_mass_crud_entries_destroy = "{{ route('backend.author.mass.destroy') }}";
             @endcan
-            @can('eventimage.show')
-                window.route_mass_crud_entries_show = "{{ route('backend.eventimage.mass.destroy') }}";
+            @can('author.show')
+                window.route_mass_crud_entries_show = "{{ route('backend.author.mass.destroy') }}";
             @endcan
             $.ajax({
-                url: "{{ route('backend.eventimage.index') }}",
+                url: "{{ route('backend.author.index') }}",
                 cache: false,
             }).then(function(data, textStatus, jqXHR) {
                 var response = JSON.parse(data);
@@ -78,13 +78,23 @@
                     data: response["data"],
                     dom: 'Bfrtip',
                     buttons: [
-                        @can('eventimage.create')
+                        @can('author.create')
                             {
-                                text: 'Create New',
+                                text: '{{ __('message.createnew') }}',
                                 className: "btn btn-primary",
                                 action: function(e, dt, node, config) {
                                     window.location.href =
-                                        '{{ route('backend.eventimage.create') }}';
+                                        '{{ route('backend.author.create') }}';
+                                }
+                            },
+                        @endcan
+                        @can('author.create')
+                            {
+                                text: '{{ __('message.excelimport') }}',
+                                className: "btn btn-primary",
+                                action: function(e, dt, node, config) {
+                                    window.location.href =
+                                        '{{ url('admin/author/authormultilecreate') }}';
                                 }
                             },
                         @endcan
@@ -119,23 +129,13 @@
                             },
                         },
                         {
-                            data: 'status'
+                            data: 'categories_id',
                         },
-
                         {
-                            orderable: false,
-                            "render": function(data, type, full, meta) {
-
-                                var string = '';
-                                var array = JSON.parse(full.image);
-                                array.forEach(function(object) {
-                                    string = object;
-                                    console.log(object);
-                                });
-                            return '<img src="' + string + '" width="50" height="50">';
-                            }
-
+                            data: 'name',
                         },
+
+
                         {
                             "render": function(data, type, full, meta) {
                                 var createdDate = new Date(full.created_at);
@@ -148,16 +148,16 @@
                                 return createdDate.toLocaleString("en-US");
                             },
                         },
-                        @canany(['eventimage.edit', 'eventimage.delete', 'eventimage.show'])
+                        @canany(['author.edit', 'author.delete', 'author.show'])
                             {
                                 orderable: false,
                                 "render": function(data, type, full, meta) {
                                     var editURL =
-                                        "{{ route('backend.eventimage.edit', ':slug') }}";
+                                        "{{ route('backend.author.edit', ':slug') }}";
                                     editURL = editURL.replace(':slug', full.slug);
 
                                     var showURL =
-                                        "{{ route('backend.eventimage.show', ':slug') }}";
+                                        "{{ route('backend.author.show', ':slug') }}";
                                     showURL = showURL.replace(':slug', full.slug);
 
                                     var editButton = '';

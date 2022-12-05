@@ -142,6 +142,7 @@ class EventCategoryController extends Controller
         return view('backend.category.category_mulitiple_create');
     }
 
+
     public function template()
     {
         $file = public_path() . "/category_list_templated.xlsx";

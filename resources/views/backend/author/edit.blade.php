@@ -3,13 +3,13 @@
 @section('content')
     <div class="row page-titles">
         <div class="col-md-12">
-            <h4 class="text-white">Event Image Lists</h4>
+            <h4 class="text-white">{{ __('message.authorlist') }}</h4>
         </div>
         <div class="col-md-6">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('backend.eventimage.index') }}"> Event Image List</a></li>
-                <li class="breadcrumb-item active">Event Lists</li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.author.index') }}"> {{ __('message.authorlist') }}</a></li>
+                <li class="breadcrumb-item active">{{ __('message.authorlist') }}</li>
             </ol>
         </div>
     </div>
@@ -18,10 +18,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action={{ route('backend.eventimage.update',[$eventimage->slug]) }} method="POST" enctype="multipart/form-data">
+                    <form action={{ route('backend.author.update',[$author->slug]) }} method="POST" enctype="multipart/form-data">
                         @csrf
                         {{csrf_field()}}
                         @method('PUT')
+
                         <div class="row">
                             <div class="col-md-12">
                                 @if ($errors->any())
@@ -39,7 +40,7 @@
                                     <h5>Select Event </h5>
                                     <select class="selectpicker form-control" data-style="form-control btn-secondary"
                                         name="event_categories_id" required="true">
-                                        @foreach ($Event as $event)
+                                        @foreach ($categories as $event)
                                             <option value="{{ $event->id }}"
                                                 {{ $event->events_id == $event->id ? 'selected' : '' }}>
                                                 {{ $event->name }}
@@ -48,14 +49,11 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
-                                    <h5>Select Status </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
-                                        name="status" required="true">
-
-                                        <option value="off" {{ $eventimage->status == OFF ? 'selected' : '' }}>OFF
-                                        </option>
-                                        <option value="on" {{ $eventimage->status == ON ? 'selected' : '' }}>ON</option>
-                                    </select>
+                                    <div class="form-group">
+                                        <label for="name">{{__('message.name')}}</label>
+                                        <input type="text" class="form-control" name="name" id="name"
+                                            placeholder="{{__('message.name')}}" value="{{ old('name',$author->name) }}">
+                                    </div>
                                 </div>
                             </div>
                             <div class="row clearfix">
@@ -64,36 +62,24 @@
                                         <label for="createdate">Created At</label>
                                         <input type="datetime" class="form-control" name="createdate" id="createdate"
                                             placeholder="Createde At"
-                                            value="{{ old('createdate', $eventimage->created_at) }}">
+                                            value="{{ old('createdate', $author->created_at) }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="updatedate">Updated At</label>
-                                        <input type="date" class="form-control" name="updatedate" id="updatedate"
+                                        <input type="datetime" class="form-control" name="updatedate" id="updatedate"
                                             placeholder="Updated At"
-                                            value="{{ old('updatedate', $eventimage->updated_at) }}">
+                                            value="{{ old('updatedate', $author->updated_at) }}">
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row clearfix">
-                                <div class="col-lg-12 col-md-12">
-                                    <div class="form-group">
-                                        <label for="images">Choose Event Images</label>
 
-                                        {{-- <input type="file" name="images[]" id="filePhoto"  accept="image/*" placeholder="Choose Event Images"> --}}
-
-                                        <input type="file" class="form-control "  name="images"
-                                            placeholder="Choose Event Images" value="{{ old('iamge') }}"
-                                             multiple  class="sr-only">
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="mt-5">
                             <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> {{__('message.save')}}</button>
-                            <a href="{{ route('backend.eventimage.index') }}" class="btn btn-danger"><i
+                            <a href="{{ route('backend.author.index') }}" class="btn btn-danger"><i
                                     class="icon-logout"></i> {{__('message.back')}}</a>
                         </div>
 

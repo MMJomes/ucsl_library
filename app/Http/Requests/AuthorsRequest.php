@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthorRequest extends FormRequest
+class AuthorsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,20 +23,15 @@ class AuthorRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'events_id' =>'required',
-            'image' => 'required',
-            'createdat' => 'nullable',
-            'updatedat' => 'nullable',
-        ];
+            return [
+                'name' => 'required',
+            ];
+
     }
     public function messages()
     {
         return [
-            'events_id' => 'ID is required',
-            'image' => 'Image is required',
-            'createdat' => 'nullable',
-            'updatedat' => 'nullable',
+            'name' => 'Name is required',
         ];
     }
 }

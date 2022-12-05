@@ -5,16 +5,20 @@ namespace App\Http\Controllers\Backend;
 use App\Helpers\EventHelper;
 use App\Helpers\AuthorHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthorRequest;
+use App\Http\Requests\AuthorsRequest;
+use App\Imports\AuthorListImport;
+use App\Imports\CategoryListImport;
 use App\Models\Event;
-use App\Models\Author;
+use App\Models\EventCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Carbon\Carbon;
 use App\Repositories\Backend\Interf\AuthorRepository;
 use App\Repositories\Backend\Interf\EventCategoryRepository;
 use App\Repositories\Backend\Interf\EventRepository;
 use Image;
-
-
+use Maatwebsite\Excel\Facades\Excel;
 
 class AuthorController extends Controller
 {
@@ -53,9 +57,9 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        $events = Event::all();
+        $categories  = EventCategory::all();
         view()->share(['form' => true, 'select' => true]);
-        return view('backend.author.create', compact('events'));
+        return view('backend.author.create', compact('categories'));
     }
 
     /**
@@ -64,20 +68,12 @@ class AuthorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AuthorsRequest $request)
     {
-        if ($request->hasfile('images')) {
-            foreach ($request->file('images') as $file) {
 
-                $names = rand() . '.' . $file->extension();
-                $name = '/upload/Author/' . $names;
-                $file->move(public_path() . '/upload/Author/', $name);
-                $data[] = $name;
-            }
-        }
-        $request->merge([
-            'image' => json_encode($data, true),
-        ]);
+
+        //dd($request->all());
+    //  dd($request->all());
         $this->AuthorRepository->create($request->all());
         return redirect()
             ->route('backend.author.index')
@@ -97,7 +93,7 @@ class AuthorController extends Controller
         $Author = $this->AuthorRepository->where('slug', $slug)->first();
         if ($Author) {
 
-            $eventCategory = Event::all();
+            $eventCategory = EventCategory::all();
             view()->share(['form' => true, 'select' => true]);
             return view('backend.author.detail', compact('Author', 'eventCategory'));
         } else {
@@ -113,11 +109,11 @@ class AuthorController extends Controller
      */
     public function edit($slug)
     {
-        $Author = $this->AuthorRepository->where('slug', $slug)->first();
-        if ($Author) {
-            $Event = Event::all();
+        $author = $this->AuthorRepository->where('slug', $slug)->first();
+        if ($author) {
+            $categories = EventCategory::all();
             view()->share(['form' => true, 'select' => true]);
-            return view('backend.author.edit', compact('Author', 'Event'));
+            return view('backend.author.edit', compact('author', 'categories'));
         } else {
             return view('errorpage.404');
         }
@@ -166,9 +162,40 @@ class AuthorController extends Controller
         return view('errorpage.404');
     }
 
+    public function multilecreate()
+    {
+        return view('backend.author.author_mulitiple_create');
+    }
+
+
+    public function template()
+    {
+        $file = public_path() . "/author_list_templated.xlsx";
+
+        if (file_exists($file)) {
+            return Response
+                ::download($file, 'author_list_templated.xlsx');
+        } else {
+            return 'file not found';
+        }
+    }
+
+    public function importData(Request $request)
+    {
+        $request->validate([
+            'import_file' => 'required'
+        ]);
+        try {
+            Excel::import(new AuthorListImport, $request->import_file);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            return redirect()->back()->withErrors($failures);
+        }
+        return redirect()->route('backend.author.index')->with(['success' => 'Successfully Upload!']);
+    }
     public function mass_destroy(Request $request)
     {
         $this->AuthorRepository->deleteMultipleById($request->ids);
-        return redirect()->route('backend.author.index')->with('success', 'Event  deleted successfully');
+        return redirect()->route('backend.author.index')->with('success', 'Author  deleted successfully');
     }
 }

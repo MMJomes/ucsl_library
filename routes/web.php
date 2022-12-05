@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\Frontend\MemberAuthController;
-use App\Http\Controllers\Frontend\MemberDashboardController;
-use App\Http\Controllers\MemberController;
+use App\Http\Controllers\Backend\AuthorController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -60,13 +58,31 @@ Route::middleware('globalSetting')->group(function () {
         Route::get('category/approve/{slug}', 'EventCategoryController@approve')->name('category.approve');
         Route::post('category/mass/approve', 'EventCategoryController@mass_approve')->name('category.mass.approve');
         Route::get('category/excel/export', 'EventCategoryController@excelexport')->name('category.excel.excelexport');
-        
+
         //excel
         Route::get('category/categorymultilecreate', 'EventCategoryController@multilecreate')->name('category.categorymultilecreate');
         Route::get('category/template', 'EventCategoryController@template')->name('category.template');
         Route::post('category/upload', 'EventCategoryController@importData')->name('category.upload');
 
 
+
+        //Author Route
+        Route::get('author', 'AuthorController@index')->name('author.index');
+        Route::get('author/create', 'AuthorController@create')->name('author.create');
+        Route::post('author/store', 'AuthorController@store')->name('author.store');
+        Route::get('author/edit/{slug}', 'AuthorController@edit')->name('author.edit');
+        Route::put('author/update/{slug}', 'AuthorController@update')->name('author.update');
+        Route::get('author/show/{slug}', 'AuthorController@show')->name('author.show');
+        Route::delete('author/destroy/{slug}', 'AuthorController@destroy')->name('author.destroy');
+        Route::post('author/mass/destroy', 'AuthorController@mass_destroy')->name('author.mass.destroy');
+        Route::get('author/approve/{slug}', 'AuthorController@approve')->name('author.approve');
+        Route::post('author/mass/approve', 'AuthorController@mass_approve')->name('author.mass.approve');
+        Route::get('author/excel/export', 'AuthorController@excelexport')->name('author.excel.excelexport');
+
+        //excel
+        Route::get('author/authormultilecreate', 'AuthorController@multilecreate')->name('author.authormultilecreate');
+        Route::get('author/template', 'AuthorController@template')->name('author.template');
+        Route::post('author/upload', 'AuthorController@importData')->name('author.upload');
 
 
 
@@ -119,9 +135,6 @@ Route::middleware('globalSetting')->group(function () {
         Route::post('eventcategory/mass/destroy', 'EventCategoryController@mass_destroy')->name('eventcategory.mass.destroy');
 
 
-        //EventImage
-        Route::resource('eventimage', EventImageController::class);
-        Route::post('eventimage/mass/destroy', 'EventImageController@mass_destroy')->name('eventimage.mass.destroy');
 
         //Event
         Route::resource('event', EventController::class);

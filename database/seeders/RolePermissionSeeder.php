@@ -71,13 +71,13 @@ class RolePermissionSeeder extends Seeder
                 ]
             ],
             [
-                'group_name' => 'EventImage',
+                'group_name' => 'Author',
                 'permissions' => [
-                    'eventimage.create',
-                    'eventimage.view',
-                    'eventimage.edit',
-                    'eventimage.delete',
-                    'eventimage.mass_destroy'
+                    'author.create',
+                    'author.view',
+                    'author.edit',
+                    'author.delete',
+                    'author.mass_destroy'
                 ]
             ],
             [

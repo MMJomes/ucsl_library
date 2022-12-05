@@ -6,16 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class EventImage extends Model
+class Author extends Model
 {
 
     use  HasFactory, Sluggable;
 
-    protected $table = 'event_images';
+    //protected $table = 'authors';
     protected $fillable = [
-        'events_id',
-        'image',
-        'status',
+        'categories_id',
+        'name',
         'createdat',
         'updatedat',
     ];
@@ -24,12 +23,12 @@ class EventImage extends Model
     {
         return [
             'slug' => [
-                'source' => 'events_id'
+                'source' => 'name'
             ]
         ];
     }
-    public function event()
+    public function category()
     {
-        return $this->belongsTo(EventCategory::class, 'events_id', 'id');
+        return $this->belongsTo(EventCategory::class, 'categories_id', 'id');
     }
 }

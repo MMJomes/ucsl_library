@@ -286,5 +286,6 @@ return [
     'exceldownload'=>'Download Excel Template',
     'upload'=>'Upload',
     'chooseexcelfile'=>'Choose Excel File',
+    'authorlist'=>'Author Lists',
 
 ];

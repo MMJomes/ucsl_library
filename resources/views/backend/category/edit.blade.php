@@ -10,7 +10,7 @@
         </div>
         <div class="col-md-6">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('backend.eventcategory.index') }}">Event Category</a></li>
                 <li class="breadcrumb-item active">Edit Event Category</li>
             </ol>
@@ -20,10 +20,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('backend.eventcategory.update', [$eventcategory->slug]) }}" method="POST"
-                        enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
+                        <form action="{{ route('backend.eventcategory.update', ["slug" => $eventcategory->slug]) }}" method="post" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            {{ method_field('POST') }}
                         <div class="row">
                             <div class="col-md-12">
                                 @if ($errors->any())
@@ -59,14 +58,16 @@
                                     <div class="form-group">
                                         <label for="updatedat">Updated At</label>
                                         <input type="datetime" class="form-control" name="updatedat" id="updatedat"
-                                            placeholder="Updated At" value="{{ old('updatedat', $eventcategory->updatedat) }}">
+                                            placeholder="Updated At"
+                                            value="{{ old('updatedat', $eventcategory->updatedat) }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="mt-5">
-                                <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> {{__('message.save')}}</button>
+                                <button type="submit" class="btn btn-info"><i class="fa fa-save"></i>
+                                    {{ __('message.save') }}</button>
                                 <a href="{{ route('backend.eventcategory.index') }}" class="btn btn-danger"><i
-                                        class="icon-logout"></i> {{__('message.back')}}</a>
+                                        class="icon-logout"></i> {{ __('message.back') }}</a>
                             </div>
 
                         </div>

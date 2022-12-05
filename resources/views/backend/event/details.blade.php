@@ -10,7 +10,7 @@
         </div>
         <div class="col-md-6">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('backend.eventcategory.index') }}">Event Category</a></li>
                 <li class="breadcrumb-item active">Edit Event Category</li>
             </ol>
