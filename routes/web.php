@@ -35,6 +35,7 @@ Route::middleware('globalSetting')->group(function () {
         Route::resource('roles', RolesController::class);
         Route::resource('admins', AdminsController::class);
         Route::get('profile', 'AdminsController@show')->name('profile');
+
         //memberList
         Route::get('memberLists', 'MemberController@index')->name('memberLists.index');
         Route::get('memberLists/create', 'MemberController@create')->name('memberLists.create');
@@ -47,6 +48,24 @@ Route::middleware('globalSetting')->group(function () {
         Route::get('memberLists/approve/{slug}', 'MemberController@approve')->name('memberLists.approve');
         Route::post('memberLists/mass/approve', 'MemberController@mass_approve')->name('memberLists.mass.approve');
         Route::get('memberLists/excel/export', 'MemberController@excelexport')->name('memberLists.excel.excelexport');
+        //Category Route
+        Route::get('category', 'EventCategoryController@index')->name('category.index');
+        Route::get('category/create', 'EventCategoryController@create')->name('category.create');
+        Route::post('category/store', 'EventCategoryController@store')->name('category.store');
+        Route::get('category/edit/{slug}', 'EventCategoryController@edit')->name('category.edit');
+        Route::post('category/update/{slug}', 'EventCategoryController@update')->name('category.update');
+        Route::get('category/show/{slug}', 'EventCategoryController@show')->name('category.show');
+        Route::delete('category/destroy/{slug}', 'EventCategoryController@destroy')->name('category.destroy');
+        Route::post('category/mass/destroy', 'EventCategoryController@mass_destroy')->name('category.mass.destroy');
+        Route::get('category/approve/{slug}', 'EventCategoryController@approve')->name('category.approve');
+        Route::post('category/mass/approve', 'EventCategoryController@mass_approve')->name('category.mass.approve');
+        Route::get('category/excel/export', 'EventCategoryController@excelexport')->name('category.excel.excelexport');
+        
+        //excel
+        Route::get('category/categorymultilecreate', 'EventCategoryController@multilecreate')->name('category.categorymultilecreate');
+        Route::get('category/template', 'EventCategoryController@template')->name('category.template');
+        Route::post('category/upload', 'EventCategoryController@importData')->name('category.upload');
+
 
 
 

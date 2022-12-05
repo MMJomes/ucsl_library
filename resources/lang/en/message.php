@@ -266,4 +266,25 @@ return [
     'usmom' => 'US($)/Mom',
     'usrati' => 'US($)/Rati',
     'notifications' => 'Notifications',
+
+    //
+    'category' => 'Category',
+    'author' => 'Author',
+    'books' => 'Books',
+    'categorylist' => 'Category Lists',
+    'dataexport' => 'Data Export',
+    'no' => 'No.',
+    'name' => 'Name',
+    'createddate' => 'Created Date',
+    'updateddate' => 'Updated Date',
+    'actions' => 'Actions',
+    'createnew' => 'Create New',
+    'excelimport'=>'Excel Import',
+    'basicinfo'=>'Basic Information',
+    'save'=>'Save',
+    'back'=>'Back',
+    'exceldownload'=>'Download Excel Template',
+    'upload'=>'Upload',
+    'chooseexcelfile'=>'Choose Excel File',
+
 ];

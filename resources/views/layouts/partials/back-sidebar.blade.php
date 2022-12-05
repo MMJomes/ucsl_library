@@ -16,17 +16,13 @@
                 <ul class="sidebar-menu">
                     <li><a href="{{ route('backend.dashboard.index') }}"> {{ __('message.home') }}</a></li>
 
-                    <li><a href="{{ route('backend.memberLists.index') }}"> Member Lists</a></li>
-                    <li><a href="{{ route('backend.biztype.index') }}"> Business Type</a></li>
-                    <li><a href="{{ route('backend.mainbusiness.index') }}"> Main Business </a></li>
+                    {{-- <li><a href="{{ route('backend.memberLists.index') }}"> Member Lists</a></li> --}}
+                    <li><a href="{{ route('backend.category.index') }}"> {{ __('message.category') }}</a></li>
+                    <li><a href="{{ route('backend.biztype.index') }}"> {{ __('message.author') }}</a></li>
+                    <li><a href="{{ route('backend.biztype.index') }}"> {{ __('message.books') }}</a></li>
+                    {{-- <li><a href="{{ route('backend.mainbusiness.index') }}"> Main Business </a></li>
                     <li><a href="{{ route('backend.sidebusiness.index') }}"> Side Business </a></li>
-                    <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)"
-                        aria-expanded="false"><span class="hide-menu">Events</span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ route('backend.eventcategory.index') }}">{{ __('Event Category') }}</a></li>
-                        <li><a href="{{ route('backend.event.index') }}">{{ __('Event') }}</a></li>
-                        <li><a href="{{ route('backend.eventimage.index') }}">{{ __('Event Image') }}</a></li>
-                    </ul>
+                  --}}
                 </li>
                 </ul>
                 <!-- Left navbar-header end -->

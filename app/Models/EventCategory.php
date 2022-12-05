@@ -11,7 +11,7 @@ class EventCategory extends Model
 
     use  HasFactory, Sluggable;
 
-    protected $table = 'event_categories';
+    protected $table = 'categories';
     protected $fillable = [
         'name',
         'createdat',
@@ -27,4 +27,3 @@ class EventCategory extends Model
         ];
     }
 }
-

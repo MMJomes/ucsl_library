@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers\Backend;
 
-
+use App\Exports\ExportCategoryList;
 use App\Helpers\EventCategoryHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EventCategoryRequest;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Repositories\Backend\Interf\EventCategoryRepository;
+use App\Exports\ExportMemberList;
+use App\Imports\CategoryListImport;
+use App\Imports\ContactListImport;
+use Illuminate\Support\Facades\Response;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EventCategoryController extends Controller
 {
@@ -25,13 +30,14 @@ class EventCategoryController extends Controller
 
     public function index()
     {
+
         if (request()->ajax()) {
             $user = auth()->user();
             $data = $this->eventCategoryRepository->all();
             return $this->eventcategory_datatable($data, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
-        return view('backend.eventcategory.index');
+        return view('backend.category.index');
     }
 
     /**
@@ -42,7 +48,7 @@ class EventCategoryController extends Controller
     public function create()
     {
         view()->share(['form' => true]);
-        return view('backend.eventcategory.create');
+        return view('backend.category.create');
     }
 
     /**
@@ -56,9 +62,8 @@ class EventCategoryController extends Controller
 
         $this->eventCategoryRepository->create($request->validated());
         return redirect()
-            ->route('backend.eventcategory.index')
+            ->route('backend.category.index')
             ->with(['success' => 'Successfully Added']);
-
     }
 
     /**
@@ -73,7 +78,7 @@ class EventCategoryController extends Controller
         if ($eventCategory) {
 
             view()->share(['form' => true]);
-            return view('backend.eventcategory.detail', compact('eventCategory'));
+            return view('backend.category.detail', compact('eventCategory'));
         } else {
             return view('errorpage.404');
         }
@@ -91,7 +96,7 @@ class EventCategoryController extends Controller
         if ($eventcategory) {
 
             view()->share(['form' => true]);
-            return view('backend.eventcategory.edit', compact('eventcategory'));
+            return view('backend.category.edit', compact('eventcategory'));
         } else {
             return view('errorpage.404');
         }
@@ -115,8 +120,8 @@ class EventCategoryController extends Controller
         $eventcategory = $this->eventCategoryRepository->where('slug', $biztype_slug)->first();
         if ($eventcategory) {
 
-            $this->eventCategoryRepository->updateById($eventcategory->id,$request->validated());
-             return redirect()->route('backend.eventcategory.index')->with(['success' => 'Successfully Updated!']);
+            $this->eventCategoryRepository->updateById($eventcategory->id, $request->validated());
+            return redirect()->route('backend.category.index')->with(['success' => 'Successfully Updated!']);
         } else {
             return view('errorpage.404');
         }
@@ -126,14 +131,50 @@ class EventCategoryController extends Controller
         $eventcategory = $this->eventCategoryRepository->where('slug', $request->slug)->first();
         if ($eventcategory) {
             $this->eventCategoryRepository->deleteById($eventcategory->id);
-            return redirect()->route('backend.eventcategory.index')->with('success', 'Event Category deleted successfully');
+            return redirect()->route('backend.category.index')->with('success', 'Event Category deleted successfully');
         }
         return view('errorpage.404');
+    }
+
+    public function multilecreate()
+    {
+
+        return view('backend.category.category_mulitiple_create');
+    }
+
+    public function template()
+    {
+        $file = public_path() . "/category_list_templated.xlsx";
+
+        if (file_exists($file)) {
+            return Response
+                ::download($file, 'category_list_templated.xlsx');
+        } else {
+            return 'file not found';
+        }
+    }
+    public function importData(Request $request)
+    {
+        $request->validate([
+            'import_file' => 'required'
+        ]);
+        try {
+            Excel::import(new CategoryListImport, $request->import_file);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            return redirect()->back()->withErrors($failures);
+        }
+        return redirect()->route('backend.category.index')->with(['success' => 'Successfully Upload!']);
+    }
+
+    public function excelexport()
+    {
+        return Excel::download(new ExportCategoryList(), 'category_List.xlsx');
     }
 
     public function mass_destroy(Request $request)
     {
         $this->eventCategoryRepository->deleteMultipleById($request->ids);
-        return redirect()->route('backend.eventcategory.index')->with('success', 'Event Category deleted successfully');
+        return redirect()->route('backend.category.index')->with('success', ' Category deleted successfully');
     }
 }

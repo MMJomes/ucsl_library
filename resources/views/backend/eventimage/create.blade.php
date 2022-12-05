@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <div class="body mt-5">
-                            <h6>Basic Information</h6>
+                            <h6>{{ __('message.basicinfo') }}</h6>
                             <hr>
                             <div class="row clearfix mb-4">
                                 <div class="col-lg-6 col-md-12">
@@ -83,9 +83,9 @@
                                 </div>
                             </div>
                             <div class="mt-5">
-                                <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> Save</button>
+                                <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> {{__('message.save')}}</button>
                                 <a href="{{ route('backend.eventimage.index') }}" class="btn btn-danger"><i
-                                        class="icon-logout"></i> Back</a>
+                                        class="icon-logout"></i> {{__('message.back')}}</a>
                             </div>
 
                         </div>

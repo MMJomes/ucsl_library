@@ -266,4 +266,26 @@ return [
     'usmom' => 'ဒေါ်လာ/မိုမီ',
     'usrati' => 'ဒေါ်လာ/ရတီ',
     'notifications' => 'သတိပေးချက်များ',
+    //
+
+    'category' =>'အမျိုးအစား',
+    'author' =>'စာရေးသူ',
+    'books' =>'စာအုပ်များ',
+    'categorylist'=> 'အမျိုးအစားစာရင်းများ',
+    'dataexport' =>'ဒေတာတင်ပို့ခြင်း',
+
+    'no' =>'အစဉ်',
+    'name' =>'နာမည်',
+    'createddate'=>'ဖန်တီးသည့်ရက်စွဲ',
+    'updateddate'=>'အပ်ဒိတ်ရက်စွဲ',
+    'actions'=>'လုပ်ဆောင်ချက်များ',
+    'createnew' => 'အသစ်ထည့်ရန်',
+    'excelimport'=>'Excelဖြင့်ထည့်ရန်',
+    'basicinfo'=>'အခြေခံအချက်အလက်',
+    'save'=>'သိမ်းမည်',
+    'back'=>'နောက်သို့',
+    'exceldownload'=>'Excel Template ကိုဒေါင်းလုဒ်လုပ်ပါ',
+    'upload'=>'တင်မည်',
+    'chooseexcelfile'=>'Excel File ကိုရွေးပါ',
+
 ];

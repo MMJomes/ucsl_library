@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="body">
-                            <h6>Basic Information</h6>
+                            <h6>{{ __('message.basicinfo') }}</h6>
                             <hr>
                             <div class="row clearfix">
                                 <div class="col-lg-6 col-md-12">
@@ -99,7 +99,7 @@
                             <div class="mt-5">
                                 <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> Update</button>
                                 <a href="{{ route('backend.admins.index') }}" class="btn btn-danger"><i
-                                        class="icon-logout"></i> Back</a>
+                                        class="icon-logout"></i> {{__('message.back')}}</a>
                             </div>
                         </div>
                     </form>

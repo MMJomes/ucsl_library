@@ -45,7 +45,7 @@
                             </div>
                         </div>
                         <div class="body mt-5">
-                            <h6>Basic Information</h6>
+                            <h6>{{ __('message.basicinfo') }}</h6>
                             <hr>
                             @if ($contactListdata)
                                 <input type="hidden" name="memberid" id="memberid" value="{{ $contactListdata->id }}">
@@ -135,9 +135,9 @@
                                 </div>
                             </div>
                             <div class="mt-5">
-                                <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> Save</button>
+                                <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> {{__('message.save')}}</button>
                                 <a href="{{ route('backend.memberLists.index') }}" class="btn btn-danger"><i
-                                        class="icon-logout"></i> Back</a>
+                                        class="icon-logout"></i> {{__('message.back')}}</a>
                             </div>
 
                         </div>

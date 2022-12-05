@@ -73,9 +73,9 @@
                         </div>
 
                         <div class="mt-5">
-                            <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> Save</button>
+                            <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> {{__('message.save')}}</button>
                             <a href="{{ route('backend.roles.index') }}" class="btn btn-danger"><i
-                                    class="icon-arrow-left"></i> Back</a>
+                                    class="icon-arrow-left"></i> {{__('message.back')}}</a>
                         </div>
                     </form>
                 </div>
