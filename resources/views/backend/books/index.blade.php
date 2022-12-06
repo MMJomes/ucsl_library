@@ -108,7 +108,7 @@
                                 className: "btn btn-primary",
                                 action: function(e, dt, node, config) {
                                     window.location.href =
-                                        '{{ url('admin/book/multilecreate') }}';
+                                        '{{ url('admin/book/bookmultilecreate') }}';
                                 }
                             },
                         @endcan

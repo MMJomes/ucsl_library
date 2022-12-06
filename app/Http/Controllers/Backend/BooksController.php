@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
 use App\Http\Requests\MemberRequest;
+use App\Imports\BookListImport;
 use App\Imports\ContactListImport;
 use App\Models\Author;
 use App\Models\EventCategory;
@@ -115,11 +116,11 @@ class BooksController extends Controller
     }
     public function template()
     {
-        $file = public_path() . "/yue_emba_contact_list_template.xlsx";
+        $file = public_path() . "/book_list_templated.xlsx";
 
         if (file_exists($file)) {
             return Response
-                ::download($file, 'yue_emba_contact_list_template.xlsx');
+                ::download($file, 'book_list_templated.xlsx');
         } else {
             return 'file not found';
         }
@@ -130,14 +131,13 @@ class BooksController extends Controller
         $request->validate([
             'import_file' => 'required'
         ]);
-
         try {
-            Excel::import(new ContactListImport, $request->import_file);
+            Excel::import(new BookListImport, $request->import_file);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             return redirect()->back()->withErrors($failures);
         }
-        return redirect()->route('backend.books.index')->with(['success' => 'Successfully Upload!']);
+        return redirect()->route('backend.book.index')->with(['success' => 'Successfully Upload!']);
     }
 
     public function mass_destroy(Request $request)

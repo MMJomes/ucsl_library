@@ -79,7 +79,7 @@ Route::middleware('globalSetting')->group(function () {
         Route::get('book/excel/export', 'BooksController@excelexport')->name('book.excel.excelexport');
 
         //for Book excel
-        Route::get('book/categorymultilecreate', 'BooksController@multilecreate')->name('book.categorymultilecreate');
+        Route::get('book/bookmultilecreate', 'BooksController@multilecreate')->name('book.bookmultilecreate');
         Route::get('book/template', 'BooksController@template')->name('book.template');
         Route::post('book/upload', 'BooksController@importData')->name('book.upload');
 
