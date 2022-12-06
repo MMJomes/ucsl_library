@@ -19,7 +19,7 @@
                     {{-- <li><a href="{{ route('backend.memberLists.index') }}"> Member Lists</a></li> --}}
                     <li><a href="{{ route('backend.category.index') }}"> {{ __('message.category') }}</a></li>
                     <li><a href="{{ route('backend.author.index') }}"> {{ __('message.author') }}</a></li>
-                    <li><a href="{{ route('backend.biztype.index') }}"> {{ __('message.books') }}</a></li>
+                    <li><a href="{{ route('backend.book.index') }}"> {{ __('message.books') }}</a></li>
                     {{-- <li><a href="{{ route('backend.mainbusiness.index') }}"> Main Business </a></li>
                     <li><a href="{{ route('backend.sidebusiness.index') }}"> Side Business </a></li>
                   --}}

@@ -37,7 +37,7 @@
                             <hr>
                             <div class="row clearfix mb-4">
                                 <div class="col-lg-6 col-md-12">
-                                    <h5>Select Event </h5>
+                                    <h5>Select Category </h5>
                                     <select class="selectpicker form-control" data-style="form-control btn-secondary"
                                         name="event_categories_id" required="true">
                                         @foreach ($categories as $event)

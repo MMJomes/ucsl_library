@@ -289,4 +289,19 @@ return [
     'chooseexcelfile'=>'Excel File ကိုရွေးပါ',
     'authorlist'=>'Author Lists',
 
+    'books'=>'Books',
+    'titlenumber'=>'Title Number',
+    'bookpublisher'=>'Publisher Name',
+    'date'=>'Date',
+    'bookname'=>'Book Name',
+    'authors'=>'Authors',
+    'producetime'=>'Produce Times',
+    'produceyear'=>'Produce Year',
+    'price'=>'Book Price',
+    'categories'=>'Categories',
+    'availablereason'=>'Available Reason',
+    'remark'=>'Remark',
+    'totalbook'=>'Total Books',
+    'availablebook'=>'Available Books',
+
 ];

@@ -70,10 +70,6 @@ class AuthorController extends Controller
      */
     public function store(AuthorsRequest $request)
     {
-
-
-        //dd($request->all());
-    //  dd($request->all());
         $this->AuthorRepository->create($request->all());
         return redirect()
             ->route('backend.author.index')

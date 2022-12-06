@@ -3,6 +3,7 @@
 namespace App\Repositories\Backend\Impls;
 
 use App\DataTables\MemberDataTable;
+use App\Http\Requests\BookRequest;
 use App\Http\Requests\MemberRequest;
 use App\Models\Member;
 use App\Models\Setting;

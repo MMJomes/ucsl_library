@@ -65,6 +65,25 @@ Route::middleware('globalSetting')->group(function () {
         Route::post('category/upload', 'EventCategoryController@importData')->name('category.upload');
 
 
+        //Books Route
+        Route::get('book', 'BooksController@index')->name('book.index');
+        Route::get('book/create', 'BooksController@create')->name('book.create');
+        Route::post('book/store', 'BooksController@store')->name('book.store');
+        Route::get('book/edit/{slug}', 'BooksController@edit')->name('book.edit');
+        Route::put('book/update/{slug}', 'BooksController@update')->name('book.update');
+        Route::get('book/show/{slug}', 'BooksController@show')->name('book.show');
+        Route::delete('book/destroy/{slug}', 'BooksController@destroy')->name('book.destroy');
+        Route::post('book/mass/destroy', 'BooksController@mass_destroy')->name('book.mass.destroy');
+        Route::get('book/approve/{slug}', 'BooksController@approve')->name('book.approve');
+        Route::post('book/mass/approve', 'BooksController@mass_approve')->name('book.mass.approve');
+        Route::get('book/excel/export', 'BooksController@excelexport')->name('book.excel.excelexport');
+
+        //for Book excel
+        Route::get('book/categorymultilecreate', 'BooksController@multilecreate')->name('book.categorymultilecreate');
+        Route::get('book/template', 'BooksController@template')->name('book.template');
+        Route::post('book/upload', 'BooksController@importData')->name('book.upload');
+
+
 
         //Author Route
         Route::get('author', 'AuthorController@index')->name('author.index');

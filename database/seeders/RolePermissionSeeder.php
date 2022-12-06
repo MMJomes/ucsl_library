@@ -104,6 +104,19 @@ class RolePermissionSeeder extends Seeder
                 ]
             ],
             [
+                'group_name' => 'Book',
+                'permissions' => [
+                    'book.create',
+                    'book.view',
+                    'book.edit',
+                    'book.delete',
+                    'book.mass_destroy',
+                    'book.approve',
+                    'book.mass_approve',
+
+                ]
+            ],
+            [
                 'group_name' => 'BizCategory',
                 'permissions' => [
                     'bizcategory.create',
