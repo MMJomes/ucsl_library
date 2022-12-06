@@ -107,11 +107,7 @@
                     <div class="dropdown-menu dropdown-menu-right animated flipInY">
                         <!-- text-->
                         <a href="{{ route('backend.profile') }}" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
-                        <!-- text-->
-                        <a href="{{ route('backend.mainbusiness.mybusiness', [auth()->user()->slug]) }}" class="dropdown-item"><i class="ti-signal"></i>  Main Business</a>
-                        <!-- text-->
-                        <a href="{{ route('backend.sidebusiness.mysidebusiness', [auth()->user()->slug]) }}" class="dropdown-item"><i class="ti-ticket"></i> Side Business</a>
-                        <!-- text-->
+                        
                         <div class="dropdown-divider"></div>
                         <!-- text-->
                         <a href="javascript:void(0)" class="dropdown-item"><i class="ti-settings"></i> Account

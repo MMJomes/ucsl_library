@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Student\StdClassController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -90,12 +91,20 @@ Route::middleware('globalSetting')->group(function () {
         Route::post("changeLanguage", 'DashboardController@changeLanguage')->name('language');
     });
 
+    Route::namespace('App\Http\Controllers\Student')->middleware(['auth'])->prefix('admin')->as('student.')->group(function () {
+        //stdclass
 
-    // Route::middleware(['member'])->group(function () {
-    //     Route::get('/', '\App\Http\Controllers\Frontend\MemberDashboardController@index')->name('user');
-    //     Route::namespace('App\Http\Controllers\Frontend')->middleware(['member'])->prefix('')->group(function () {
-    // });
-    // });
+        Route::get('stdclass', 'StdClassController@index')->name('stdclass.index');
+        Route::get('stdclass/create', 'StdClassController@create')->name('stdclass.create');
+        Route::post('stdclass/store', 'StdClassController@store')->name('stdclass.store');
+        Route::get('stdclass/edit/{id}', 'StdClassController@edit')->name('stdclass.edit');
+        Route::put('stdclass/update/{id}', 'StdClassController@update')->name('stdclass.update');
+        Route::get('stdclass/show/{id}', 'StdClassController@show')->name('stdclass.show');
+        Route::delete('stdclass/destroy/{id}', 'StdClassController@destroy')->name('stdclass.destroy');
+        Route::post('stdclass/mass/destroy', 'StdClassController@mass_destroy')->name('stdclass.mass.destroy');
+
+      });
+
     Route::namespace('App\Http\Controllers\Frontend')->prefix('')->group(function () {
         //Route::get('/', 'MemberDashboardController@index')->name('user');
         Route::post('login', 'Auth\MemberAuthController@loginAction')->name('member.login');
@@ -104,7 +113,14 @@ Route::middleware('globalSetting')->group(function () {
     });
 
 
+    Route::namespace('App\Http\Controllers\Student')->prefix('')->group(function () {
+        // Route::resource('stdclass', StdClassController::class);
+        // Route::post('stdclass/mass/destroy', 'StdClassController@mass_destroy')->name('stdclass.mass.destroy');
+    });
+
+
     Route::prefix('user')->as('user.')->namespace('App\Http\Controllers\Frontend')->group(function () {
+
         Route::get('login', 'Auth\MemberAuthController@login')->name('member.index');
         Route::get('/', 'MemberDashboardController@index')->name('user');
         Route::middleware('member')->group(function () {
