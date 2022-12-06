@@ -155,7 +155,7 @@
                             defaultContent: "-"
                         },
                         {
-                            data: 'authors_id',
+                            data: 'author.name',
                             defaultContent: "-"
                         },
                         {
@@ -179,7 +179,7 @@
                             defaultContent: "-"
                         },
                         {
-                            data: 'categories_id',
+                            data: 'category.name',
                             defaultContent: "-"
                         },
 

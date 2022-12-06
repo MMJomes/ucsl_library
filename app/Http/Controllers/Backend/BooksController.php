@@ -11,6 +11,7 @@ use App\Http\Requests\MemberRequest;
 use App\Imports\BookListImport;
 use App\Imports\ContactListImport;
 use App\Models\Author;
+use App\Models\Books;
 use App\Models\EventCategory;
 use App\Repositories\Backend\Interf\BookListAllRepository;
 use App\Repositories\Backend\Interf\BookListRepository;
@@ -34,9 +35,10 @@ class BooksController extends Controller
 
     public function index()
     {
+
         if (request()->ajax()) {
             $user = auth()->user();
-            $data = $this->bookListAllRepository->all();
+        $data = Books::with('author','category')->get();
             return $this->booking_datatable($data, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);

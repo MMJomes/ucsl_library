@@ -9,6 +9,7 @@ use App\Http\Requests\AuthorRequest;
 use App\Http\Requests\AuthorsRequest;
 use App\Imports\AuthorListImport;
 use App\Imports\CategoryListImport;
+use App\Models\Author;
 use App\Models\Event;
 use App\Models\EventCategory;
 use Illuminate\Http\Request;
@@ -40,10 +41,9 @@ class AuthorController extends Controller
 
     public function index()
     {
-
         if (request()->ajax()) {
             $user = auth()->user();
-            $data = $this->AuthorRepository->all();
+            $data = Author::with('category')->get();
             return $this->Author_datatable($data, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);

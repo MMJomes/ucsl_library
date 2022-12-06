@@ -20,6 +20,15 @@
                 <div class="card-body">
                     <form action={{ route('backend.book.store') }} method="POST" enctype="multipart/form-data">
                         @csrf
+                        @if (count($authors) <= 0)
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="bg-primary" style="padding: 10px 3px 1px 10px; margin-bottom:10px;">
+                                        <p>Please Create Author Name First!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                         <div class="row">
                             <div class="col-md-12">
                                 @if ($errors->any())
@@ -37,7 +46,8 @@
                                     <div class="form-group">
                                         <label for="titlenumber">{{ __('message.titlenumber') }}</label>
                                         <input type="text" class="form-control" name="titlename" id="titlenumber"
-                                            placeholder="{{ __('message.titlenumber') }}" value="{{ old('titlenumber') }}">
+                                            placeholder="{{ __('message.titlenumber') }}"
+                                            value="{{ old('titlenumber') }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
@@ -130,15 +140,21 @@
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
                                         <label for="remark">{{ __('message.remark') }}</label>
-                                        <input type="text"  class="form-control" name="remark" id="remark"
+                                        <input type="text" class="form-control" name="remark" id="remark"
                                             placeholder="{{ __('message.remark') }}" value="{{ old('remark') }}">
                                     </div>
                                 </div>
 
                             </div>
                             <div class="mt-5">
-                                <button type="submit" class="btn btn-info"><i class="fa fa-save"></i>
-                                    {{ __('message.save') }}</button>
+                                @if (count($authors) <= 0)
+                                    <button type="submit" class="btn btn-info" disabled="disabled"><i
+                                            class="fa fa-save"></i>
+                                        {{ __('message.save') }}</button>
+                                @else
+                                    <button type="submit" class="btn btn-info"><i class="fa fa-save"></i>
+                                        {{ __('message.save') }}</button>
+                                @endif
                                 <a href="{{ route('backend.memberLists.index') }}" class="btn btn-danger"><i
                                         class="icon-logout"></i> {{ __('message.back') }}</a>
                             </div>

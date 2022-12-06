@@ -8,7 +8,8 @@
         <div class="col-md-6">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('backend.author.index') }}"> {{ __('message.authorlist') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.author.index') }}"> {{ __('message.authorlist') }}</a>
+                </li>
                 <li class="breadcrumb-item active">{{ __('message.authorlist') }}</li>
             </ol>
         </div>
@@ -20,7 +21,16 @@
                 <div class="card-body">
                     <form action={{ route('backend.author.store') }} method="POST" enctype="multipart/form-data">
                         @csrf
-                        {{csrf_field()}}
+                        {{ csrf_field() }}
+                        @if (count($categories) <= 0)
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="bg-primary" style="padding: 10px 3px 1px 10px; margin-bottom:10px;">
+                                        <p>Please Create Category Name First!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                         <div class="row">
                             <div class="col-md-12">
                                 @if ($errors->any())
@@ -38,7 +48,7 @@
                                     <h5>{{ __('message.category') }} </h5>
                                     <select class="selectpicker form-control" data-style="form-control btn-secondary"
                                         name="categories_id" required="true">
-                                        {{($categories); }}
+                                        {{ $categories }}
                                         @foreach ($categories as $event)
                                             <option value="{{ $event->id }}">
                                                 {{ $event->name }}
@@ -48,9 +58,9 @@
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
-                                        <label for="name">{{__('message.name')}}</label>
+                                        <label for="name">{{ __('message.name') }}</label>
                                         <input type="text" class="form-control" name="name" id="name"
-                                            placeholder="{{__('message.name')}}" value="{{ old('name') }}">
+                                            placeholder="{{ __('message.name') }}" value="{{ old('name') }}">
                                     </div>
                                 </div>
                             </div>
@@ -71,9 +81,16 @@
                                 </div>
                             </div>
                             <div class="mt-5">
-                                <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> {{__('message.save')}}</button>
+                                @if (count($categories) <= 0)
+                                    <button type="submit" class="btn btn-info" disabled="disabled"><i class="fa fa-save"></i>
+                                        {{ __('message.save') }}</button>
+                                @else
+                                    <button type="submit" class="btn btn-info"><i class="fa fa-save"></i>
+                                        {{ __('message.save') }}</button>
+                                @endif
+
                                 <a href="{{ route('backend.author.index') }}" class="btn btn-danger"><i
-                                        class="icon-logout"></i> {{__('message.back')}}</a>
+                                        class="icon-logout"></i> {{ __('message.back') }}</a>
                             </div>
 
                         </div>

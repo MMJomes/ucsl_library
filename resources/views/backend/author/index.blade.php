@@ -129,7 +129,7 @@
                             },
                         },
                         {
-                            data: 'categories_id',
+                            data: 'category.name',
                         },
                         {
                             data: 'name',
