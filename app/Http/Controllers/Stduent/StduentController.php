@@ -3,32 +3,25 @@
 namespace App\Http\Controllers\Stduent;
 
 
-use App\Helpers\EventHelper;
+use App\Helpers\StduentHelper;
 use App\Helpers\AuthorHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AuthorRequest;
-use App\Http\Requests\AuthorsRequest;
 use App\Imports\AuthorListImport;
-use App\Imports\CategoryListImport;
 use App\Models\Author;
-use App\Models\Event;
 use App\Models\EventCategory;
 use App\Models\Stduent\StdClass;
 use App\Models\Stduent\Stduent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Carbon\Carbon;
-use App\Repositories\Backend\Interf\AuthorRepository;
-use App\Repositories\Backend\Interf\EventCategoryRepository;
-use App\Repositories\Backend\Interf\EventRepository;
 use App\Repositories\Backend\Interf\StudentRepository;
+use Illuminate\Support\Facades\DB;
 use Image;
 use Maatwebsite\Excel\Facades\Excel;
 
 class StduentController extends Controller
 {
-    use EventHelper;
-    use AuthorHelper;
+    use StduentHelper;
     private StudentRepository $studentRepository;
 
     public function __construct(StudentRepository $studentRepository)
@@ -43,8 +36,8 @@ class StduentController extends Controller
     {
         if (request()->ajax()) {
             $user = auth()->user();
-            $data = Stduent::with('stduentClass')->get();
-            return $this->Author_datatable($data, $user);
+            $data = Stduent::with('stdclass')->get();
+            return $this->Stduent_datatable($data, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
         return view('stduent.student.index');
@@ -68,11 +61,32 @@ class StduentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AuthorsRequest $request)
+    public function store(Request $request)
     {
-        $this->AuthorRepository->create($request->all());
+        $data1 = DB::table('stduents')->latest('id')->first();
+        if ($data1 == null) {
+            $last_id = 1;
+        } else {
+            $id = Stduent::latest()->first()->id;
+            $last_id = $id + 1;
+        }
+        if ($request->hasfile('logos')) {
+            $img = $request->file('logos');
+            $upload_path = public_path() . '/upload/stduents/';
+            $file = $img->getClientOriginalName();
+            $name = $last_id . $file;
+            $img->move($upload_path, $name);
+            $path = '/upload/stduents/' . $name;
+        } else {
+            $path = "/default-user.png";
+        }
+        $request->merge([
+            'image' => $path,
+            'status'=>'on',
+        ]);
+        $this->studentRepository->create($request->all());
         return redirect()
-            ->route('stduent.student.index')
+            ->route('stduent.stduents.index')
             ->with(['success' => 'Successfully Added']);
     }
 
@@ -86,9 +100,8 @@ class StduentController extends Controller
     {
 
 
-        $Author = $this->AuthorRepository->where('slug', $slug)->first();
+        $Author = $this->studentRepository->where('slug', $slug)->first();
         if ($Author) {
-
             $eventCategory = EventCategory::all();
             view()->share(['form' => true, 'select' => true]);
             return view('stduent.student.detail', compact('Author', 'eventCategory'));
@@ -105,7 +118,7 @@ class StduentController extends Controller
      */
     public function edit($slug)
     {
-        $author = $this->AuthorRepository->where('slug', $slug)->first();
+        $author = $this->studentRepository->where('slug', $slug)->first();
         if ($author) {
             $categories = EventCategory::all();
             view()->share(['form' => true, 'select' => true]);
@@ -124,7 +137,7 @@ class StduentController extends Controller
      */
     public function update(Request $request, $slug)
     {
-        $Author = $this->AuthorRepository->where('slug', $slug)->first();
+        $Author = $this->studentRepository->where('slug', $slug)->first();
         if ($Author) {
             $currentTime = Carbon::now();
             if ($request->has('images')) {
@@ -142,7 +155,7 @@ class StduentController extends Controller
                     'updatedat' => $currentTime,
                 ]);
             }
-            $this->AuthorRepository->updateById($Author->id, $request->all());
+            $this->studentRepository->updateById($Author->id, $request->all());
             return redirect()->route('stduent.student.index')->with(['success' => 'Successfully Updated!']);
         } else {
             return view('errorpage.404');
@@ -150,9 +163,9 @@ class StduentController extends Controller
     }
     public function destroy(Request $request)
     {
-        $eventcategory = $this->AuthorRepository->where('slug', $request->slug)->first();
+        $eventcategory = $this->studentRepository->where('slug', $request->slug)->first();
         if ($eventcategory) {
-            $this->AuthorRepository->deleteById($eventcategory->id);
+            $this->studentRepository->deleteById($eventcategory->id);
             return redirect()->route('stduent.student.index')->with('success', 'Event  deleted successfully');
         }
         return view('errorpage.404');
@@ -187,11 +200,32 @@ class StduentController extends Controller
             $failures = $e->failures();
             return redirect()->back()->withErrors($failures);
         }
-        return redirect()->route('stduent.student.index')->with(['success' => 'Successfully Upload!']);
+        return redirect()->route('stduent.stduents.index')->with(['success' => 'Successfully Upload!']);
     }
     public function mass_destroy(Request $request)
     {
-        $this->AuthorRepository->deleteMultipleById($request->ids);
-        return redirect()->route('stduent.student.index')->with('success', 'Author  deleted successfully');
+        $this->studentRepository->deleteMultipleById($request->ids);
+        return redirect()->route('stduent.stduents.index')->with('success', 'Author  deleted successfully');
+    }
+
+    public function approve(Request $request)
+    {
+        $contactListdata = $this->studentRepository->where('slug', $request->slug)->first();
+        if ($contactListdata) {
+            if ($contactListdata->status == ON) {
+                $contactListdata->update(['status' => OFF]);
+            } else {
+                $contactListdata->update(['status' => ON]);
+            }
+            return redirect()->route('stduent.stduents.index')->with(['success' => 'Successfully Updated!']);
+        } else {
+            return view('errorpage.404');
+        }
+    }
+
+    public function mass_approve(Request $request)
+    {
+        $this->studentRepository->massUpdate($request->ids, ['status' => ON]);
+        return redirect()->route('stduent.stduents.index')->with('success', 'Stduents Approved successfully');
     }
 }

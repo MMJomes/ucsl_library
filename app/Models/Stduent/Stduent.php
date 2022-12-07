@@ -20,6 +20,7 @@ class Stduent extends Model
         'email',
         'phoneNo',
         'Address',
+        'status',
     ];
 
     public function sluggable(): array
@@ -30,8 +31,10 @@ class Stduent extends Model
             ]
         ];
     }
-    public function stduentClass()
+    public function stdclass()
     {
         return $this->belongsTo(StdClass::class, 'std_classes_id', 'id');
     }
+
 }
+

@@ -2,12 +2,12 @@
 @section('content')
     <div class="row page-titles">
         <div class="col-md-12">
-            <h4 class="text-white">{{ __('message.authorlist') }} </h4>
+            <h4 class="text-white">{{ 'Stduent Lists' }} </h4>
         </div>
         <div class="col-md-6">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
-                <li class="breadcrumb-item active">{{ __('message.authorlist') }}</li>
+                <li class="breadcrumb-item active">{{ 'Stduent Lists' }}</li>
             </ol>
         </div>
     </div>
@@ -35,10 +35,14 @@
                                         <input type="checkbox" id="select-all" class="select-checkbox">
                                     </th>
                                     <th>{{ __('message.no') }}</th>
-                                    <th>{{ __('message.category') }}</th>
-                                    <th>{{ __('message.author') }}</th>
-                                    <th>{{ __('message.createddate') }}</th>
-                                    <th>{{ __('message.updateddate') }}</th>
+                                    <th>{{ 'Profile' }}</th>
+                                    <th>{{ 'Name' }}</th>
+                                    <th>{{ 'Roll Number' }}</th>
+                                    <th>{{ 'Phone Number' }}</th>
+                                    <th>{{ 'Address' }}</th>
+                                    @canany(['member.approve', 'member.mass_approve'])
+                                        <th>Status</th>
+                                    @endcanany
                                     @canany(['author.edit', 'author.delete'])
                                         <th>{{ __('message.action') }}</th>
                                     @endcanany
@@ -55,22 +59,26 @@
 @endsection
 
 @section('delete_route')
-    {{ route('backend.author.destroy', 'slug') }}
+    {{ route('stduent.stduents.destroy', 'slug') }}
 @endsection
 @section('approve_route')
-    {{ route('backend.author.destroy', 'slug') }}
+    {{ route('stduent.stduents.destroy', 'slug') }}
 @endsection
 @push('scripts')
     <script>
         $(document).ready(function() {
             @can('author.mass_destroy')
-                window.route_mass_crud_entries_destroy = "{{ route('backend.author.mass.destroy') }}";
+                window.route_mass_crud_entries_destroy = "{{ route('stduent.stduents.mass.destroy') }}";
             @endcan
             @can('author.show')
-                window.route_mass_crud_entries_show = "{{ route('backend.author.mass.destroy') }}";
+                window.route_mass_crud_entries_show = "{{ route('stduent.stduents.mass.destroy') }}";
+            @endcan
+
+            @can('member.mass_approve')
+                window.route_mass_crud_entries_approve = "{{ route('stduent.stduents.mass.approve') }}";
             @endcan
             $.ajax({
-                url: "{{ route('backend.author.index') }}",
+                url: "{{ route('stduent.stduents.index') }}",
                 cache: false,
             }).then(function(data, textStatus, jqXHR) {
                 var response = JSON.parse(data);
@@ -84,17 +92,7 @@
                                 className: "btn btn-primary",
                                 action: function(e, dt, node, config) {
                                     window.location.href =
-                                        '{{ route('stduent.stduent.create') }}';
-                                }
-                            },
-                        @endcan
-                        @can('author.create')
-                            {
-                                text: '{{ __('message.excelimport') }}',
-                                className: "btn btn-primary",
-                                action: function(e, dt, node, config) {
-                                    window.location.href =
-                                        '{{ url('admin/author/authormultilecreate') }}';
+                                        '{{ route('stduent.stduents.create') }}';
                                 }
                             },
                         @endcan
@@ -105,13 +103,13 @@
                                 deleteSelected();
                             }
                         },
-                        // {
-                        //     text: 'Approve Selected',
-                        //     className: "btn btn-primary",
-                        //     action: function(e, dt, node, config) {
-                        //         approveSelected();
-                        //     }
-                        // }
+                        {
+                            text: 'Approve Selected',
+                            className: "btn btn-primary",
+                            action: function(e, dt, node, config) {
+                                approveSelected();
+                            }
+                        }
                     ],
                     columns: [{
                             className: 'select-checkbox text-center',
@@ -129,25 +127,70 @@
                             },
                         },
                         {
-                            data: 'category.name',
+                            data: 'image',
+                            name: 'image',
+                            defaultContent: '',
+                            render: function(data) {
+                                return '<img src="' + data + '" width="50" height="50">';
+                            },
                         },
                         {
                             data: 'name',
-                        },
+                            defaultContent: "-"
 
-
-                        {
-                            "render": function(data, type, full, meta) {
-                                var createdDate = new Date(full.created_at);
-                                return createdDate.toLocaleString("en-US");
-                            },
                         },
                         {
-                            "render": function(data, type, full, meta) {
-                                var createdDate = new Date(full.created_at);
-                                return createdDate.toLocaleString("en-US");
-                            },
+                            data: 'stdclass.stduentclass',
+                            defaultContent: "-",
+                            "render": function(data, type, full, meta, ) {
+                                return data + " - " + full["rollno"];
+                            }
                         },
+
+                        {
+
+
+                            data: 'phoneNo',
+                            defaultContent: "-"
+
+                        },
+
+                        {
+                            data: 'Address',
+                            defaultContent: "-"
+                        },
+                        @canany(['member.approve', 'member.mass_approve'])
+                            {
+                                orderable: false,
+                                "render": function(data, type, full, meta) {
+                                    var sle = full.status;
+                                    var approveURL =
+                                        "{{ route('stduent.stduents.approve', ':slug') }}";
+                                    approveURL = approveURL.replace(':slug', full.slug);
+                                    var ApproveButton = '';
+
+                                    if (response["can_edit"]) {
+                                        if (full.status == 'on') {
+                                            ApproveButton =
+                                                '<div class="dropdown mx-1" data-href="' +
+                                                approveURL +
+                                                '"><button class="btn btn-outline-success btn-sm btn-font-size-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i> &nbsp; Active</button><div class="dropdown-menu py-0" btn-success aria-labelledby="dropdownMenuButton"><a class="dropdown-item bg-danger btn-sm text-white d-flex align-items-start "href="' +
+                                                approveURL +
+                                                '" id="set_ban" data-status="off"><i class="icon-ban"></i> &nbsp;InActive</a></div>';
+                                        } else {
+                                            ApproveButton =
+                                                '<div class="dropdown mx-1" data-href="' +
+                                                approveURL +
+                                                '"><button class="btn btn-outline-danger btn-sm btn-font-size-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-ban"></i> &nbsp; InActive</button><div class="dropdown-menu py-0" btn-success aria-labelledby="dropdownMenuButton"><a class="dropdown-item bg-success btn-sm text-white d-flex align-items-start "href="' +
+                                                approveURL +
+                                                '" id="set_ban" data-status="off"><i class="icon-check"></i> &nbsp;Active</a></div>';
+                                        }
+                                    }
+                                    return ApproveButton;
+                                }
+
+                            },
+                            @endcanany
                         @canany(['author.edit', 'author.delete', 'author.show'])
                             {
                                 orderable: false,

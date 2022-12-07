@@ -123,7 +123,7 @@
                 <ul class="sidebar-menu">
                     <li><a href="{{ route('stduent.stdclass.index') }}"> {{ ('Classes') }}</a></li>
 
-                    <li><a href="{{ route('stduent.stduent.index') }}"> stduent Lists</a></li>
+                    <li><a href="{{ route('stduent.stduents.index') }}"> Stduent Lists</a></li>
                     {{-- <li><a href="{{ route('backend.category.index') }}"> {{ __('message.category') }}</a></li>
                     <li><a href="{{ route('backend.author.index') }}"> {{ __('message.author') }}</a></li>
                     <li><a href="{{ route('backend.book.index') }}"> {{ __('message.books') }}</a></li> --}}

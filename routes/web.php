@@ -103,14 +103,17 @@ Route::middleware('globalSetting')->group(function () {
         Route::post('stdclass/mass/destroy', 'StdClassController@mass_destroy')->name('stdclass.mass.destroy');
 
         //stduent
-        Route::get('stduent', 'StduentController@index')->name('stduent.index');
-        Route::get('stduent/create', 'StduentController@create')->name('stduent.create');
-        Route::post('stduent/store', 'StduentController@store')->name('stduent.store');
-        Route::get('stduent/edit/{id}', 'StduentController@edit')->name('stduent.edit');
-        Route::put('stduent/update/{id}', 'StduentController@update')->name('stduent.update');
-        Route::get('stduent/show/{id}', 'StduentController@show')->name('stduent.show');
-        Route::delete('stduent/destroy/{id}', 'StduentController@destroy')->name('stduent.destroy');
-        Route::post('stduent/mass/destroy', 'StduentController@mass_destroy')->name('stduent.mass.destroy');
+        Route::get('stduent', 'StduentController@index')->name('stduents.index');
+        Route::get('stduent/create', 'StduentController@create')->name('stduents.create');
+        Route::post('stduent/store', 'StduentController@store')->name('stduents.store');
+        Route::get('stduent/edit/{id}', 'StduentController@edit')->name('stduents.edit');
+        Route::put('stduent/update/{id}', 'StduentController@update')->name('stduents.update');
+        Route::get('stduent/show/{id}', 'StduentController@show')->name('stduents.show');
+        Route::delete('stduent/destroy/{id}', 'StduentController@destroy')->name('stduents.destroy');
+        Route::post('stduent/mass/destroy', 'StduentController@mass_destroy')->name('stduents.mass.destroy');
+        Route::get('stduent/approve/{slug}', 'StduentController@approve')->name('stduents.approve');
+        Route::post('stduent/mass/approve', 'StduentController@mass_approve')->name('stduents.mass.approve');
+
       });
 
     Route::namespace('App\Http\Controllers\Frontend')->prefix('')->group(function () {

@@ -19,10 +19,12 @@ class CreateStduentsTable extends Migration
             $table->unsignedBigInteger('std_classes_id');
             $table->string('image')->nullable();
             $table->string('name');
+            $table->string('slug');
             $table->string('rollno')->unique();
             $table->string('email')->unique()->nullable();
             $table->string('phoneNo')->nullable();
             $table->string('Address')->nullable();
+            $table->enum('status', [ON, OFF])->default(OFF);
             $table->timestamps();
             $table->foreign('std_classes_id')->references('id')->on('std_classes')->onDelete('cascade');
         });
