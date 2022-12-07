@@ -2,12 +2,12 @@
 @section('content')
     <div class="row page-titles">
         <div class="col-md-12">
-            <h4 class="text-white">{{ ('Stduent Book Rent List') }} </h4>
+            <h4 class="text-white">{{ 'Stduent Book Rent List' }} </h4>
         </div>
         <div class="col-md-6">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
-                <li class="breadcrumb-item active">{{ ('Stduent Book Rent List') }}</li>
+                <li class="breadcrumb-item active">{{ 'Stduent Book Rent List' }}</li>
             </ol>
         </div>
     </div>
@@ -35,10 +35,11 @@
                                         <input type="checkbox" id="select-all" class="select-checkbox">
                                     </th>
                                     <th>{{ __('message.no') }}</th>
-                                    <th>{{ __('message.category') }}</th>
-                                    <th>{{ __('message.author') }}</th>
-                                    <th>{{ __('message.createddate') }}</th>
-                                    <th>{{ __('message.updateddate') }}</th>
+                                    <th>{{ 'Stduent Name' }}</th>
+                                    <th>{{ 'Book Name' }}</th>
+                                    <th>{{ 'Start Date' }}</th>
+                                    <th>{{ 'Retrun Date' }}</th>
+                                    <th>{{ 'Status' }}</th>
                                     @canany(['author.edit', 'author.delete'])
                                         <th>{{ __('message.action') }}</th>
                                     @endcanany
@@ -70,7 +71,7 @@
                 window.route_mass_crud_entries_show = "{{ route('stduent.bookRent.mass.destroy') }}";
             @endcan
             $.ajax({
-                url: "{{ route('backend.author.index') }}",
+                url: "{{ route('stduent.bookRent.index') }}",
                 cache: false,
             }).then(function(data, textStatus, jqXHR) {
                 var response = JSON.parse(data);
@@ -95,13 +96,6 @@
                                 deleteSelected();
                             }
                         },
-                        // {
-                        //     text: 'Approve Selected',
-                        //     className: "btn btn-primary",
-                        //     action: function(e, dt, node, config) {
-                        //         approveSelected();
-                        //     }
-                        // }
                     ],
                     columns: [{
                             className: 'select-checkbox text-center',
@@ -119,25 +113,56 @@
                             },
                         },
                         {
-                            data: 'category.name',
+                            defaultContent: "-",
+                            data: 'stduent.name',
                         },
                         {
-                            data: 'name',
+
+                            defaultContent: "-",
+                            data: 'book.bookname',
                         },
 
 
                         {
+
+                            defaultContent: "-",
                             "render": function(data, type, full, meta) {
-                                var createdDate = new Date(full.created_at);
+                                var createdDate = new Date(full.startdate);
                                 return createdDate.toLocaleString("en-US");
                             },
                         },
                         {
+
+                            defaultContent: "-",
                             "render": function(data, type, full, meta) {
-                                var createdDate = new Date(full.created_at);
-                                return createdDate.toLocaleString("en-US");
+                                var returnDate = new Date(full.enddate);
+                                return returnDate.toLocaleString("en-US");
                             },
                         },
+                        {
+                            orderable: false,
+                            "render": function(data, type, full, meta) {
+                                var status = full.status;
+                                if (status != 'on') {
+                                    return '<p style="font-weight:bold;" class="btn btn-outline-info btn-sm btn-font-size-sm "aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i> &nbsp;Duration Time';
+
+                                } else {
+                                    var endTime = full.enddate;
+                                    var ent = new Date(endTime);
+                                    var currentTime = new Date();
+                                    var rentingTime = (ent.getTime() - currentTime
+                                        .getTime()) / 1000;
+                                    if (rentingTime > 0) {
+                                        return '<p style="font-weight:bold;" class="btn btn-outline-success btn-sm btn-font-size-sm "aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i> &nbsp;Duration Time';
+                                    } else {
+                                        return '<p style="font-weight:bold;" class="btn btn-outline-danger btn-sm btn-font-size-sm "aria-haspopup="true" aria-expanded="false"><i class="icon-clock"></i> &nbsp;Overred Time  &nbsp;';
+                                    }
+                                }
+
+                            }
+
+                        },
+
                         @canany(['author.edit', 'author.delete', 'author.show'])
                             {
                                 orderable: false,
@@ -147,7 +172,7 @@
                                     editURL = editURL.replace(':slug', full.slug);
 
                                     var showURL =
-                                        "{{ route('backend.author.show', ':slug') }}";
+                                        "{{ route('stduent.bookRent.show', ':slug') }}";
                                     showURL = showURL.replace(':slug', full.slug);
 
                                     var editButton = '';

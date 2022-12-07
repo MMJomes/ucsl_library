@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Stduent;
 
-use App\Helpers\EventHelper;
+use App\Helpers\BookRentHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AuthorsRequest;
 use App\Imports\AuthorListImport;
 use App\Models\Books;
 use App\Models\EventCategory;
+use App\Models\Setting;
 use App\Models\Stduent\Bookrent;
 use App\Models\Stduent\Stduent;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class BookRentController extends Controller
 {
-    use EventHelper;
+    use BookRentHelper;
     private BookRentRepository $BookRentRepository;
 
     public function __construct(BookRentRepository $BookRentRepository)
@@ -33,8 +33,8 @@ class BookRentController extends Controller
     {
         if (request()->ajax()) {
             $user = auth()->user();
-            $data = Bookrent::with('book', 'stduent')->get();
-            return $this->Author_datatable($data, $user);
+            $datas = Bookrent::with('book', 'stduent')->orderBy('id', 'ASC')->get();
+            return $this->BookRent_datatable($datas, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
         return view('stduent.bookrent.index');
@@ -61,11 +61,14 @@ class BookRentController extends Controller
      */
     public function store(Request $request)
     {
-        $stduent_id= $request->stduent_id;
 
+        $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
+        $book_return_date = Carbon::parse($request->startdate);
+        $enddate = $book_return_date->addDays($book_rent_duration);
+        $request->merge(['enddate'=>$enddate]);
         $this->BookRentRepository->create($request->all());
         return redirect()
-            ->route('backend.author.index')
+            ->route('stduent.bookRent.index')
             ->with(['success' => 'Successfully Added']);
     }
 

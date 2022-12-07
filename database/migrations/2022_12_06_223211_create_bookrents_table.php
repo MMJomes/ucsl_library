@@ -20,6 +20,7 @@ class CreateBookrentsTable extends Migration
             $table->date('startdate')->nullable();
             $table->date('enddate')->nullable();
             $table->string('remark')->nullable();
+            $table->string('status')->nullable();
             $table->string('numberofbook')->nullable();
             $table->foreign('books_id')->references('id')->on('books')->onDelete('cascade');
             $table->foreign('stduents_id')->references('id')->on('stduents')->onDelete('cascade');
