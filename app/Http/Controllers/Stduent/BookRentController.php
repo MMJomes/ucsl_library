@@ -30,7 +30,6 @@ class BookRentController extends Controller
 
     public function index()
     {
-
         if (request()->ajax()) {
             $user = auth()->user();
             $datas = Bookrent::with('book', 'stduent')->orderBy('id', 'ASC')->get();
@@ -61,12 +60,17 @@ class BookRentController extends Controller
      */
     public function store(Request $request)
     {
-
         $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
         $book_return_date = Carbon::parse($request->startdate);
         $enddate = $book_return_date->addDays($book_rent_duration);
         $request->merge(['enddate' => $enddate]);
-        $this->BookRentRepository->create($request->all());
+        $data = $this->BookRentRepository->create($request->all());
+        $stdeunt = Stduent::where('id', $data->stduents_id)->first();
+        if ($stdeunt) {
+            $totalbok = $stdeunt->totalNoOfBooks + 1;
+            $stdeunt->totalNoOfBooks = $totalbok;
+            $stdeunt->save();
+        }
         return redirect()
             ->route('stduent.bookRent.index')
             ->with(['success' => 'Successfully Added']);
@@ -88,7 +92,7 @@ class BookRentController extends Controller
             $stduents  = Stduent::all();
             $books  = Books::all();
             view()->share(['form' => true, 'select' => true]);
-            return view('stduent.bookrent.detail', compact('Author', 'stduents','books'));
+            return view('stduent.bookrent.detail', compact('Author', 'stduents', 'books'));
         } else {
             return view('errorpage.404');
         }
@@ -107,7 +111,7 @@ class BookRentController extends Controller
             $stduents  = Stduent::all();
             $books  = Books::all();
             view()->share(['form' => true, 'select' => true]);
-            return view('stduent.bookrent.edit', compact('author', 'stduents','books'));
+            return view('stduent.bookrent.edit', compact('author', 'stduents', 'books'));
         } else {
             return view('errorpage.404');
         }
@@ -146,7 +150,7 @@ class BookRentController extends Controller
             return view('errorpage.404');
         }
     }
-    public function destroy(Request $request,$id)
+    public function destroy(Request $request, $id)
     {
         dd($id);
         $eventcategory = $this->BookRentRepository->where('id', $id)->first();
@@ -192,5 +196,20 @@ class BookRentController extends Controller
     {
         $this->BookRentRepository->deleteMultipleById($request->ids);
         return redirect()->route('stduent.bookRent.index')->with('success', 'Author  deleted successfully');
+    }
+    public function approve(Request $request, $id)
+    {
+        $contactListdata = $this->BookRentRepository->where('id', $id)->first();
+        if ($contactListdata) {
+            if ($contactListdata->rentstatus = OFF) {
+                $contactListdata->rentstatus ='on';
+                $contactListdata->status ='on';
+                $contactListdata->save();
+
+            }
+            return redirect()->route('stduent.bookRent.index')->with(['success' => 'Successfully Updated!']);
+        } else {
+            return view('errorpage.404');
+        }
     }
 }

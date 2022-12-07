@@ -85,7 +85,7 @@ class PreRequestController extends Controller
             $stduents  = Stduent::all();
             $books  = Books::all();
             view()->share(['form' => true, 'select' => true]);
-        return view('stduent.prequestbook.detail', compact('Author','books', 'stduents'));
+            return view('stduent.prequestbook.detail', compact('Author', 'books', 'stduents'));
         } else {
             return view('errorpage.404');
         }
@@ -190,19 +190,23 @@ class PreRequestController extends Controller
     }
     public function approve(Request $request, $id)
     {
-
         $contactListdata = $this->PreQuestRepository->where('id', $id)->first();
         if ($contactListdata) {
-            if ($contactListdata->status = OFF) {
-
+            if ($contactListdata->rentStatus = OFF) {
                 $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
-                $current_date =Carbon::now();
+                $current_date = Carbon::now();
                 $book_return_date = Carbon::parse($current_date);
                 $enddate = $book_return_date->addDays($book_rent_duration);
                 $studentid = $contactListdata->stduents_id;
                 $bookid = $contactListdata->books_id;
-                $datas = $request->merge(['books_id' => $studentid, 'stduents_id' => $bookid,'startdate' =>$current_date,'enddate'=>$enddate,'remark'=>'PreRequest Book.']);
+                $datas = $request->merge(['books_id' => $studentid, 'stduents_id' => $bookid, 'startdate' => $current_date, 'enddate' => $enddate, 'remark' => 'PreRequest Book.']);
                 $this->BookRentRepository->create($datas->all());
+                $stdeunt = Stduent::where('id', $studentid)->first();
+                if ($stdeunt) {
+                    $totalbok = $stdeunt->totalNoOfBooks + 1;
+                    $stdeunt->totalNoOfBooks = $totalbok;
+                    $stdeunt->save();
+                }
             }
             if ($contactListdata->status == ON) {
                 $contactListdata->update(['status' => OFF]);
