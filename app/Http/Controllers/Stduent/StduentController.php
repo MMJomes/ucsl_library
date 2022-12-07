@@ -82,7 +82,7 @@ class StduentController extends Controller
         }
         $request->merge([
             'image' => $path,
-            'status'=>'on',
+            'status' => 'on',
         ]);
         $this->studentRepository->create($request->all());
         return redirect()
@@ -118,11 +118,11 @@ class StduentController extends Controller
      */
     public function edit($slug)
     {
-        $author = $this->studentRepository->where('slug', $slug)->first();
-        if ($author) {
-            $categories = EventCategory::all();
+        $stduent = $this->studentRepository->where('slug', $slug)->first();
+        if ($stduent) {
+            $categories = StdClass::all();
             view()->share(['form' => true, 'select' => true]);
-            return view('stduent.student.edit', compact('author', 'categories'));
+            return view('stduent.student.edit', compact('stduent', 'categories'));
         } else {
             return view('errorpage.404');
         }
@@ -137,26 +137,26 @@ class StduentController extends Controller
      */
     public function update(Request $request, $slug)
     {
-        $Author = $this->studentRepository->where('slug', $slug)->first();
-        if ($Author) {
-            $currentTime = Carbon::now();
-            if ($request->has('images')) {
-                foreach ($request->file('images') as $iamge) {
-                    $data[] = $iamge;
-                }
-                $request->merge([
-                    'image' => json_encode($data, true),
-                    'updatedat' => $currentTime,
-                ]);
+
+
+        $stduent = $this->studentRepository->where('slug', $slug)->first();
+        if ($stduent) {
+            if ($request->hasfile('logos')) {
+                $img = $request->file('logos');
+                $upload_path = public_path() . '/upload/stduent/';
+                $file = $img->getClientOriginalName();
+                $name = $stduent->id . $file;
+                $img->move($upload_path, $name);
+                $path = '/upload/stduent/' . $name;
             } else {
-                $data = $Author->image;
-                $request->merge([
-                    'image' => $Author->image,
-                    'updatedat' => $currentTime,
-                ]);
+                $path = $request->oldimg;
             }
-            $this->studentRepository->updateById($Author->id, $request->all());
-            return redirect()->route('stduent.student.index')->with(['success' => 'Successfully Updated!']);
+            $request->merge([
+                'logo' => $path,
+            ]);
+            $request->merge(['image' => $path]);
+            $this->studentRepository->updateById($stduent->id, $request->all());
+            return redirect()->route('stduent.stduents.index')->with(['success' => 'Successfully Updated!']);
         } else {
             return view('errorpage.404');
         }
@@ -166,7 +166,7 @@ class StduentController extends Controller
         $eventcategory = $this->studentRepository->where('slug', $request->slug)->first();
         if ($eventcategory) {
             $this->studentRepository->deleteById($eventcategory->id);
-            return redirect()->route('stduent.student.index')->with('success', 'Event  deleted successfully');
+            return redirect()->route('stduent.stduents.index')->with('success', 'Event  deleted successfully');
         }
         return view('errorpage.404');
     }

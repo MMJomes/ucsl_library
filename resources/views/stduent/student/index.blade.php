@@ -196,11 +196,11 @@
                                 orderable: false,
                                 "render": function(data, type, full, meta) {
                                     var editURL =
-                                        "{{ route('backend.author.edit', ':slug') }}";
+                                        "{{ route('stduent.stduents.edit', ':slug') }}";
                                     editURL = editURL.replace(':slug', full.slug);
 
                                     var showURL =
-                                        "{{ route('backend.author.show', ':slug') }}";
+                                        "{{ route('stduent.stduents.show', ':slug') }}";
                                     showURL = showURL.replace(':slug', full.slug);
 
                                     var editButton = '';
@@ -221,7 +221,7 @@
                                             full.slug +
                                             '" data-container="body" data-togglePopover="popover" data-trigger="hover" data-placement="top" data-content="Delete" data-original-title="" title=""><i class="fa fa-trash"></i></a></form>';
                                     }
-                                    return editButton + showButton + deleteButton;
+                                    return editButton  + deleteButton;
                                 }
                             },
                         @endcanany
