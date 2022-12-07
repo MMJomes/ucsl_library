@@ -192,7 +192,7 @@ class PreRequestController extends Controller
     {
         $contactListdata = $this->PreQuestRepository->where('id', $id)->first();
         if ($contactListdata) {
-            if ($contactListdata->rentStatus = OFF) {
+            if ($contactListdata->status = OFF) {
                 $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
                 $current_date = Carbon::now();
                 $book_return_date = Carbon::parse($current_date);
@@ -200,7 +200,7 @@ class PreRequestController extends Controller
                 $studentid = $contactListdata->stduents_id;
                 $bookid = $contactListdata->books_id;
                 $datas = $request->merge(['books_id' => $studentid, 'stduents_id' => $bookid, 'startdate' => $current_date, 'enddate' => $enddate, 'remark' => 'PreRequest Book.']);
-                $this->BookRentRepository->create($datas->all());
+                $data = $this->BookRentRepository->create($datas->all());
                 $stdeunt = Stduent::where('id', $studentid)->first();
                 if ($stdeunt) {
                     $totalbok = $stdeunt->totalNoOfBooks + 1;
@@ -209,9 +209,12 @@ class PreRequestController extends Controller
                 }
             }
             if ($contactListdata->status == ON) {
+                $contactListdata->status  = 'off';
+                $contactListdata->save();
                 $contactListdata->update(['status' => OFF]);
             } else {
-                $contactListdata->update(['status' => ON]);
+                $contactListdata->status  = 'on';
+                $contactListdata->save();
             }
             return redirect()->route('stduent.preRequestBooks.index')->with(['success' => 'Successfully Updated!']);
         } else {

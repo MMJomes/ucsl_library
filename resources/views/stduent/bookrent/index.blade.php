@@ -185,51 +185,6 @@
                             }
 
                         },
-
-                        // {
-                        //     orderable: false,
-                        //     "render": function(data, type, full, meta) {
-                        //         var status = full.status;
-                        //         var returnStatus = full.returnstatus;
-                        //         var endTime = full.enddate;
-                        //         var updatedTime = full.created_at;
-                        //         var ent = new Date(updatedTime);
-                        //         var updatetim = new Date(endTime);
-                        //         var currentTime = new Date();
-                        //         var rentingTime = (ent.getTime() - currentTime
-                        //             .getTime()) / 1000;
-                        //         if (returnStatus == 'on') {
-                        //             if (status == 'on') {
-                        //                 var rent = (updatedTime
-                        //                     .getTime() - ent.getTime()) / 1000;
-                        //                 if (rent > 0) {
-                        //                     return '<p style="font-weight:bold;" class="btn btn-outline-info btn-sm btn-font-size-sm "aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i> &nbsp;Returned Time';
-
-                        //                 } else {
-                        //                     return '<p style="font-weight:bold;" class="btn btn-danger-info btn-sm btn-font-size-sm "aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i> &nbsp;Returned Time';
-
-                        //                 }
-                        //             }
-
-                        //         } else {
-                        //             return '<p style="font-weight:bold;" class="btn btn-outline-success btn-sm btn-font-size-sm "aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i> &nbsp;Returned Time';
-
-
-                        //         }
-                        //         // if (status == 'on') {
-                        //         //     return '<p style="font-weight:bold;" class="btn btn-outline-info btn-sm btn-font-size-sm "aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i> &nbsp;Returned Time';
-                        //         // } else {
-                        //         //     if (rentingTime > 0) {
-                        //         //         return '<p style="font-weight:bold;" class="btn btn-outline-success btn-sm btn-font-size-sm "aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i> &nbsp;Duration Time';
-                        //         //     } else {
-                        //         //         return '<p style="font-weight:bold;" class="btn btn-outline-danger btn-sm btn-font-size-sm "aria-haspopup="true" aria-expanded="false"><i class="icon-clock"></i> &nbsp;Overred Time  &nbsp;';
-                        //         //     }
-                        //         // }
-
-                        //     }
-
-                        // },
-
                         @canany(['member.approve', 'member.mass_approve'])
                             {
                                 orderable: false,
@@ -245,14 +200,14 @@
                                             ApproveButton =
                                                 '<div class="dropdown mx-1  disabled" data-href="' +
                                                 approveURL +
-                                                '"><button class="btn disabled btn-outline-success btn-sm btn-font-size-sm " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i> &nbsp; Return</button><div class="dropdown-menu py-0" btn-success aria-labelledby="dropdownMenuButton"><a class="dropdown-item bg-danger btn-sm text-white d-flex align-items-start "href="' +
+                                                '"><button style="font-weight:bold;font-size:13px;" class="btn disabled btn-outline-success btn-sm btn-font-size-sm " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i> &nbsp; Return</button><div class="dropdown-menu py-0" btn-success aria-labelledby="dropdownMenuButton"><a class="dropdown-item bg-danger btn-sm text-white d-flex align-items-start "href="' +
                                                 approveURL +
                                                 '" id="set_clock" data-status="off"><i class="icon-clock"></i> &nbsp;Pending</a></div>';
                                         } else {
                                             ApproveButton =
                                                 '<div class="dropdown mx-1" data-href="' +
                                                 approveURL +
-                                                '"><button class="btn btn-outline-info btn-sm btn-font-size-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-clock"></i> &nbsp; Renting</button><div class="dropdown-menu py-0" btn-success aria-labelledby="dropdownMenuButton"><a class="dropdown-item bg-success btn-sm text-white d-flex align-items-start "href="' +
+                                                '"><button style="font-weight:bold;font-size:13px;" class="btn btn-outline-info btn-sm btn-font-size-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-clock"></i> &nbsp; Renting</button><div class="dropdown-menu py-0" btn-success aria-labelledby="dropdownMenuButton"><a class="dropdown-item bg-success btn-sm text-white d-flex align-items-start "href="' +
                                                 approveURL +
                                                 '" id="set_clock" data-status="off"><i class="icon-check"></i> &nbsp;Return</a></div>';
                                         }
