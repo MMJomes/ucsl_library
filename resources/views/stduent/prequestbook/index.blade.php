@@ -39,7 +39,12 @@
                                     <th>{{ 'Book Name' }}</th>
                                     <th>{{ 'Edtion' }}</th>
                                     <th>{{ 'Request Date' }}</th>
+
                                     <th>{{ 'Status' }}</th>
+
+                                    @canany(['author.edit', 'author.delete'])
+                                        <th>{{ __('message.action') }}</th>
+                                    @endcanany
 
                                 </tr>
                             </thead>
@@ -98,13 +103,6 @@
                                 deleteSelected();
                             }
                         },
-                        {
-                            text: 'Approve Selected',
-                            className: "btn btn-primary",
-                            action: function(e, dt, node, config) {
-                                approveSelected();
-                            }
-                        }
 
                     ],
                     columns: [{
@@ -142,6 +140,7 @@
                                 return createdDate.toLocaleString("en-US");
                             },
                         },
+
                         @canany(['member.approve', 'member.mass_approve'])
                             {
                                 orderable: false,
@@ -172,6 +171,24 @@
                                     return ApproveButton;
                                 }
 
+                            },
+                        @endcanany
+                        @canany(['author.edit', 'author.delete', 'author.show'])
+                            {
+                                orderable: false,
+                                "render": function(data, type, full, meta) {
+                                    var showURL =
+                                        "{{ route('stduent.preRequestBooks.show', ':id') }}";
+                                    showURL = showURL.replace(':id', full.id);
+
+                                    var showButton = '';
+                                    if (response["can_show"]) {
+                                        showButton = '<a href="' + showURL +
+                                            '" class="btn btn-primary btn-sm mx-2"><i class="fa fa-info-circle"></i></a>';
+                                    }
+
+                                    return  showButton ;
+                                }
                             },
                         @endcanany
                     ],

@@ -78,16 +78,14 @@ class PreRequestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($id)
     {
-
-
-        $Author = $this->PreQuestRepository->where('slug', $slug)->first();
+        $Author = $this->PreQuestRepository->where('id', $id)->first();
         if ($Author) {
-
-            $eventCategory = EventCategory::all();
+            $stduents  = Stduent::all();
+            $books  = Books::all();
             view()->share(['form' => true, 'select' => true]);
-            return view('stduent.prequestbook.detail', compact('Author', 'eventCategory'));
+        return view('stduent.prequestbook.detail', compact('Author','books', 'stduents'));
         } else {
             return view('errorpage.404');
         }

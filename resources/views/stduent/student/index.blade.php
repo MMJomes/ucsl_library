@@ -149,21 +149,17 @@
                         },
 
                         {
-
-
                             data: 'phoneNo',
                             defaultContent: "-"
 
                         },
-
                         {
                             data: 'Address',
                             defaultContent: "-"
                         },
 
-
                         {
-                            data: 'Address',
+                            data: 'totalNoOfBooks',
                             defaultContent: "-"
                         },
 
@@ -198,7 +194,7 @@
                                 }
 
                             },
-                            @endcanany
+                        @endcanany
                         @canany(['author.edit', 'author.delete', 'author.show'])
                             {
                                 orderable: false,

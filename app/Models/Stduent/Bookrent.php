@@ -18,6 +18,7 @@ class Bookrent extends Model
         'startdate',
         'enddate',
         'remark',
+        'rentstatus',
         'status',
         'numberofbook',
     ];

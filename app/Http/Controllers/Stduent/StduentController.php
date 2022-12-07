@@ -4,20 +4,15 @@ namespace App\Http\Controllers\Stduent;
 
 
 use App\Helpers\StduentHelper;
-use App\Helpers\AuthorHelper;
 use App\Http\Controllers\Controller;
 use App\Imports\AuthorListImport;
-use App\Models\Author;
 use App\Models\EventCategory;
-use App\Models\Stduent\Bookrent;
 use App\Models\Stduent\StdClass;
 use App\Models\Stduent\Stduent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use Carbon\Carbon;
 use App\Repositories\Backend\Interf\StudentRepository;
 use Illuminate\Support\Facades\DB;
-use Image;
 use Maatwebsite\Excel\Facades\Excel;
 
 class StduentController extends Controller
@@ -35,7 +30,6 @@ class StduentController extends Controller
 
     public function index()
     {
-
         if (request()->ajax()) {
             $user = auth()->user();
             $data = Stduent::with('stdclass')->get();

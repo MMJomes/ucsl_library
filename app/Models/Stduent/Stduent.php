@@ -20,6 +20,7 @@ class Stduent extends Model
         'email',
         'phoneNo',
         'Address',
+        'totalNoOfBooks',
         'status',
     ];
 

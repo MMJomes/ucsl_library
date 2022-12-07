@@ -24,6 +24,7 @@ class CreateStduentsTable extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('phoneNo')->nullable();
             $table->string('Address')->nullable();
+            $table->string('totalNoOfBooks')->nullable();
             $table->enum('status', [ON, OFF])->default(OFF);
             $table->timestamps();
             $table->foreign('std_classes_id')->references('id')->on('std_classes')->onDelete('cascade');

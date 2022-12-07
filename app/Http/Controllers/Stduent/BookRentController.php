@@ -6,7 +6,6 @@ use App\Helpers\BookRentHelper;
 use App\Http\Controllers\Controller;
 use App\Imports\AuthorListImport;
 use App\Models\Books;
-use App\Models\EventCategory;
 use App\Models\Setting;
 use App\Models\Stduent\Bookrent;
 use App\Models\Stduent\Stduent;
@@ -31,6 +30,7 @@ class BookRentController extends Controller
 
     public function index()
     {
+
         if (request()->ajax()) {
             $user = auth()->user();
             $datas = Bookrent::with('book', 'stduent')->orderBy('id', 'ASC')->get();
@@ -78,16 +78,17 @@ class BookRentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($id)
     {
 
 
-        $Author = $this->BookRentRepository->where('slug', $slug)->first();
+        $Author = $this->BookRentRepository->where('id', $id)->first();
         if ($Author) {
 
-            $eventCategory = EventCategory::all();
+            $stduents  = Stduent::all();
+            $books  = Books::all();
             view()->share(['form' => true, 'select' => true]);
-            return view('stduent.bookrent.detail', compact('Author', 'eventCategory'));
+            return view('stduent.bookrent.detail', compact('Author', 'stduents','books'));
         } else {
             return view('errorpage.404');
         }
@@ -99,13 +100,14 @@ class BookRentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($slug)
+    public function edit($id)
     {
-        $author = $this->BookRentRepository->where('slug', $slug)->first();
+        $author = $this->BookRentRepository->where('id', $id)->first();
         if ($author) {
-            $categories = EventCategory::all();
+            $stduents  = Stduent::all();
+            $books  = Books::all();
             view()->share(['form' => true, 'select' => true]);
-            return view('stduent.bookrent.edit', compact('author', 'categories'));
+            return view('stduent.bookrent.edit', compact('author', 'stduents','books'));
         } else {
             return view('errorpage.404');
         }
@@ -118,9 +120,9 @@ class BookRentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug)
+    public function update(Request $request, $id)
     {
-        $Author = $this->BookRentRepository->where('slug', $slug)->first();
+        $Author = $this->BookRentRepository->where('id', $id)->first();
         if ($Author) {
             $currentTime = Carbon::now();
             if ($request->has('images')) {
@@ -139,17 +141,18 @@ class BookRentController extends Controller
                 ]);
             }
             $this->BookRentRepository->updateById($Author->id, $request->all());
-            return redirect()->route('backend.author.index')->with(['success' => 'Successfully Updated!']);
+            return redirect()->route('stduent.bookRent.index')->with(['success' => 'Successfully Updated!']);
         } else {
             return view('errorpage.404');
         }
     }
-    public function destroy(Request $request)
+    public function destroy(Request $request,$id)
     {
-        $eventcategory = $this->BookRentRepository->where('slug', $request->slug)->first();
+        dd($id);
+        $eventcategory = $this->BookRentRepository->where('id', $id)->first();
         if ($eventcategory) {
             $this->BookRentRepository->deleteById($eventcategory->id);
-            return redirect()->route('backend.author.index')->with('success', 'Event  deleted successfully');
+            return redirect()->route('stduent.bookRent.index')->with('success', 'Event  deleted successfully');
         }
         return view('errorpage.404');
     }
@@ -183,11 +186,11 @@ class BookRentController extends Controller
             $failures = $e->failures();
             return redirect()->back()->withErrors($failures);
         }
-        return redirect()->route('backend.author.index')->with(['success' => 'Successfully Upload!']);
+        return redirect()->route('stduent.bookRent.index')->with(['success' => 'Successfully Upload!']);
     }
     public function mass_destroy(Request $request)
     {
         $this->BookRentRepository->deleteMultipleById($request->ids);
-        return redirect()->route('backend.author.index')->with('success', 'Author  deleted successfully');
+        return redirect()->route('stduent.bookRent.index')->with('success', 'Author  deleted successfully');
     }
 }

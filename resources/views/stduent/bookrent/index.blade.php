@@ -56,10 +56,10 @@
 @endsection
 
 @section('delete_route')
-    {{ route('stduent.bookRent.destroy', 'slug') }}
+    {{ route('stduent.bookRent.destroy', 'id') }}
 @endsection
 @section('approve_route')
-    {{ route('stduent.bookRent.destroy', 'slug') }}
+    {{ route('stduent.bookRent.destroy', 'id') }}
 @endsection
 @push('scripts')
     <script>
@@ -168,12 +168,12 @@
                                 orderable: false,
                                 "render": function(data, type, full, meta) {
                                     var editURL =
-                                        "{{ route('backend.author.edit', ':slug') }}";
-                                    editURL = editURL.replace(':slug', full.slug);
+                                        "{{ route('stduent.bookRent.edit', ':id') }}";
+                                    editURL = editURL.replace(':id', full.id);
 
                                     var showURL =
-                                        "{{ route('stduent.bookRent.show', ':slug') }}";
-                                    showURL = showURL.replace(':slug', full.slug);
+                                        "{{ route('stduent.bookRent.show', ':id') }}";
+                                    showURL = showURL.replace(':id', full.id);
 
                                     var editButton = '';
                                     var showButton = '';
@@ -190,7 +190,7 @@
                                     if (response["can_delete"]) {
                                         deleteButton =
                                             '<a class="btn btn-danger btn-sm delete-btn" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal" data-slug="' +
-                                            full.slug +
+                                            full.id +
                                             '" data-container="body" data-togglePopover="popover" data-trigger="hover" data-placement="top" data-content="Delete" data-original-title="" title=""><i class="fa fa-trash"></i></a></form>';
                                     }
                                     return editButton + showButton + deleteButton;
