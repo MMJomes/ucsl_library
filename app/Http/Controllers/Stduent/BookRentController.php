@@ -32,7 +32,7 @@ class BookRentController extends Controller
     {
         if (request()->ajax()) {
             $user = auth()->user();
-            $datas = Bookrent::with('book', 'stduent')->orderBy('totalNoOfBooks', 'DESC')->get();
+            $datas = Bookrent::with('book', 'stduent')->orderBy('id', 'ASC')->get();
             return $this->BookRent_datatable($datas, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);

@@ -32,7 +32,7 @@ class StduentController extends Controller
     {
         if (request()->ajax()) {
             $user = auth()->user();
-            $data = Stduent::with('stdclass')->orderBy('id', 'ASC')->get();;
+            $data = Stduent::with('stdclass')->orderBy('totalNoOfBooks', 'DESC')->get();
             return $this->Stduent_datatable($data, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
