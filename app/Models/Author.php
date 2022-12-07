@@ -13,7 +13,6 @@ class Author extends Model
 
     //protected $table = 'authors';
     protected $fillable = [
-        'categories_id',
         'name',
         'createdat',
         'updatedat',
@@ -27,8 +26,5 @@ class Author extends Model
             ]
         ];
     }
-    public function category()
-    {
-        return $this->belongsTo(EventCategory::class, 'categories_id', 'id');
-    }
+
 }

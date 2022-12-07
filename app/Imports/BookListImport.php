@@ -30,7 +30,7 @@ class BookListImport implements ToModel, WithHeadingRow, WithValidation
             'date' => $date,
             'bookname' => $row['book_name'],
             'producetime' => $row['produce_time'],
-            'produceyear' => $row['produce_year'],
+            'edtion' => $row['edtion'],
             'price' => $row['price'],
             'availablereason' => $row['available_reason'],
             'remark' => $row['remark'],

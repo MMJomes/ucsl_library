@@ -21,7 +21,7 @@ class CreateBooksTable extends Migration
             $table->date('date')->nullable();
             $table->string('bookname')->nullable();
             $table->string('publishername')->nullable();
-            $table->string('producetime')->nullable();
+            $table->string('edtion')->nullable();
             $table->string('produceyear')->nullable();
             $table->string('price')->nullable();
             $table->string('availablereason')->nullable();

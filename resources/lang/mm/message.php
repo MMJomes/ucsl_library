@@ -295,7 +295,7 @@ return [
     'date'=>'Date',
     'bookname'=>'Book Name',
     'authors'=>'Authors',
-    'producetime'=>'Produce Times',
+    'producetime'=>'Edtion',
     'produceyear'=>'Produce Year',
     'price'=>'Book Price',
     'categories'=>'Categories',

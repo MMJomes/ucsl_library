@@ -29,7 +29,7 @@
                     <h6 class="card-subtitle">Export data to Copy, CSV, Excel, PDF & Print</h6>
                     <div class="table-responsive m-t-40">
                         <table id="dataTable" class="display nowrap table table-hover table-striped table-bordered"
-                            cellspacing="0" width="100%">
+                            cellspacing="0" width="100%" style="font-size: 14px !important">
                             <thead>
                                 <tr>
                                     <th class="text-center">
@@ -37,16 +37,10 @@
                                     </th>
                                     <th>{{ __('message.no') }}</th>
                                     <th>{{ __('message.titlenumber') }}</th>
-                                    <th>{{ __('message.date') }}</th>
                                     <th>{{ __('message.author') }}</th>
                                     <th>{{ __('message.bookname') }}</th>
-                                    <th>{{ __('message.bookpublisher') }}</th>
                                     <th>{{ __('message.producetime') }}</th>
-                                    <th>{{ __('message.produceyear') }}</th>
-                                    <th>{{ __('message.price') }}</th>
                                     <th>{{ __('message.category') }}</th>
-                                    <th>{{ __('message.availablereason') }}</th>
-                                    <th>{{ __('message.remark') }}</th>
                                     <th>{{ __('message.totalbook') }}</th>
                                     <th>{{ __('message.availablebook') }}</th>
                                     @canany(['book.edit', 'book.delete'])
@@ -151,10 +145,6 @@
                             defaultContent: "-"
                         },
                         {
-                            data: 'date',
-                            defaultContent: "-"
-                        },
-                        {
                             data: 'author.name',
                             defaultContent: "-"
                         },
@@ -162,36 +152,17 @@
                             data: 'bookname',
                             defaultContent: "-"
                         },
+
                         {
-                            data: 'publishername',
+                            data: 'edtion',
                             defaultContent: "-"
                         },
-                        {
-                            data: 'producetime',
-                            defaultContent: "-"
-                        },
-                        {
-                            data: 'produceyear',
-                            defaultContent: "-"
-                        },
-                        {
-                            data: 'price',
-                            defaultContent: "-"
-                        },
+
                         {
                             data: 'category.name',
                             defaultContent: "-"
                         },
 
-                        {
-                            data: 'availablereason',
-                            defaultContent: "-"
-                        },
-
-                        {
-                            data: 'remark',
-                            defaultContent: "-"
-                        },
                         {
 
                             data: 'totalbook',

@@ -36,19 +36,7 @@
                             <h6>{{ __('message.basicinfo') }}</h6>
                             <hr>
                             <div class="row clearfix mb-4">
-                                <div class="col-lg-6 col-md-12">
-                                    <h5>Select Category </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
-                                        name="event_categories_id" required="true">
-                                        @foreach ($categories as $event)
-                                            <option value="{{ $event->id }}"
-                                                {{ $event->events_id == $event->id ? 'selected' : '' }}>
-                                                {{ $event->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
+                                <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
                                         <label for="name">{{__('message.name')}}</label>
                                         <input type="text" class="form-control" name="name" id="name"

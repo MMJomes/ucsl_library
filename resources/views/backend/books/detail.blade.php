@@ -8,7 +8,7 @@
         <div class="col-md-6">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('backend.memberLists.index') }}"> {{ __('message.books') }}</a>
+                <li class="breadcrumb-item"><a href="{{ route('backend.book.index') }}"> {{ __('message.books') }}</a>
                 </li>
                 <li class="breadcrumb-item active">{{ __('message.books') }}</li>
             </ol>
@@ -140,7 +140,7 @@
 
                             </div>
                             <div class="mt-5">
-                                <a href="{{ route('backend.memberLists.index') }}" class="btn btn-danger"><i
+                                <a href="{{ route('backend.book.index') }}" class="btn btn-danger"><i
                                         class="icon-logout"></i> {{ __('message.back') }}</a>
                             </div>
 

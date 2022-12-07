@@ -35,7 +35,6 @@
                                         <input type="checkbox" id="select-all" class="select-checkbox">
                                     </th>
                                     <th>{{ __('message.no') }}</th>
-                                    <th>{{ __('message.category') }}</th>
                                     <th>{{ __('message.author') }}</th>
                                     <th>{{ __('message.createddate') }}</th>
                                     <th>{{ __('message.updateddate') }}</th>
@@ -105,13 +104,6 @@
                                 deleteSelected();
                             }
                         },
-                        // {
-                        //     text: 'Approve Selected',
-                        //     className: "btn btn-primary",
-                        //     action: function(e, dt, node, config) {
-                        //         approveSelected();
-                        //     }
-                        // }
                     ],
                     columns: [{
                             className: 'select-checkbox text-center',
@@ -128,9 +120,7 @@
                                 return meta.row + 1;
                             },
                         },
-                        {
-                            data: 'category.name',
-                        },
+
                         {
                             data: 'name',
                         },

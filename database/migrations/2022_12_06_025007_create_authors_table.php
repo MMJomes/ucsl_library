@@ -15,13 +15,11 @@ class CreateAuthorsTable extends Migration
     {
         Schema::create('authors', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('categories_id');
             $table->string('name');
             $table->string('slug');
             $table->dateTime('createdat')->nullable();
             $table->dateTime('updatedat')->nullable();
             $table->timestamps();
-            $table->foreign('categories_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

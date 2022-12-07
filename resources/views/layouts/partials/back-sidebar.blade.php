@@ -16,7 +16,6 @@
                 <ul class="sidebar-menu">
                     <li><a href="{{ route('backend.dashboard.index') }}"> {{ __('message.home') }}</a></li>
 
-                    {{-- <li><a href="{{ route('backend.memberLists.index') }}"> Member Lists</a></li> --}}
                     <li><a href="{{ route('backend.category.index') }}"> {{ __('message.category') }}</a></li>
                     <li><a href="{{ route('backend.author.index') }}"> {{ __('message.author') }}</a></li>
                     <li><a href="{{ route('backend.book.index') }}"> {{ __('message.books') }}</a></li>

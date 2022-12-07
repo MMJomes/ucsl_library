@@ -8,7 +8,7 @@
         <div class="col-md-6">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('backend.memberLists.index') }}"> {{ __('message.books') }}</a>
+                <li class="breadcrumb-item"><a href="{{ route('backend.book.index') }}"> {{ __('message.books') }}</a>
                 </li>
                 <li class="breadcrumb-item active">{{ __('message.books') }}</li>
             </ol>
@@ -90,14 +90,14 @@
                                         <label for="qualification">{{ __('message.producetime') }}</label>
                                         <input type="text" class="form-control" name="producetime"
                                             placeholder="{{ __('message.producetime') }}"
-                                            value="{{ old('producetime',$book->producetime) }}">
+                                            value="{{ old('producetime',$book->edtion) }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="row clearfix">
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
-                                        <label for="occupation">{{ __('message.produceyear') }}</label>
+                                        <label for="produceyear">{{ __('message.produceyear') }}</label>
                                         <input type="text" class="form-control" name="produceyear"
                                             placeholder="{{ __('message.produceyear') }}"
                                             value="{{ old('produceyear',$book->produceyear) }}">
@@ -147,7 +147,7 @@
                             <div class="mt-5">
                                 <button type="submit" class="btn btn-info"><i class="fa fa-save"></i>
                                     {{ __('message.save') }}</button>
-                                <a href="{{ route('backend.memberLists.index') }}" class="btn btn-danger"><i
+                                <a href="{{ route('backend.book.index') }}" class="btn btn-danger"><i
                                         class="icon-logout"></i> {{ __('message.back') }}</a>
                             </div>
 

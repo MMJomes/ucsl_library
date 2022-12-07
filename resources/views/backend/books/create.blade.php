@@ -90,8 +90,8 @@
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
-                                        <label for="qualification">{{ __('message.producetime') }}</label>
-                                        <input type="text" class="form-control" name="producetime"
+                                        <label for="edtion">{{ __('message.producetime') }}</label>
+                                        <input type="text" class="form-control" name="edtion"
                                             placeholder="{{ __('message.producetime') }}"
                                             value="{{ old('producetime') }}">
                                     </div>

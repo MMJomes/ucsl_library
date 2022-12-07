@@ -39,7 +39,7 @@ class AuthorController extends Controller
     {
         if (request()->ajax()) {
             $user = auth()->user();
-            $data = Author::with('category')->get();
+            $data = Author::get();
             return $this->Author_datatable($data, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
@@ -53,9 +53,8 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        $categories  = EventCategory::all();
         view()->share(['form' => true, 'select' => true]);
-        return view('backend.author.create', compact('categories'));
+        return view('backend.author.create');
     }
 
     /**

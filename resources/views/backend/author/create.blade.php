@@ -22,15 +22,6 @@
                     <form action={{ route('backend.author.store') }} method="POST" enctype="multipart/form-data">
                         @csrf
                         {{ csrf_field() }}
-                        @if (count($categories) <= 0)
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="bg-primary" style="padding: 10px 3px 1px 10px; margin-bottom:10px;">
-                                        <p>Please Create Category Name First!</p>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
                         <div class="row">
                             <div class="col-md-12">
                                 @if ($errors->any())
@@ -44,19 +35,7 @@
                             <h6>{{ __('message.basicinfo') }}</h6>
                             <hr>
                             <div class="row clearfix mb-4">
-                                <div class="col-lg-6 col-md-12">
-                                    <h5>{{ __('message.category') }} </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
-                                        name="categories_id" required="true">
-                                        {{ $categories }}
-                                        @foreach ($categories as $event)
-                                            <option value="{{ $event->id }}">
-                                                {{ $event->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
+                                <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
                                         <label for="name">{{ __('message.name') }}</label>
                                         <input type="text" class="form-control" name="name" id="name"
@@ -81,13 +60,9 @@
                                 </div>
                             </div>
                             <div class="mt-5">
-                                @if (count($categories) <= 0)
-                                    <button type="submit" class="btn btn-info" disabled="disabled"><i class="fa fa-save"></i>
-                                        {{ __('message.save') }}</button>
-                                @else
-                                    <button type="submit" class="btn btn-info"><i class="fa fa-save"></i>
-                                        {{ __('message.save') }}</button>
-                                @endif
+
+                                <button type="submit" class="btn btn-info"><i class="fa fa-save"></i>
+                                    {{ __('message.save') }}</button>
 
                                 <a href="{{ route('backend.author.index') }}" class="btn btn-danger"><i
                                         class="icon-logout"></i> {{ __('message.back') }}</a>
