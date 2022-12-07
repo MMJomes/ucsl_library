@@ -23,7 +23,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="bg-primary" style="padding: 10px 3px 1px 10px; margin-bottom:10px;">
-                                        <p>Please Create Category Name First!</p>
+                                        <p>Please Create Class Name First!</p>
                                     </div>
                                 </div>
                             </div>

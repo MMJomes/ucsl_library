@@ -113,7 +113,7 @@
             <a href="javascript:void(0)"><i class="ti-layout-grid2"></i></a>
             <div class="sidebarmenu">
                 <!-- Left navbar-header -->
-                <h3 class="menu-title">stduent</h3>
+                <h3 class="menu-title">Stduents Managemet</h3>
                 <div class="searchable-menu">
                     <form role="search" class="menu-search">
                         <input type="text" placeholder="Search..." class="form-control">
@@ -124,6 +124,7 @@
                     <li><a href="{{ route('stduent.stdclass.index') }}"> {{ ('Classes') }}</a></li>
 
                     <li><a href="{{ route('stduent.stduents.index') }}"> Stduent Lists</a></li>
+                    <li><a href="{{ route('stduent.bookRent.index') }}"> Stduent Rent Book Lists</a></li>
                     {{-- <li><a href="{{ route('backend.category.index') }}"> {{ __('message.category') }}</a></li>
                     <li><a href="{{ route('backend.author.index') }}"> {{ __('message.author') }}</a></li>
                     <li><a href="{{ route('backend.book.index') }}"> {{ __('message.books') }}</a></li> --}}

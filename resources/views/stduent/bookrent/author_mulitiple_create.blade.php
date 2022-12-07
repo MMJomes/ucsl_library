@@ -1,23 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row page-titles">
-    <div class="col-md-12">
-        <h4 class="text-white">{{ __('message.books') }}</h4>
+    <div class="row page-titles">
+        <div class="col-md-12">
+            <h4 class="text-white">{{ __('message.author') }}</h4>
+        </div>
+            <div class="col-md-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
+                    <li class="breadcrumb-item active">{{ __('message.author') }}</li>
+                </ol>
+            </div>
     </div>
-    <div class="col-md-6">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
-            </li>
-            <li class="breadcrumb-item active">{{ __('message.books') }}</li>
-        </ol>
-    </div>
-</div>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('backend.book.upload') }}" method="POST"
+                    <form action="{{ route('backend.author.upload') }}" method="POST"
                                 enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -32,7 +31,8 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="text-center">
-                                        <h3><a href="{{ url('admin/book/template') }}">{{__('message.exceldownload')}}</a></h3>
+                                        <h3><a href="{{ url('admin/author/template') }}">{{__('message.exceldownload')}}</a></h3>
+                                        
                                         </div>
                                     </div>
                                     <div class="col-md-1">
@@ -44,6 +44,8 @@
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-flat"><i
                                                 class="fa fa-upload"></i> {{__('message.upload')}}</button>
+                                                <a href="{{ route('backend.category.index') }}" class="btn btn-danger"><i
+                                                    class="icon-logout"></i> {{__('message.back')}}</a>
 
                                     </div>
                                 </div>

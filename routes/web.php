@@ -114,6 +114,16 @@ Route::middleware('globalSetting')->group(function () {
         Route::get('stduent/approve/{slug}', 'StduentController@approve')->name('stduents.approve');
         Route::post('stduent/mass/approve', 'StduentController@mass_approve')->name('stduents.mass.approve');
 
+        //Book Rents
+        Route::get('bookrent', 'BookRentController@index')->name('bookRent.index');
+        Route::get('bookrent/create', 'BookRentController@create')->name('bookRent.create');
+        Route::post('bookrent/store', 'BookRentController@store')->name('bookRent.store');
+        Route::get('bookrent/edit/{id}', 'BookRentController@edit')->name('bookRent.edit');
+        Route::put('bookrent/update/{id}', 'BookRentController@update')->name('bookRent.update');
+        Route::get('bookrent/show/{id}', 'BookRentController@show')->name('bookRent.show');
+        Route::delete('bookrent/destroy/{id}', 'BookRentController@destroy')->name('bookRent.destroy');
+        Route::post('bookrent/mass/destroy', 'BookRentController@mass_destroy')->name('bookRent.mass.destroy');
+
       });
 
     Route::namespace('App\Http\Controllers\Frontend')->prefix('')->group(function () {

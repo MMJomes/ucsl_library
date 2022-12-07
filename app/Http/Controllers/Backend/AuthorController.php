@@ -5,12 +5,9 @@ namespace App\Http\Controllers\Backend;
 use App\Helpers\EventHelper;
 use App\Helpers\AuthorHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AuthorRequest;
 use App\Http\Requests\AuthorsRequest;
 use App\Imports\AuthorListImport;
-use App\Imports\CategoryListImport;
 use App\Models\Author;
-use App\Models\Event;
 use App\Models\EventCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -18,7 +15,6 @@ use Carbon\Carbon;
 use App\Repositories\Backend\Interf\AuthorRepository;
 use App\Repositories\Backend\Interf\EventCategoryRepository;
 use App\Repositories\Backend\Interf\EventRepository;
-use Image;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AuthorController extends Controller
