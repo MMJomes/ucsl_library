@@ -38,9 +38,8 @@
                                     <th>{{ 'Profile' }}</th>
                                     <th>{{ 'Name' }}</th>
                                     <th>{{ 'Roll Number' }}</th>
-                                    <th>{{ 'Phone Number' }}</th>
-                                    <th>{{ 'Address' }}</th>
                                     <th>{{ 'Total Rent Books' }}</th>
+                                    <th>{{ 'Total Return Books' }}</th>
                                     @canany(['member.approve', 'member.mass_approve'])
                                         <th>Status</th>
                                     @endcanany
@@ -147,19 +146,12 @@
                                 return data + " - " + full["rollno"];
                             }
                         },
-
-                        {
-                            data: 'phoneNo',
-                            defaultContent: "-"
-
-                        },
-                        {
-                            data: 'Address',
-                            defaultContent: "-"
-                        },
-
                         {
                             data: 'totalNoOfBooks',
+                            defaultContent: "-"
+                        },
+                        {
+                            data: 'totalNoOfreturn',
                             defaultContent: "-"
                         },
 

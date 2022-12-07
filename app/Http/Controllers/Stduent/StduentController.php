@@ -96,11 +96,11 @@ class StduentController extends Controller
     {
 
 
-        $Author = $this->studentRepository->where('slug', $slug)->first();
-        if ($Author) {
-            $eventCategory = EventCategory::all();
+        $stduent = $this->studentRepository->where('slug', $slug)->first();
+        if ($stduent) {
+            $categories = StdClass::all();
             view()->share(['form' => true, 'select' => true]);
-            return view('stduent.student.detail', compact('Author', 'eventCategory'));
+            return view('stduent.student.detail', compact('stduent', 'categories'));
         } else {
             return view('errorpage.404');
         }

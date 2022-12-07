@@ -202,10 +202,15 @@ class BookRentController extends Controller
         $contactListdata = $this->BookRentRepository->where('id', $id)->first();
         if ($contactListdata) {
             if ($contactListdata->rentstatus = OFF) {
-                $contactListdata->rentstatus ='on';
-                $contactListdata->status ='on';
+                $contactListdata->rentstatus = 'on';
+                $contactListdata->status = 'on';
                 $contactListdata->save();
-
+            }
+            $stdeunt = Stduent::where('id', $contactListdata->stduents_id)->first();
+            if ($stdeunt) {
+                $totalbok = $stdeunt->totalNoOfreturn + 1;
+                $stdeunt->totalNoOfreturn = $totalbok;
+                $stdeunt->save();
             }
             return redirect()->route('stduent.bookRent.index')->with(['success' => 'Successfully Updated!']);
         } else {

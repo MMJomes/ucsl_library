@@ -21,6 +21,7 @@ class Stduent extends Model
         'phoneNo',
         'Address',
         'totalNoOfBooks',
+        'totalNoOfreturn',
         'status',
     ];
 
