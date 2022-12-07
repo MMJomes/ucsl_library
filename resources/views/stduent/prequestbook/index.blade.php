@@ -155,9 +155,9 @@
                                     if (response["can_edit"]) {
                                         if (full.status == 'on') {
                                             ApproveButton =
-                                                '<div class="dropdown mx-1" data-href="' +
+                                                '<div class="dropdown mx-1  disabled" data-href="' +
                                                 approveURL +
-                                                '"><button class="btn btn-outline-success btn-sm btn-font-size-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i> &nbsp; Approve</button><div class="dropdown-menu py-0" btn-success aria-labelledby="dropdownMenuButton"><a class="dropdown-item bg-danger btn-sm text-white d-flex align-items-start "href="' +
+                                                '"><button class="btn disabled btn-outline-success btn-sm btn-font-size-sm " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i> &nbsp; Approve</button><div class="dropdown-menu py-0" btn-success aria-labelledby="dropdownMenuButton"><a class="dropdown-item bg-danger btn-sm text-white d-flex align-items-start "href="' +
                                                 approveURL +
                                                 '" id="set_clock" data-status="off"><i class="icon-clock"></i> &nbsp;Pending</a></div>';
                                         } else {

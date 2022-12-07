@@ -194,7 +194,6 @@ class PreRequestController extends Controller
     {
 
         $contactListdata = $this->PreQuestRepository->where('id', $id)->first();
-        //dd($contac\tListdata);
         if ($contactListdata) {
             if ($contactListdata->status = OFF) {
 
