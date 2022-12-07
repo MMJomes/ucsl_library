@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Imports\AuthorListImport;
 use App\Models\Author;
 use App\Models\EventCategory;
+use App\Models\Stduent\Bookrent;
 use App\Models\Stduent\StdClass;
 use App\Models\Stduent\Stduent;
 use Illuminate\Http\Request;
@@ -34,6 +35,7 @@ class StduentController extends Controller
 
     public function index()
     {
+
         if (request()->ajax()) {
             $user = auth()->user();
             $data = Stduent::with('stdclass')->get();

@@ -35,6 +35,5 @@ class Stduent extends Model
     {
         return $this->belongsTo(StdClass::class, 'std_classes_id', 'id');
     }
-
 }
 

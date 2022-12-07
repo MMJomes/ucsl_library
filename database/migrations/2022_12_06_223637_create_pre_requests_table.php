@@ -15,6 +15,12 @@ class CreatePreRequestsTable extends Migration
     {
         Schema::create('pre_requests', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('books_id');
+            $table->unsignedBigInteger('stduents_id');
+            $table->string('remark')->nullable();
+            $table->enum('status', [ON, OFF])->default(OFF);
+            $table->foreign('books_id')->references('id')->on('books')->onDelete('cascade');
+            $table->foreign('stduents_id')->references('id')->on('stduents')->onDelete('cascade');
             $table->timestamps();
         });
     }

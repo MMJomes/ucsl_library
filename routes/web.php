@@ -124,6 +124,19 @@ Route::middleware('globalSetting')->group(function () {
         Route::delete('bookrent/destroy/{id}', 'BookRentController@destroy')->name('bookRent.destroy');
         Route::post('bookrent/mass/destroy', 'BookRentController@mass_destroy')->name('bookRent.mass.destroy');
 
+
+        //PreBook Request Book
+        Route::get('preRequestBook', 'PreRequestController@index')->name('preRequestBooks.index');
+        Route::get('preRequestBook/create', 'PreRequestController@create')->name('preRequestBooks.create');
+        Route::post('preRequestBookstore', 'PreRequestController@store')->name('preRequestBooks.store');
+        Route::get('preRequestBookedit/{id}', 'PreRequestController@edit')->name('preRequestBooks.edit');
+        Route::put('preRequestBookupdate/{id}', 'PreRequestController@update')->name('preRequestBooks.update');
+        Route::get('preRequestBook/show/{id}', 'PreRequestController@show')->name('preRequestBooks.show');
+        Route::delete('preRequestBook/destroy/{id}', 'PreRequestController@destroy')->name('preRequestBooks.destroy');
+        Route::post('preRequestBook/mass/destroy', 'PreRequestController@mass_destroy')->name('preRequestBooks.mass.destroy');
+        Route::get('preRequestBook/approve/{slug}', 'PreRequestController@approve')->name('preRequestBooks.approve');
+        Route::post('preRequestBook/mass/approve', 'PreRequestController@mass_approve')->name('preRequestBooks.mass.approve');
+
       });
 
     Route::namespace('App\Http\Controllers\Frontend')->prefix('')->group(function () {

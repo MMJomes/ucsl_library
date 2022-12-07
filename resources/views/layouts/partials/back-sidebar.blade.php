@@ -124,12 +124,7 @@
 
                     <li><a href="{{ route('stduent.stduents.index') }}"> Stduent Lists</a></li>
                     <li><a href="{{ route('stduent.bookRent.index') }}"> Stduent Rent Book Lists</a></li>
-                    {{-- <li><a href="{{ route('backend.category.index') }}"> {{ __('message.category') }}</a></li>
-                    <li><a href="{{ route('backend.author.index') }}"> {{ __('message.author') }}</a></li>
-                    <li><a href="{{ route('backend.book.index') }}"> {{ __('message.books') }}</a></li> --}}
-                    {{-- <li><a href="{{ route('backend.mainbusiness.index') }}"> Main Business </a></li>
-                    <li><a href="{{ route('backend.sidebusiness.index') }}"> Side Business </a></li>
-                  --}}
+                    <li><a href="{{ route('stduent.preRequestBooks.index') }}"> PreRequest Book Lists</a></li>
                 </li>
                 </ul>
                 <!-- Left navbar-header end -->
