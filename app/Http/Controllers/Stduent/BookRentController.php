@@ -50,7 +50,7 @@ class BookRentController extends Controller
         $stduents  = Stduent::all();
         $books  = Books::all();
         view()->share(['form' => true, 'select' => true]);
-        return view('stduent.bookrent.create', compact('books','stduents'));
+        return view('stduent.bookrent.create', compact('books', 'stduents'));
     }
 
     /**
@@ -65,7 +65,7 @@ class BookRentController extends Controller
         $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
         $book_return_date = Carbon::parse($request->startdate);
         $enddate = $book_return_date->addDays($book_rent_duration);
-        $request->merge(['enddate'=>$enddate]);
+        $request->merge(['enddate' => $enddate]);
         $this->BookRentRepository->create($request->all());
         return redirect()
             ->route('stduent.bookRent.index')

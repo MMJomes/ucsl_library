@@ -143,7 +143,7 @@
                             orderable: false,
                             "render": function(data, type, full, meta) {
                                 var status = full.status;
-                                if (status != 'on') {
+                                if (status == 'on') {
                                     return '<p style="font-weight:bold;" class="btn btn-outline-info btn-sm btn-font-size-sm "aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i> &nbsp;Duration Time';
 
                                 } else {
