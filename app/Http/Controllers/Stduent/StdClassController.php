@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Student;
+namespace App\Http\Controllers\Stduent;
 
 use App\Helpers\EventHelper;
 use App\Helpers\AuthorHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
-use App\Models\Author;
-use App\Models\Student\StdClass;
+use App\Models\Stduent\StdClass;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Repositories\Backend\Interf\AuthorRepository;
@@ -40,7 +39,7 @@ class StdClassController extends Controller
             return $this->Author_datatable($data, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
-        return view('student.stdclass.index');
+        return view('stduent.stdclass.index');
     }
 
     /**
@@ -52,7 +51,7 @@ class StdClassController extends Controller
     {
         $events = Event::all();
         view()->share(['form' => true, 'select' => true]);
-        return view('student.stdclass.create', compact('events'));
+        return view('stduent.stdclass.create', compact('events'));
     }
 
     /**
@@ -65,7 +64,7 @@ class StdClassController extends Controller
     {
         StdClass::create($request->all());
         return redirect()
-            ->route('student.stdclass.index')
+            ->route('stduent.stdclass.index')
             ->with(['success' => 'Successfully Added']);
     }
 
@@ -84,7 +83,7 @@ class StdClassController extends Controller
 
             $eventCategory = Event::all();
             view()->share(['form' => true, 'select' => true]);
-            return view('student.stdclass.detail', compact('Author', 'eventCategory'));
+            return view('stduent.stdclass.detail', compact('Author', 'eventCategory'));
         } else {
             return view('errorpage.404');
         }
@@ -102,7 +101,7 @@ class StdClassController extends Controller
         $stdclass = StdClass::where('id', $id)->first();
         if ($stdclass) {
             view()->share(['form' => true]);
-            return view('student.stdclass.edit', compact('stdclass'));
+            return view('stduent.stdclass.edit', compact('stdclass'));
         } else {
             return view('errorpage.404');
         }
@@ -122,7 +121,7 @@ class StdClassController extends Controller
         if ($stdclass) {
 
             $this->stdClassessRepository->updateById($stdclass->id, $request->all());
-            return redirect()->route('student.stdclass.index')->with(['success' => 'Successfully Updated!']);
+            return redirect()->route('stduent.stdclass.index')->with(['success' => 'Successfully Updated!']);
         } else {
             return view('errorpage.404');
         }
@@ -132,7 +131,7 @@ class StdClassController extends Controller
         $eventcategory = $this->stdClassessRepository->where('id', $request->slug)->first();
         if ($eventcategory) {
             $this->stdClassessRepository->deleteById($eventcategory->id);
-            return redirect()->route('student.stdclass.index')->with('success', 'Event  deleted successfully');
+            return redirect()->route('stduent.stdclass.index')->with('success', 'Event  deleted successfully');
         }
         return view('errorpage.404');
     }
@@ -140,7 +139,6 @@ class StdClassController extends Controller
     public function mass_destroy(Request $request)
     {
         $this->stdClassessRepository->deleteMultipleById($request->ids);
-        return redirect()->route('student.stdclass.index')->with('success', 'Event  deleted successfully');
+        return redirect()->route('stduent.stdclass.index')->with('success', 'Event  deleted successfully');
     }
 }
-

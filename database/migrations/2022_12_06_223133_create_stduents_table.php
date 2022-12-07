@@ -15,7 +15,16 @@ class CreateStduentsTable extends Migration
     {
         Schema::create('stduents', function (Blueprint $table) {
             $table->id();
+
+            $table->unsignedBigInteger('std_classes_id');
+            $table->string('image')->nullable();
+            $table->string('name');
+            $table->string('rollno')->unique();
+            $table->string('email')->unique()->nullable();
+            $table->string('phoneNo')->nullable();
+            $table->string('Address')->nullable();
             $table->timestamps();
+            $table->foreign('std_classes_id')->references('id')->on('std_classes')->onDelete('cascade');
         });
     }
 

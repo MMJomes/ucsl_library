@@ -15,7 +15,7 @@ class CreateStdClassesTable extends Migration
     {
         Schema::create('std_classes', function (Blueprint $table) {
             $table->id();
-            $table->string('studentclass');
+            $table->string('stduentclass');
             $table->timestamps();
         });
     }

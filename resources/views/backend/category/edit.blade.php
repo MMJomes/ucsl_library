@@ -1,28 +1,28 @@
 @extends('layouts.myapp')
 
 @section('content')
-    <!-- ============================================================== -->
-    <!-- Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
     <div class="row page-titles">
         <div class="col-md-12">
-            <h4 class="text-white">Event Category Lists</h4>
+            <h4 class="text-white">{{ __('message.categorylist') }}</h4>
         </div>
         <div class="col-md-6">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('backend.eventcategory.index') }}">Event Category</a></li>
-                <li class="breadcrumb-item active">Edit Event Category</li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.category.index') }}">
+                        {{ __('message.categorylist') }}</a></li>
+                <li class="breadcrumb-item active">{{ __('message.categorylist') }}</li>
             </ol>
         </div>
     </div>
+
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                        <form action="{{ route('backend.eventcategory.update', ["slug" => $eventcategory->slug]) }}" method="post" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            {{ method_field('POST') }}
+                    <form action="{{ route('backend.category.update', ['slug' => $eventcategory->slug]) }}"
+                        method="post" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        {{ method_field('POST') }}
                         <div class="row">
                             <div class="col-md-12">
                                 @if ($errors->any())
@@ -66,7 +66,7 @@
                             <div class="mt-5">
                                 <button type="submit" class="btn btn-info"><i class="fa fa-save"></i>
                                     {{ __('message.save') }}</button>
-                                <a href="{{ route('backend.eventcategory.index') }}" class="btn btn-danger"><i
+                                <a href="{{ route('backend.category.index') }}" class="btn btn-danger"><i
                                         class="icon-logout"></i> {{ __('message.back') }}</a>
                             </div>
 

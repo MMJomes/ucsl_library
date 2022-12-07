@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Student\StdClassController;
+use App\Http\Controllers\stduent\StdClassController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -91,9 +91,8 @@ Route::middleware('globalSetting')->group(function () {
         Route::post("changeLanguage", 'DashboardController@changeLanguage')->name('language');
     });
 
-    Route::namespace('App\Http\Controllers\Student')->middleware(['auth'])->prefix('admin')->as('student.')->group(function () {
+    Route::namespace('App\Http\Controllers\Stduent')->middleware(['auth'])->prefix('admin')->as('stduent.')->group(function () {
         //stdclass
-
         Route::get('stdclass', 'StdClassController@index')->name('stdclass.index');
         Route::get('stdclass/create', 'StdClassController@create')->name('stdclass.create');
         Route::post('stdclass/store', 'StdClassController@store')->name('stdclass.store');
@@ -103,6 +102,15 @@ Route::middleware('globalSetting')->group(function () {
         Route::delete('stdclass/destroy/{id}', 'StdClassController@destroy')->name('stdclass.destroy');
         Route::post('stdclass/mass/destroy', 'StdClassController@mass_destroy')->name('stdclass.mass.destroy');
 
+        //stduent
+        Route::get('stduent', 'StduentController@index')->name('stduent.index');
+        Route::get('stduent/create', 'StduentController@create')->name('stduent.create');
+        Route::post('stduent/store', 'StduentController@store')->name('stduent.store');
+        Route::get('stduent/edit/{id}', 'StduentController@edit')->name('stduent.edit');
+        Route::put('stduent/update/{id}', 'StduentController@update')->name('stduent.update');
+        Route::get('stduent/show/{id}', 'StduentController@show')->name('stduent.show');
+        Route::delete('stduent/destroy/{id}', 'StduentController@destroy')->name('stduent.destroy');
+        Route::post('stduent/mass/destroy', 'StduentController@mass_destroy')->name('stduent.mass.destroy');
       });
 
     Route::namespace('App\Http\Controllers\Frontend')->prefix('')->group(function () {
@@ -113,7 +121,7 @@ Route::middleware('globalSetting')->group(function () {
     });
 
 
-    Route::namespace('App\Http\Controllers\Student')->prefix('')->group(function () {
+    Route::namespace('App\Http\Controllers\stduent')->prefix('')->group(function () {
         // Route::resource('stdclass', StdClassController::class);
         // Route::post('stdclass/mass/destroy', 'StdClassController@mass_destroy')->name('stdclass.mass.destroy');
     });

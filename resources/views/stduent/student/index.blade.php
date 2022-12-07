@@ -84,7 +84,7 @@
                                 className: "btn btn-primary",
                                 action: function(e, dt, node, config) {
                                     window.location.href =
-                                        '{{ route('backend.author.create') }}';
+                                        '{{ route('stduent.stduent.create') }}';
                                 }
                             },
                         @endcan

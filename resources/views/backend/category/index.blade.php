@@ -53,22 +53,22 @@
 @endsection
 
 @section('delete_route')
-    {{ route('backend.eventcategory.destroy', 'slug') }}
+    {{ route('backend.category.destroy', 'slug') }}
 @endsection
 @section('approve_route')
-    {{ route('backend.eventcategory.destroy', 'slug') }}
+    {{ route('backend.category.destroy', 'slug') }}
 @endsection
 @push('scripts')
     <script>
         $(document).ready(function() {
             @can('eventcategory.mass_destroy')
-                window.route_mass_crud_entries_destroy = "{{ route('backend.eventcategory.mass.destroy') }}";
+                window.route_mass_crud_entries_destroy = "{{ route('backend.category.mass.destroy') }}";
             @endcan
             @can('eventcategory.show')
-                window.route_mass_crud_entries_show = "{{ route('backend.eventcategory.mass.destroy') }}";
+                window.route_mass_crud_entries_show = "{{ route('backend.category.mass.destroy') }}";
             @endcan
             $.ajax({
-                url: "{{ route('backend.eventcategory.index') }}",
+                url: "{{ route('backend.category.index') }}",
                 cache: false,
             }).then(function(data, textStatus, jqXHR) {
                 var response = JSON.parse(data);
@@ -82,7 +82,7 @@
                                 className: "btn btn-primary",
                                 action: function(e, dt, node, config) {
                                     window.location.href =
-                                        '{{ route('backend.eventcategory.create') }}';
+                                        '{{ route('backend.category.create') }}';
                                 }
                             },
                         @endcan
@@ -146,11 +146,11 @@
                                 orderable:false,
                                 "render": function(data, type, full, meta) {
                                     var editURL =
-                                        "{{ route('backend.eventcategory.edit', ':slug') }}";
+                                        "{{ route('backend.category.edit', ':slug') }}";
                                     editURL = editURL.replace(':slug', full.slug);
 
                                     var showURL =
-                                        "{{ route('backend.eventcategory.show', ':slug') }}";
+                                        "{{ route('backend.category.show', ':slug') }}";
                                         showURL = showURL.replace(':slug', full.slug);
 
                                     var editButton = '';

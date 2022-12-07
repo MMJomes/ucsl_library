@@ -2,12 +2,12 @@
 @section('content')
     <div class="row page-titles">
         <div class="col-md-12">
-            <h4 class="text-white">{{ ('Student Classes') }}</h4>
+            <h4 class="text-white">{{ ('stduent Classes') }}</h4>
         </div>
         <div class="col-md-6">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
-                <li class="breadcrumb-item active">{{ ('Student Classes') }}</li>
+                <li class="breadcrumb-item active">{{ ('stduent Classes') }}</li>
             </ol>
         </div>
     </div>
@@ -51,22 +51,22 @@
 @endsection
 
 @section('delete_route')
-    {{ route('student.stdclass.destroy', 'slug') }}
+    {{ route('stduent.stdclass.destroy', 'slug') }}
 @endsection
 @section('approve_route')
-    {{ route('student.stdclass.destroy', 'slug') }}
+    {{ route('stduent.stdclass.destroy', 'slug') }}
 @endsection
 @push('scripts')
     <script>
         $(document).ready(function() {
             @can('eventcategory.mass_destroy')
-                window.route_mass_crud_entries_destroy = "{{ route('student.stdclass.mass.destroy') }}";
+                window.route_mass_crud_entries_destroy = "{{ route('stduent.stdclass.mass.destroy') }}";
             @endcan
             @can('eventcategory.show')
-                window.route_mass_crud_entries_show = "{{ route('student.stdclass.mass.destroy') }}";
+                window.route_mass_crud_entries_show = "{{ route('stduent.stdclass.mass.destroy') }}";
             @endcan
             $.ajax({
-                url: "{{ route('student.stdclass.index') }}",
+                url: "{{ route('stduent.stdclass.index') }}",
                 cache: false,
             }).then(function(data, textStatus, jqXHR) {
                 var response = JSON.parse(data);
@@ -80,7 +80,7 @@
                                 className: "btn btn-primary",
                                 action: function(e, dt, node, config) {
                                     window.location.href =
-                                        '{{ route('student.stdclass.create') }}';
+                                        '{{ route('stduent.stdclass.create') }}';
                                 }
                             },
                         @endcan
@@ -109,18 +109,18 @@
                             },
                         },
                         {
-                            data: 'studentclass'
+                            data: 'stduentclass'
                         },
                         @canany(['eventcategory.edit', 'eventcategory.delete','eventcategory.show'])
                             {
                                 orderable:false,
                                 "render": function(data, type, full, meta) {
                                     var editURL =
-                                        "{{ route('student.stdclass.edit', ':id') }}";
+                                        "{{ route('stduent.stdclass.edit', ':id') }}";
                                     editURL = editURL.replace(':id', full.id);
 
                                     var showURL =
-                                        "{{ route('student.stdclass.show', ':id') }}";
+                                        "{{ route('stduent.stdclass.show', ':id') }}";
                                         showURL = showURL.replace(':id', full.id);
 
                                     var editButton = '';

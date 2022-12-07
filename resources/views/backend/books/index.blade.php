@@ -217,9 +217,6 @@
                                     var showButton = '';
                                     var deleteButton = '';
 
-                                    var sidebusiness =
-                                        "{{ route('backend.sidebusiness.mysidebusiness', ':slug') }}";
-                                    sidebusiness = sidebusiness.replace(':slug', full.slug);
 
                                     if (response["can_edit"]) {
                                         editButton = '<a href="' + editURL +

@@ -8,7 +8,7 @@
         <div class="col-md-6">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('backend.eventcategory.index') }}"> {{ __('message.categorylist') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.category.index') }}"> {{ __('message.categorylist') }}</a></li>
                 <li class="breadcrumb-item active">{{ __('message.categorylist') }}</li>
             </ol>
         </div>
@@ -18,7 +18,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action={{ route('backend.eventcategory.store') }} method="POST" enctype="multipart/form-data">
+                    <form action={{ route('backend.category.store') }} method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
@@ -59,7 +59,7 @@
                             </div>
                             <div class="mt-5">
                                 <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> {{__('message.save')}}</button>
-                                <a href="{{ route('backend.eventcategory.index') }}" class="btn btn-danger"><i
+                                <a href="{{ route('backend.category.index') }}" class="btn btn-danger"><i
                                         class="icon-logout"></i> {{__('message.back')}}</a>
                             </div>
 

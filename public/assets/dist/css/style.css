@@ -9569,12 +9569,12 @@ a.text-purple:hover, a.text-purple:focus {
 .icons-Strikethrough-Text,
 .icons-Stroller,
 .icons-Structure,
-.icons-Student-Female,
-.icons-Student-Hat,
-.icons-Student-Hat2,
-.icons-Student-Male,
-.icons-Student-MaleFemale,
-.icons-Students,
+.icons-stduent-Female,
+.icons-stduent-Hat,
+.icons-stduent-Hat2,
+.icons-stduent-Male,
+.icons-stduent-MaleFemale,
+.icons-stduents,
 .icons-Studio-Flash,
 .icons-Studio-Lightbox,
 .icons-Stumbleupon,
@@ -15188,22 +15188,22 @@ a.text-purple:hover, a.text-purple:focus {
 .icons-Structure:before {
   content: "\ece0"; }
 
-.icons-Student-Female:before {
+.icons-stduent-Female:before {
   content: "\ece1"; }
 
-.icons-Student-Hat:before {
+.icons-stduent-Hat:before {
   content: "\ece2"; }
 
-.icons-Student-Hat2:before {
+.icons-stduent-Hat2:before {
   content: "\ece3"; }
 
-.icons-Student-Male:before {
+.icons-stduent-Male:before {
   content: "\ece4"; }
 
-.icons-Student-MaleFemale:before {
+.icons-stduent-MaleFemale:before {
   content: "\ece5"; }
 
-.icons-Students:before {
+.icons-stduents:before {
   content: "\ece6"; }
 
 .icons-Studio-Flash:before {

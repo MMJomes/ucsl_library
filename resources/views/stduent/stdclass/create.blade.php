@@ -8,7 +8,7 @@
         <div class="col-md-6">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('student.stdclass.index') }}"> {{ __('message.categorylist') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('stduent.stdclass.index') }}"> {{ __('message.categorylist') }}</a></li>
                 <li class="breadcrumb-item active">{{ __('message.categorylist') }}</li>
             </ol>
         </div>
@@ -18,7 +18,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action={{ route('student.stdclass.store') }} method="POST" enctype="multipart/form-data">
+                    <form action={{ route('stduent.stdclass.store') }} method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
@@ -35,15 +35,15 @@
                             <div class="row clearfix">
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
-                                        <label for="studentclass">Class Name</label>
-                                        <input type="text" class="form-control" name="studentclass" id="studentclass"
-                                            placeholder="Class Name" value="{{ old('studentclass') }}">
+                                        <label for="stduentclass">Class Name</label>
+                                        <input type="text" class="form-control" name="stduentclass" id="stduentclass"
+                                            placeholder="Class Name" value="{{ old('stduentclass') }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="mt-5">
                                 <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> {{__('message.save')}}</button>
-                                <a href="{{ route('student.stdclass.index') }}" class="btn btn-danger"><i
+                                <a href="{{ route('stduent.stdclass.index') }}" class="btn btn-danger"><i
                                         class="icon-logout"></i> {{__('message.back')}}</a>
                             </div>
 

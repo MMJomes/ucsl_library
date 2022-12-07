@@ -2,13 +2,13 @@
 
 namespace App\Repositories\Backend\Interf;
 
-use App\Models\Stduent\StdClass;
+use App\Models\Stduent\Stduent;
 use App\Repositories\BaseRepository;
 
-class  StdClassessRepository extends BaseRepository
+class  StudentRepository extends BaseRepository
 {
     public function model()
     {
-        return StdClass::class;
+        return Stduent::class;
     }
 }
