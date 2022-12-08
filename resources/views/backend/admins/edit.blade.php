@@ -20,8 +20,8 @@
                     <form action={{ route('backend.admins.update', $admin->id) }} method="POST"
                         enctype="multipart/form-data">
                         @csrf
+                        {{ csrf_field() }}
                         @method('PUT')
-
                         <h6>Profile Photo</h6>
                         <hr>
                         <div class="media photo">
@@ -35,7 +35,7 @@
                                 </p>
                                 <button type="button" class="btn btn-default-dark" id="btn-upload-photo">Upload
                                     Photo</button>
-                                <input type="file" name="image" id="filePhoto" class="sr-only" accept="image/*">
+                                <input type="file" name="logos" id="filePhoto" class="sr-only" accept="image/*">
                             </div>
                         </div>
 

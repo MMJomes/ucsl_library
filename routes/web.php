@@ -16,8 +16,19 @@ Route::middleware('globalSetting')->group(function () {
     Route::namespace('App\Http\Controllers\Backend')->middleware(['auth'])->prefix('admin')->as('backend.')->group(function () {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
         Route::resource('roles', RolesController::class);
-        Route::resource('admins', AdminsController::class);
+        // Route::resource('admins', AdminsController::class);
+        Route::get('admin', 'AdminsController@index')->name('admins.index');
+        Route::get('admin/create', 'AdminsController@create')->name('admins.create');
+        Route::post('admin/store', 'AdminsController@store')->name('admins.store');
+        Route::get('admin/show/{slug}', 'AdminsController@show')->name('admins.show');
+        Route::get('admin/edit/{slug}', 'AdminsController@edit')->name('admins.edit');
+        Route::put('admin/update/{slug}', 'AdminsController@update')->name('admins.update');
+        Route::delete('admin/destroy/{slug}', 'AdminsController@destroy')->name('admins.destroy');
+        Route::post('admin/mass/destroy', 'AdminsController@mass_destroy')->name('admins.mass.destroy');
+        // Route::get('category/edit/{slug}', 'EventCategoryController@edit')->name('category.edit');
+
         Route::get('profile', 'AdminsController@show')->name('profile');
+
 
         //Category Route
         Route::get('category', 'EventCategoryController@index')->name('category.index');

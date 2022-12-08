@@ -90,7 +90,7 @@ class AdminsDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            ['name'=>'DT_RowIndex','title'=>'No','data'=>"DT_RowIndex"],
+            ['name'=>'DT_RowIndex','title'=>'No','data'=>"DT_RowIndex","orderable" => false ],
             'image',
             'name',
             'email',
