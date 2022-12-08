@@ -30,7 +30,7 @@
 <!-- /.Dashboard -->
 <!-- .User Management -->
 <li>
-    <a href="javascript:void(0)"><i class="fa fa-users"></i></a>
+    <a href="javascript:void(0)"><i class="icon-settings"></i></a>
     <div class="sidebarmenu">
         <!-- Left navbar-header -->
         <h3 class="menu-title">User Management</h3>
@@ -68,7 +68,7 @@
     </div>
 </li>
 <li>
-    <a href="javascript:void(0)"><i class="ti-layout-grid2"></i></a>
+    <a href="javascript:void(0)"><i class="fa fa-users"></i></a>
     <div class="sidebarmenu">
         <!-- Left navbar-header -->
         <h3 class="menu-title">Stduents Managemet</h3>
@@ -90,7 +90,7 @@
 </div>
 </li>
 <li>
-    <a href="javascript:void(0)"><i class="ti-layout-grid2"></i></a>
+    <a href="javascript:void(0)"><i class="icons-Worker"></i></a>
     <div class="sidebarmenu">
         <!-- Left navbar-header -->
         <h3 class="menu-title">Staff Managemet</h3>
