@@ -46,6 +46,27 @@ class SettingSeeder extends Seeder
                     'value' => '30',
                     'type' => 'integer',
                 ],
+                [
+                    'key' => 'sned_email_to_new_book',
+                    'value' => OFF,
+                    'type' => 'chcekbox',
+                ],
+                [
+                    'key' => 'sned_email_to_user_account',
+                    'value' => OFF,
+                    'type' => 'chcekbox',
+                ],
+                [
+                    'key' => 'sned_email_to_user_overred_time',
+                    'value' => OFF,
+                    'type' => 'chcekbox',
+                ],
+                [
+                    'key' => 'send_mail_to_user_for_return',
+                    'value' => '7',
+                    'type' => 'integer',
+                ],
+
 
                 // [
                 //     'title' => 'Register Approve',

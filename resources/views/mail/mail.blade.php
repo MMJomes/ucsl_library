@@ -77,37 +77,39 @@
 </head>
 <style>
     .card {
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-      max-width: 80%;
-      text-align: center;
-      margin: auto;
-      margin-top: 20px;
-      margin-bottom: 20px;
-      font-family: arial;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 80%;
+        text-align: center;
+        margin: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-family: arial;
     }
+
     body {
         font-family: Arial, Helvetica, sans-serif;
     }
 </style>
+
 <body>
 
     <div class="container justify-content-center" style="justify-content: center">
-    <div class="card"><br><br>
-        <div class="card-header" style="font-weight: bold;">
-            Member Register Mail Notification
-        </div>
-        <div class="card-body">
-            <p class="card-text" >User Name: {{ $username }}</p>
-            <p class="card-text">User Password: {{ $userpassword }}</p>
-            <p class="card-text">Date : {{ $date }} / Time: {{ $time }}</p>
-        </div>
-        <div class="card-footer">
-            <h6 class="card-title mb-4">Powered By MTI</h6><br>
+        <div class="card"><br><br>
+            <div class="card-header" style="font-weight: bold;">
+                Member Register Mail Notification
+            </div>
+            <div class="card-body">
+                <p class="card-text">User Name: {{ $username }}</p>
+                <p class="card-text">User Password: {{ $userpassword }}</p>
+                <p class="card-text">Date : {{ $date }} / Time: {{ $time }}</p>
+            </div>
+            <div class="card-footer">
+                <h6 class="card-title mb-4">Powered By MTI</h6><br>
 
+            </div>
         </div>
+
     </div>
-
-</div>
 </body>
 
 </html>
