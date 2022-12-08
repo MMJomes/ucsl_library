@@ -130,6 +130,31 @@
                 <!-- Left navbar-header end -->
             </div>
         </li>
+        <li>
+            <a href="javascript:void(0)"><i class="ti-layout-grid2"></i></a>
+            <div class="sidebarmenu">
+                <!-- Left navbar-header -->
+                <h3 class="menu-title">Staff Managemet</h3>
+                <div class="searchable-menu">
+                    <form role="search" class="menu-search">
+                        <input type="text" placeholder="Search..." class="form-control">
+                        <a href=""><i class="fa fa-search"></i></a>
+                    </form>
+                </div>
+                <ul class="sidebar-menu">
+                    <li><a href="{{ route('staff.stfClass.index') }}"> {{ ('Department') }}</a></li>
+                    <li><a href="{{ route('staff.staffs.index') }}"> Staff Lists</a></li>
+                    <li><a href="{{ route('staff.rentbyStaff.index') }}"> Staff Rent Book Lists</a></li>
+                    <li><a href="{{ route('staff.requestbyStaffs.index') }}"> Staff PreRequest Book Lists</a></li>
+
+                    {{-- <li><a href="{{ route('staff.staff.index') }}"> Staff Lists</a></li>
+                    <li><a href="{{ route('stduent.bookRent.index') }}"> Stduent Rent Book Lists</a></li>
+                    <li><a href="{{ route('stduent.preRequestBooks.index') }}"> PreRequest Book Lists</a></li> --}}
+                </li>
+                </ul>
+                <!-- Left navbar-header end -->
+            </div>
+        </li>
         <!-- /.User Management -->
     </ul>
 </div>

@@ -136,8 +136,55 @@ Route::middleware('globalSetting')->group(function () {
         Route::post('preRequestBook/mass/destroy', 'PreRequestController@mass_destroy')->name('preRequestBooks.mass.destroy');
         Route::get('preRequestBook/approve/{slug}', 'PreRequestController@approve')->name('preRequestBooks.approve');
         Route::post('preRequestBook/mass/approve', 'PreRequestController@mass_approve')->name('preRequestBooks.mass.approve');
+    });
 
-      });
+    Route::namespace('App\Http\Controllers\Teacher')->middleware(['auth'])->prefix('admin')->as('staff.')->group(function () {
+        //stdclass
+        Route::get('stfclass', 'DepartementController@index')->name('stfClass.index');
+        Route::get('stfclass/create', 'DepartementController@create')->name('stfClass.create');
+        Route::post('stfclass/store', 'DepartementController@store')->name('stfClass.store');
+        Route::get('stfclass/edit/{id}', 'DepartementController@edit')->name('stfClass.edit');
+        Route::put('stfclass/update/{id}', 'DepartementController@update')->name('stfClass.update');
+        Route::get('stfclass/show/{id}', 'DepartementController@show')->name('stfClass.show');
+        Route::delete('stfclass/destroy/{id}', 'DepartementController@destroy')->name('stfClass.destroy');
+        Route::post('stfclass/mass/destroy', 'DepartementController@mass_destroy')->name('stfClass.mass.destroy');
+
+        //Staff
+        Route::get('staff', 'TeacherController@index')->name('staffs.index');
+        Route::get('staff/create', 'TeacherController@create')->name('staffs.create');
+        Route::post('staff/store', 'TeacherController@store')->name('staffs.store');
+        Route::get('staff/edit/{id}', 'TeacherController@edit')->name('staffs.edit');
+        Route::put('staff/update/{id}', 'TeacherController@update')->name('staffs.update');
+        Route::get('staff/show/{id}', 'TeacherController@show')->name('staffs.show');
+        Route::delete('staff/destroy/{id}', 'TeacherController@destroy')->name('staffs.destroy');
+        Route::post('staff/mass/destroy', 'TeacherController@mass_destroy')->name('staffs.mass.destroy');
+        Route::get('staff/approve/{slug}', 'TeacherController@approve')->name('staffs.approve');
+        Route::post('staff/mass/approve', 'TeacherController@mass_approve')->name('staffs.mass.approve');
+
+        //Book Rents
+        Route::get('rentbystaff', 'TeacherrentController@index')->name('rentbyStaff.index');
+        Route::get('rentbystaff/create', 'TeacherrentController@create')->name('rentbyStaff.create');
+        Route::post('rentbystaff/store', 'TeacherrentController@store')->name('rentbyStaff.store');
+        Route::get('rentbystaff/edit/{id}', 'TeacherrentController@edit')->name('rentbyStaff.edit');
+        Route::put('rentbystaff/update/{id}', 'TeacherrentController@update')->name('rentbyStaff.update');
+        Route::get('rentbystaff/show/{id}', 'TeacherrentController@show')->name('rentbyStaff.show');
+        Route::delete('rentbystaff/destroy/{id}', 'TeacherrentController@destroy')->name('rentbyStaff.destroy');
+        Route::post('rentbystaff/mass/destroy', 'TeacherrentController@mass_destroy')->name('rentbyStaff.mass.destroy');
+        Route::get('rentbystaff/approve/{slug}', 'TeacherrentController@approve')->name('rentbyStaff.approve');
+
+        //PreBook Request By Staff Book
+        Route::get('requestbyStaff', 'StaffPreRequestController@index')->name('requestbyStaffs.index');
+        Route::get('requestbyStaff/create', 'StaffPreRequestController@create')->name('requestbyStaffs.create');
+        Route::post('requestbyStaffstore', 'StaffPreRequestController@store')->name('requestbyStaffs.store');
+        Route::get('requestbyStaffedit/{id}', 'StaffPreRequestController@edit')->name('requestbyStaffs.edit');
+        Route::put('requestbyStaffupdate/{id}', 'StaffPreRequestController@update')->name('requestbyStaffs.update');
+        Route::get('requestbyStaff/show/{id}', 'StaffPreRequestController@show')->name('requestbyStaffs.show');
+        Route::delete('requestbyStaff/destroy/{id}', 'StaffPreRequestController@destroy')->name('requestbyStaffs.destroy');
+        Route::post('requestbyStaff/mass/destroy', 'StaffPreRequestController@mass_destroy')->name('requestbyStaffs.mass.destroy');
+        Route::get('requestbyStaff/approve/{slug}', 'StaffPreRequestController@approve')->name('requestbyStaffs.approve');
+        Route::post('requestbyStaff/mass/approve', 'StaffPreRequestController@mass_approve')->name('requestbyStaffs.mass.approve');
+    });
+
 
     Route::namespace('App\Http\Controllers\Frontend')->prefix('')->group(function () {
         //Route::get('/', 'MemberDashboardController@index')->name('user');

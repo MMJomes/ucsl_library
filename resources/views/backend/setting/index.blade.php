@@ -68,6 +68,33 @@
         </div>
     </div>
 
+
+    <div class="row">
+        {{-- <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Signup Email</h4>
+                    <h6 class="card-subtitle">Singup Email for send Email!.</h6>
+                    <div id="the-basics">
+                        <input class="typeahead form-control" type="text" name="signup_email"
+                            placeholder="Enter Singup Email" value="{{ $settings['signup_email'] }}">
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Staff Books Rent Duration</h4>
+                    <h6 class="card-subtitle">Staff Books Rent Duration from it's Originzation.</h6>
+                    <div id="the-basics">
+                        <input class="typeahead form-control" type="number" name="staff_book_rent_duration" placeholder="Enter Member Expiration date"
+                         value="{{ $settings['staff_book_rent_duration'] }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6">
             <div class="card">

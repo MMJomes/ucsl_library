@@ -84,8 +84,6 @@ class BookRentController extends Controller
      */
     public function show($id)
     {
-
-
         $Author = $this->BookRentRepository->where('id', $id)->first();
         if ($Author) {
 
@@ -150,9 +148,8 @@ class BookRentController extends Controller
             return view('errorpage.404');
         }
     }
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        dd($id);
         $eventcategory = $this->BookRentRepository->where('id', $id)->first();
         if ($eventcategory) {
             $this->BookRentRepository->deleteById($eventcategory->id);

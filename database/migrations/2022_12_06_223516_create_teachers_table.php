@@ -15,7 +15,18 @@ class CreateTeachersTable extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('departements_id');
+            $table->string('image')->nullable();
+            $table->string('name');
+            $table->string('slug');
+            $table->string('email')->unique()->nullable();
+            $table->string('phoneNo')->nullable();
+            $table->string('Address')->nullable();
+            $table->string('totalNoOfBooks')->default(0);
+            $table->string('totalNoOfreturn')->default(0);
+            $table->enum('status', [ON, OFF])->default(OFF);
             $table->timestamps();
+            $table->foreign('departements_id')->references('id')->on('departements')->onDelete('cascade');
         });
     }
 

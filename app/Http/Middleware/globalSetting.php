@@ -17,7 +17,7 @@ class globalSetting
      */
     public function handle(Request $request, Closure $next)
     {
-        $settings = Setting::whereIn('key', ['reg_approve', 'sned_email', 'signup_email','member_expire_notify_date','book_rent_duration'])->get()->pluck('value', 'key');
+        $settings = Setting::whereIn('key', ['reg_approve', 'sned_email', 'signup_email','member_expire_notify_date','book_rent_duration','staff_book_rent_duration'])->get()->pluck('value', 'key');
         view()->share('settings', $settings);
         return $next($request);
     }

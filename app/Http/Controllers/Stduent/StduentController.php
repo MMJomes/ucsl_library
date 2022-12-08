@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Stduent;
 use App\Helpers\StduentHelper;
 use App\Http\Controllers\Controller;
 use App\Imports\AuthorListImport;
-use App\Models\EventCategory;
 use App\Models\Stduent\StdClass;
 use App\Models\Stduent\Stduent;
 use Illuminate\Http\Request;

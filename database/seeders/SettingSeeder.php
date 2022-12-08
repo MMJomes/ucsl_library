@@ -41,6 +41,11 @@ class SettingSeeder extends Seeder
                     'value' => '14',
                     'type' => 'integer',
                 ],
+                [
+                    'key' => 'staff_book_rent_duration',
+                    'value' => '30',
+                    'type' => 'integer',
+                ],
 
                 // [
                 //     'title' => 'Register Approve',

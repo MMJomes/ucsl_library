@@ -18,18 +18,28 @@ class BookListImport implements ToModel, WithHeadingRow, WithValidation
 
     public function model(array $row)
     {
-
         $start_time = $row['date'];
         $start_times = ($start_time - 25569) * 86400;
         $date = gmdate("Y-m-d H:i:s", $start_times);
-
+        $authorname =$row['author_name'];
+        if($authorname){
+            $authorName =$row['author_name'];
+        }else{
+            $authorName =null;
+        }
+        $categoriesname =$row['category_number'];
+        if($categoriesname){
+            $categoryName =$row['category_number'];
+        }else{
+            $categoryName =null;
+        }
         Books::create([
-            'categories_id' => $row['category_name'],
-            'authors_id' =>  $row['author_name'],
+            'categories_id' => $categoryName,
+            'authors_id' =>  $authorName,
             'titlename' => $row['title_number'],
             'date' => $date,
             'bookname' => $row['book_name'],
-            'producetime' => $row['produce_time'],
+            'produceyear' => $row['produce_year'],
             'edtion' => $row['edtion'],
             'price' => $row['price'],
             'availablereason' => $row['available_reason'],
