@@ -62,6 +62,11 @@ class SettingSeeder extends Seeder
                     'type' => 'chcekbox',
                 ],
                 [
+                    'key' => 'site_maintenance',
+                    'value' => OFF,
+                    'type' => 'chcekbox',
+                ],
+                [
                     'key' => 'send_mail_to_user_for_return',
                     'value' => '7',
                     'type' => 'integer',

@@ -46,6 +46,18 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
+                    <h4 class="card-title">Notify To User About Books To Return!</h4>
+                    <h6 class="card-subtitle">Notify to User To Retrun Book to Current Date (Hour Format:)</h6>
+                    <div id="the-basics">
+                        <input class="typeahead form-control" type="number" name="send_mail_to_user_for_return"
+                            placeholder="Enter Member Expiration date" value="{{ $settings['send_mail_to_user_for_return'] }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
                     <h4 class="card-title">Register Approve</h4>
                     <h6 class="card-subtitle">Register member Lists are auto approve .</h6>
                     <input type="checkbox" name="reg_approve" {{ $settings['reg_approve'] == ON ? 'checked' : '' }}
@@ -54,19 +66,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Email Setting</h4>
-                    <h6 class="card-subtitle">Register members are send email by Admin!.</h6>
-                    <div id="default-suggestions">
-                        {{-- <input type="checkbox" name="sned_email" {{ $settings['sned_email'] == ON ? 'checked' : '' }}
-                            style="width: 40px;height: 40px;text-align: right;float: right;"> --}}
-                        <span>&nbsp;</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
     <div class="row">
         <div class="col-md-6">
@@ -95,18 +95,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Notify To User About Books To Return!</h4>
-                    <h6 class="card-subtitle">Notify to User To Retrun Book to Current Date (Hour Format:)</h6>
-                    <div id="the-basics">
-                        <input class="typeahead form-control" type="number" name="send_mail_to_user_for_return"
-                            placeholder="Enter Member Expiration date" value="{{ $settings['send_mail_to_user_for_return'] }}">
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
@@ -119,34 +108,20 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Make Site Under Construction! </h4>
+                    <h6 class="card-subtitle">Stop Service to For All Ussrs!(Site Maintenance).</h6>
+                    <div id="default-suggestions">
+                        <input type="checkbox" name="site_maintenance" {{ $settings['site_maintenance'] == ON ? 'checked' : '' }}
+                            style="width: 40px;height: 40px;text-align: right;float: right;">
+                        <span>&nbsp;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    {{-- <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Signup Email</h4>
-                    <h6 class="card-subtitle">Singup Email for send Email!.</h6>
-                    <div id="the-basics">
-                        <input class="typeahead form-control" type="text" name="signup_email"
-                            placeholder="Enter Singup Email" value="{{ $settings['signup_email'] }}">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Member Expire Notification</h4>
-                    <h6 class="card-subtitle">Notify the member expire date from it's Originzation.</h6>
-                    <div id="the-basics">
-                        <input class="typeahead form-control" type="number" name="member_expire_notify_date"
-                            placeholder="Enter Member Expiration date"
-                            value="{{ $settings['member_expire_notify_date'] }}">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 @endsection
 
 @push('scripts')

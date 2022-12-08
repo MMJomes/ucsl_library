@@ -1,11 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Teacher;
+
 use App\Helpers\StduentHelper;
 use App\Http\Controllers\Controller;
 use App\Imports\AuthorListImport;
+use App\Jobs\StaffAccountMailServiceJob;
+use App\Models\Setting;
 use App\Models\Teacher\Departement;
 use App\Models\Teacher\Teacher;
+use App\Notifications\SendEmail;
 use App\Repositories\Backend\Interf\StaffRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -185,10 +189,18 @@ class TeacherController extends Controller
     {
         $contactListdata = $this->StaffRepository->where('slug', $request->slug)->first();
         if ($contactListdata) {
+            $sned_email_to_user_account = Setting::where('key', 'sned_email_to_user_account')->first()->value;
+
             if ($contactListdata->status == ON) {
                 $contactListdata->update(['status' => OFF]);
             } else {
                 $contactListdata->update(['status' => ON]);
+            }
+            if ($sned_email_to_user_account->value = ON) {
+                $curListdata = $this->StaffRepository->where('slug', $request->slug)->first();
+                if ($curListdata) {
+                    $curListdata->notify(new SendEmail($curListdata->name, $curListdata->status));
+                }
             }
             return redirect()->route('staff.staffs.index')->with(['success' => 'Successfully Updated!']);
         } else {
@@ -199,6 +211,13 @@ class TeacherController extends Controller
     public function mass_approve(Request $request)
     {
         $this->StaffRepository->massUpdate($request->ids, ['status' => ON]);
+        $sned_email_to_user_account = Setting::where('key', 'sned_email_to_user_account')->first()->value;
+        if ($sned_email_to_user_account->value = ON) {
+            $curListdata = $this->StaffRepository->where('slug', $request->slug)->first();
+            if ($curListdata) {
+                StaffAccountMailServiceJob::dispatch($curListdata->name, $curListdata->status, $curListdata->id);
+            }
+        }
         return redirect()->route('staff.staffs.index')->with('success', 'Stduents Approved successfully');
     }
 }

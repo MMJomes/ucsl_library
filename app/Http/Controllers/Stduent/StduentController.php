@@ -6,8 +6,11 @@ namespace App\Http\Controllers\Stduent;
 use App\Helpers\StduentHelper;
 use App\Http\Controllers\Controller;
 use App\Imports\AuthorListImport;
+use App\Jobs\StduentAccountMailServiceJob;
+use App\Models\Setting;
 use App\Models\Stduent\StdClass;
 use App\Models\Stduent\Stduent;
+use App\Notifications\SendEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use App\Repositories\Backend\Interf\StudentRepository;
@@ -207,10 +210,17 @@ class StduentController extends Controller
     {
         $contactListdata = $this->studentRepository->where('slug', $request->slug)->first();
         if ($contactListdata) {
+            $sned_email_to_user_account = Setting::where('key', 'sned_email_to_user_account')->first()->value;
             if ($contactListdata->status == ON) {
                 $contactListdata->update(['status' => OFF]);
             } else {
                 $contactListdata->update(['status' => ON]);
+            }
+            if ($sned_email_to_user_account->value = ON) {
+                $curListdata = $this->studentRepository->where('slug', $request->slug)->first();
+                if ($curListdata) {
+                    $curListdata->notify(new SendEmail($curListdata->name, $curListdata->status));
+                }
             }
             return redirect()->route('stduent.stduents.index')->with(['success' => 'Successfully Updated!']);
         } else {
@@ -220,7 +230,14 @@ class StduentController extends Controller
 
     public function mass_approve(Request $request)
     {
-        $this->studentRepository->massUpdate($request->ids, ['status' => ON]);
+         $this->studentRepository->massUpdate($request->ids, ['status' => ON]);
+        $sned_email_to_user_account = Setting::where('key', 'sned_email_to_user_account')->first()->value;
+        if ($sned_email_to_user_account->value = ON) {
+            $curListdata = $this->studentRepository->where('slug', $request->slug)->first();
+            if ($curListdata) {
+                StduentAccountMailServiceJob::dispatch($curListdata->name, $curListdata->status, $curListdata->id);
+            }
+        }
         return redirect()->route('stduent.stduents.index')->with('success', 'Stduents Approved successfully');
     }
 }
