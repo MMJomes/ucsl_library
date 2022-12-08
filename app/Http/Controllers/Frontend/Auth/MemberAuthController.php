@@ -25,7 +25,7 @@ class MemberAuthController extends Controller
         if ($already_registered) {
             return redirect()->route('/');
         }
-        return view('frontend.auth.login');
+        return view('frontend.auth.register');
     }
 
     public function loginAction(MemberLoginRequest $loginrequest)
