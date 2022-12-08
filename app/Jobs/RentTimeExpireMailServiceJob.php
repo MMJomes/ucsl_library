@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Models\Setting;
 use App\Models\Stduent\Bookrent;
 use App\Models\Teacher\Teacher;
+use App\Models\Teacher\Teacherrent;
 use App\Notifications\SendEmail;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -35,12 +36,16 @@ class RentTimeExpireMailServiceJob implements ShouldQueue
      */
     public function handle()
     {
-        $currentTime = microtime(true);
         $notification_setting_date = Setting::where('key', 'sned_email_to_user_overred_time')->first()->value;
         $notification_datetime = Carbon::now()->addHour($notification_setting_date)->format('Y-m-d H:i:s');
-        Bookrent::where('status', OFF)->get()->each(function ($teacher)  use ($notification_datetime) {
-            if ($notification_datetime == $teacher->dob) {
-                $teacher->notify(new SendEmail($teacher->name, $teacher->dob));
+        Bookrent::with('stduent')->where('status', null)->each(function ($teacher)  use ($notification_datetime) {
+            if ($notification_datetime == $teacher->enddate) {
+                $teacher->notify(new SendEmail($teacher->stduent->name, $teacher->enddate));
+            }
+        });
+        Teacherrent::with('teacher')->where('status', null)->each(function ($teacher)  use ($notification_datetime) {
+            if ($notification_datetime == $teacher->enddate) {
+                $teacher->notify(new SendEmail($teacher->teacher->name, $teacher->enddate));
             }
         });
     }

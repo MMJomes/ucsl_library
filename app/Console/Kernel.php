@@ -2,28 +2,21 @@
 
 namespace App\Console;
 
+use App\Jobs\ExpiredToRetrunMailServiceJob;
 use App\Jobs\MemberExpireReminderJob;
+use App\Jobs\RentTimeExpireMailServiceJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * Define the application's command schedule.
-     *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
-     */
     protected function schedule(Schedule $schedule)
     {
         $schedule->job(new MemberExpireReminderJob)->everyMinute();
+        $schedule->job(new RentTimeExpireMailServiceJob)->everyMinute();
+        $schedule->job(new ExpiredToRetrunMailServiceJob)->everyMinute();
     }
 
-    /**
-     * Register the commands for the application.
-     *
-     * @return void
-     */
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');
