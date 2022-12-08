@@ -104,10 +104,10 @@ class AdminsController extends Controller
         $this->repository->delete($request->id);
         return redirect()->back()->with(['success' => 'Successfully Deleted!']);
     }
-    public function show()
+    public function profile()
     {
-        $admin_slug = Admin::findorFail(auth()->id())->slug;
-        $admin = $this->repository->getBySlug($admin_slug);
+
+        $admin = $this->repository->where('id', auth()->id())->first();
         $roles = $this->roleRepository->roles();
         $adminroles = $admin->roles->pluck('name')->first();
         return view('backend.admins.profile', compact('admin', 'roles', 'adminroles'));

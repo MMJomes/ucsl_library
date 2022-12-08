@@ -27,7 +27,7 @@ Route::middleware('globalSetting')->group(function () {
         Route::post('admin/mass/destroy', 'AdminsController@mass_destroy')->name('admins.mass.destroy');
         // Route::get('category/edit/{slug}', 'EventCategoryController@edit')->name('category.edit');
 
-        Route::get('profile', 'AdminsController@show')->name('profile');
+        Route::get('profile', 'AdminsController@profile')->name('profile');
 
 
         //Category Route
