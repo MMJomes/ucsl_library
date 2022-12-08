@@ -11,17 +11,15 @@ class SendEmail extends Notification
 {
     use Queueable;
     private $username;
-    private $password;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($username, $userpassword)
+    public function __construct($username)
     {
         $this->username = $username;
-        $this->userpassword = $userpassword;
     }
 
     /**
@@ -50,7 +48,7 @@ class SendEmail extends Notification
         ->subject(config('mail.subject'))
         ->view('mail.mail', array(
             'username' => $this->username,
-            'userpassword' => $this->userpassword,
+            'userpassword' => "Password",
             'date' => $DT[0],
             'time' => $DT[1],
         ));

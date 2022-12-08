@@ -72,7 +72,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Mail To New Book Available Email</h4>
+                    <h4 class="card-title">Mail To New Book Available To Library</h4>
                     <h6 class="card-subtitle">Notify both Stdunt And Staff About New Book Available! </h6>
                     <div id="the-basics">
                         <input type="checkbox" name="sned_email_to_new_book" {{ $settings['sned_email_to_new_book'] == ON ? 'checked' : '' }}

@@ -5,10 +5,11 @@ namespace App\Models\Teacher;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+
 class Teacher extends Model
 {
-
-    use  HasFactory, Sluggable;
+    use  HasFactory, Sluggable,Notifiable;
     protected $table = 'teachers';
     protected $fillable = [
         'departements_id',

@@ -24,11 +24,6 @@ class ContactMailServiceJob implements ShouldQueue
         $this->id= $id;
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
     public function handle()
     {
         $username= $this->username;

@@ -21,9 +21,7 @@ class ContactListImport implements ToModel, WithHeadingRow, WithValidation
      */
     public function model(array $row)
     {
-        dd($row);
         $setting_approve =  Setting::where('key', 'reg_approve')->first();
-        dd($setting_approve);
         $setting_sned_email =  Setting::where('key', 'sned_email')->first();
         $dob =  $row['dob'];
         $start_times = ($dob - 25569) * 86400;

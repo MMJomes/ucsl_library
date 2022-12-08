@@ -18,7 +18,6 @@ class ContactListRepositoryImpl implements ContactListRepository
 
     public function create(MemberRequest $request): Member
     {
-
         $setting_approve =  Setting::where('key', 'reg_approve')->first();
         $setting_sned_email =  Setting::where('key', 'sned_email')->first();
         $name = $request->name;
@@ -52,5 +51,4 @@ class ContactListRepositoryImpl implements ContactListRepository
         }
         return $yueembcontact;
     }
-
 }

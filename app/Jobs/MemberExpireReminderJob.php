@@ -28,7 +28,6 @@ class MemberExpireReminderJob implements ShouldQueue
     public function handle()
     {
         $currentTime = microtime(true);
-
         $notification_setting_date = Setting::where('key', 'member_expire_notify_date')->first()->value;
         $notification_datetime = Carbon::now()->addMinute($notification_setting_date)->format('Y-m-d H:i:s');
         Member::where('status', OFF)->get()->each(function ($member)  use ($notification_datetime) {

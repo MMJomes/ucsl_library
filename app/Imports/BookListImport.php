@@ -2,11 +2,12 @@
 
 namespace App\Imports;
 
-use App\Jobs\ContactMailServiceJob;
+use App\Jobs\AddNewBookMailServiceJob;
 use App\Models\Books;
-use App\Models\Member;
 use App\Models\Setting;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Stduent\Stduent;
+use App\Models\Teacher\Teacher;
+use App\Notifications\SendEmail;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -18,6 +19,8 @@ class BookListImport implements ToModel, WithHeadingRow, WithValidation
 
     public function model(array $row)
     {
+
+        $sned_email_to_new_book =  Setting::where('key', 'sned_email_to_new_book')->first();
         $start_time = $row['date'];
         $start_times = ($start_time - 25569) * 86400;
         $date = gmdate("Y-m-d H:i:s", $start_times);
@@ -47,6 +50,21 @@ class BookListImport implements ToModel, WithHeadingRow, WithValidation
             'publishername' => $row['publisher_name'],
 
         ]);
+        if ($sned_email_to_new_book->value == ON ) {
+            if ($sned_email_to_new_book->value == ON) {
+                Stduent::where('status', ON)->get()->each(function ($stdeunt) {
+                    if ($stdeunt->email != null) {
+                        $stdeunt->notify(new SendEmail($stdeunt->name));
+                    }
+                });
+                Teacher::where('status', ON)->get()->each(function ($stf) {
+                    if ($stf->email != null) {
+                        $stf->notify(new SendEmail($stf->name));
+                    }
+                });
+            }
+            // ContactMailServiceJob::dispatch($userfullname, $pwd, $yucontact->id);
+        }
     }
 
     public function rules(): array

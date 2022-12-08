@@ -5,11 +5,12 @@ namespace App\Models\Stduent;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Stduent extends Model
 {
 
-    use  HasFactory, Sluggable;
+    use  HasFactory, Sluggable,Notifiable;
 
     protected $table = 'stduents';
     protected $fillable = [

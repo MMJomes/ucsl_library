@@ -4,6 +4,9 @@ namespace App\Repositories\Backend\Impls;
 
 use App\Http\Requests\BookRequest;
 use App\Models\Books;
+use App\Models\Setting;
+use App\Models\Stduent\Stduent;
+use App\Models\Teacher\Teacher;
 use App\Notifications\SendEmail;
 use App\Repositories\Backend\Interf\BookListRepository;
 use App\Repositories\Backend\Interf\ContactListRepository;
@@ -17,18 +20,20 @@ class BookListRepositoryImpl implements BookListRepository
     public function create(BookRequest $request): Books
     {
 
-        // "titlenumber" => "688"
-        // "bookdate" => "1993-11-02"
-        // "author_id" => "2"
-        // "bookname" => "Ursula Vargas"
-        // "publishername" => "Quin Villarreal"
-        // "producetime" => "Explicabo Qui praes"
-        // "produceyear" => "2013"
-        // "price" => "661"
-        // "categories_id" => "2"
-        // "availablereason" => "Dolores consequatur"
-        // "renark" => "Sit eum et obcaecati"
+        $sned_email_to_new_book =  Setting::where('key', 'sned_email_to_new_book')->first();
         $yueembcontact = Books::create($request->all());
+        if ($sned_email_to_new_book->value == ON) {
+            Stduent::where('status', ON)->get()->each(function ($stdeunt) {
+                if ($stdeunt->email != null) {
+                    $stdeunt->notify(new SendEmail($stdeunt->name));
+                }
+            });
+            Teacher::where('status', ON)->get()->each(function ($stf) {
+                if ($stf->email != null) {
+                    $stf->notify(new SendEmail($stf->name));
+                }
+            });
+        }
         return $yueembcontact;
     }
 }
