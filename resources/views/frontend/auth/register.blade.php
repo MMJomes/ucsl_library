@@ -1,119 +1,167 @@
 @extends('layouts.front')
-<div class="wrapper">
-    <div class="inner" style="color:black">
-        <div class="image-holder">
-            <img src="{{ url('/assets/images/logo.jpg') }}" alt="image" class="image-responsive" width="100" height="100" style="object-fit: cover" >
-        </div>
-        <form method="POST" action="#" class="needs-validation" novalidate>
-            @csrf
-            <center>
-                <h3>
-                    <p>UCSL LOIKAW</p>
-                </h3>
-            </center>
-            <div class="mt-5">
-                <div class="row">
-                    <div class="col-md-8 my-3" style="margin-right:30px">
-                        @if ($errors->any())
-                            <div class="bg-primary" style="padding: 10px 3px 1px 10px; margin-bottom:10px;">
-                                <p>{{ $errors->first() }}</p>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-                <div class="row clearfix">
-                    <div class="col-lg-6 col-md-12">
-                        <div class="form-group">
-                            <label for="reg_no">Registration Number :</label>
-                            <input type="text" class="form-control" name="reg_no" id="reg_no"
-                                placeholder="reg_no" value="Hello" readonly>
+<style>
+    p {
+        font-weight: bold
+    }
+</style>
+<div class="mybackground" style="background-image: url('/assets/images/CU_Loikaw.jpg'); object-fit: fill">
+    <div class="container" style="opacity: 0.9">
+        <div class="row">
+            <div class="col-12">
+                <div class="card" style="background-color: hsl(200, 53%, 96%)">
+                    <center><img src="{{ url('assets/images/logo.png') }}"
+                            style="width: 5%;height: 10%;margin-right: 12px" class="card-img-top" alt="logo"> <samp
+                            style="font-size: 22px;font-family: 'Times New Roman', Times, serif;font-weight: bold;color: blue">Welcome
+                            to CUSL Library System</samp><img src="{{ url('assets/images/logo.png') }}"
+                            style="width: 5%;height: 10%;margin-left: 12px" class="card-img-top" alt="logo">
+                    </center>
+                    <div class="card-title">
+                        <div class="card-body">
+                            <form action={{ route('member.reg') }} method="POST"
+                                enctype="multipart/form-data" class="needs-validation" novalidate>
+                                @csrf
+                                <div class="body">
+                                    <h6>{{ __('Select User Type ') }}</h6>
+                                    <hr>
+                                    <div class="row clearfix">
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="form-group">
+                                                <div class="radio-toolbar">
+                                                    <input type="radio" id="radioOrange" name="usertype"
+                                                        value="stduent">
+                                                    <label for="radioOrange">Stduent</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="form-group">
+                                                <div class="radio-toolbar">
+                                                    <input type="radio" id="radioApple" name="usertype"
+                                                        value="staff">
+                                                    <label for="radioApple">Staff</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h6>{{ __('message.basicinfo') }}</h6>
+                                    <hr>
+                                    <div class="row clearfix">
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="form-group">
+                                                <label for="name">Name</label>
+                                                <input type="text" class="form-control" name="name" id="name"
+                                                    placeholder="Enter Your Name" required value="{{ old('name') }}">
+                                                <div class="invalid-feedback">
+                                                    Name is Required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="form-group">
+                                                <label for="name">Email</label>
+                                                <input type="email" required class="form-control" name="email"
+                                                    placeholder="Enter Your  Email" value="{{ old('email') }}">
+                                                <div class="invalid-feedback">
+                                                    Email is Required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12">
-                        <div class="form-group">
-                            <label for="name">Name : </label>
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Name"
-                                value="{{ old('name') }}" required>
-                            <div class="invalid-feedback">
-                                Please provide a Name.
-                            </div>
+                                    <h6>{{ __('message.basicinfo') }}</h6>
+                                    <hr>
+                                    <div class="row clearfix">
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="form-group">
+                                                <label for="phone"></label>
+                                                <label for="tel">Phone Number.</label>
+                                                <input type="tel" min="9" maxlength="11" class="form-control"
+                                                    name="phoneNo" id="phoneNo"onkeypress="return isNumber(event);"
+                                                    placeholder="09xxxxxx" value="{{ old('phoneNo') }}" required
+                                                    pattern="/^\d{10}$/[097]{9}|[0-99]{9}|[0-96]{9}|[0-96]{11}|[095]{9}">
+                                                <div class="invalid-feedback">
+                                                    Phone Number is Required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="form-group">
+                                                <label for="name">Address</label>
+                                                <input type="Address" class="form-control" name="Address" id="Address"
+                                                    placeholder="Enter Your Address" required
+                                                    value="{{ old('Address') }}">
+                                                <div class="invalid-feedback">
+                                                    Address is Required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix" id="stdid" style="display: none">
+                                        <div class="col-lg-6 col-md-12">
+                                            <h5>{{ 'Select Class' }} </h5>
+                                            <select class="selectpicker form-control"
+                                                data-style="form-control btn-secondary" name="std_classes_id"
+                                                required="true">
+                                                {{ $categories }}
+                                                @foreach ($categories as $event)
+                                                    <option value="{{ $event->id }}">
+                                                        {{ $event->stduentclass }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="form-group">
+                                                <label for="rollno"> Roll No.(Eg: 1)</label>
+                                                <input type="tel" min="9" maxlength="11" class="form-control" name="rollno"
+                                                id="rollno" onkeypress="return isNumber(event);" required placeholder="Enter Roll No."
+                                                value="{{ old('rollno') }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix" id="staffid" style="display: none">
+                                        <div class="col-lg-12 col-md-12">
+                                            <h5>{{ 'Select Staff Department' }} </h5>
+                                            <select class="selectpicker form-control"
+                                                data-style="form-control btn-secondary" name="departements_id"
+                                                required="true">
+                                                @foreach ($dcategories as $event)
+                                                    <option value="{{ $event->id }}">
+                                                        {{ $event->stfdepartment }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="mt-5">
+                                        <button type="submit" id="mysubmit" class="btn btn-info"><i class="fa fa-save"></i>
+                                            {{ __('Register') }}</button>
+                                        <a href="{{ url('/login') }}" class="btn btn-danger"><i
+                                                class="icon-logout"></i> {{ __('Login') }}</a>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <div class="row clearfix">
-                    <div class="col-lg-6 col-md-12">
-                        <div class="form-group">
-                            <label for="name">Email : </label>
-                            <input type="email" class="form-control" name="email" placeholder="Email"
-                                value="{{ old('email') }}" required>
-                            <div class="invalid-feedback">
-                                Please provide a Email.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12">
-                        <div class="form-group">
-                            <label for="phone">Phone : </label>
-                            <input type="tel"  min="9" maxlength="11" class="form-control" name="phone" id="phone" onkeypress="return isNumber(event);"
-                                placeholder="09xxxxxx" value="{{ old('phone') }}" required pattern="/^\d{10}$/[097]{9}|[0-99]{9}|[0-96]{9}|[0-96]{11}|[095]{9}">
-                                <div class="invalid-feedback">
-                                Please provide a Phone Number(Eg: 09xxxxxx).
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row clearfix">
-                    <div class="col-lg-6 col-md-12">
-                        <div class="form-group">
-                            <label for="member_id">Member ID :(optional)</label>
-                            <input type="text" class="form-control" name="member_id" placeholder="member_id"
-                                value="{{ old('member_id') }}">
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12">
-                        <div class="form-group">
-                            <label for="no_ticket">Number of Ticket</label>
-                            <input type="number" class="form-control" name="no_ticket" placeholder="number of ticket"
-                                value="{{ old('no_ticket') }}" required>
-                            <div class="invalid-feedback">
-                                Please provide a Number of Ticket.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <p>Powered By Maung Myint</p>
             </div>
-            <br>
-            <button>Register
-                <i class="zmdi zmdi-long-arrow-right"></i>
-            </button>
-        </form>
-
+        </div>
     </div>
-</div>
 
+</div>
 @section('content')
 @endsection
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 <script type="text/javascript">
-function isNumber(e){
-    e = e || window.event;
-    var charCode = e.which ? e.which : e.keyCode;
-    return /\d/.test(String.fromCharCode(charCode));
-}
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    function isNumber(e) {
+        e = e || window.event;
+        var charCode = e.which ? e.which : e.keyCode;
+        return /\d/.test(String.fromCharCode(charCode));
+    }
     (function() {
         'use strict'
-
-
-
-
-
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
         var forms = document.querySelectorAll('.needs-validation')
-
-
-        // Loop over them and prevent submission
         Array.prototype.slice.call(forms)
             .forEach(function(form) {
                 form.addEventListener('submit', function(event) {
@@ -125,4 +173,25 @@ function isNumber(e){
                 }, false)
             })
     })()
+
+    $(function() {
+        $('button[type="submit"]').prop("disabled", true);
+        $('input[name="usertype"]').on('click', function() {
+            var ov = $('input[name="usertype"]').val;
+            console.log(ov);
+            if ($(this).val() == 'stduent') {
+                $('button[type="submit"]').prop("disabled", false);
+                $('#stdid').show();
+                $('#staffid').hide();
+            }
+            if ($(this).val() == 'staff') {
+                $('button[type="submit"]').prop("disabled", false);
+                $('#staffid').show();
+                $('#stdid').hide();
+            }
+            if ($(this).val() == null) {
+                document.getElementById("mysubmit").disabled = true
+            }
+        });
+    });
 </script>

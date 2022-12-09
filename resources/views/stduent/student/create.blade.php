@@ -37,7 +37,7 @@
                                 @endif
                             </div>
                         </div>
-                        <h6>Business Photo</h6>
+                        <h6>Stduent Photo</h6>
                         <hr>
                         <div class="media photo center">
                             <div class="media-left m-r-15">
@@ -46,7 +46,7 @@
                                     style="object-fit: fill" width="140px">
                             </div>
                             <div class="media-body">
-                                <p>Upload Business photo.
+                                <p>Upload Stduent photo.
                                     <br> <em>Image should be at least 140px x 140px</em>
                                 </p>
                                 <button type="button" class="btn btn-default-dark" id="btn-upload-photo">Upload

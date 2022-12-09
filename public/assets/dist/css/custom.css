@@ -1,3 +1,13 @@
 table{
     width: 100%!important;
 }
+
+.mybackground {
+    min-height: 100vh;
+    display: flex;
+    background-color: Red;
+    align-items: center;
+    background: url("../images/CU_Loikaw.jpg") no-repeat center center;
+    background-size: cover;
+}
+

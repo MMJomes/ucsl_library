@@ -6,7 +6,8 @@
 </head>
 <body>
         @yield('content')
-    @include('layouts.frontend_partials.frontend_script')
+    {{-- @include('layouts.frontend_partials.frontend_script') --}}
+    @include('layouts.partials.back-script')
 </body>
 
 </html>
