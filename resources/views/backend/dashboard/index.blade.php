@@ -14,11 +14,6 @@
                 <li class="breadcrumb-item active">Blank Page</li>
             </ol>
         </div>
-        <div class="col-md-6 text-right">
-            <form class="app-search d-none d-md-block d-lg-block">
-                <input type="text" class="form-control" placeholder="Search &amp; enter">
-            </form>
-        </div>
     </div>
     <!-- ============================================================== -->
     <!-- End Bread crumb and right sidebar toggle -->
