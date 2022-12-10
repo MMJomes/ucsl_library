@@ -71,7 +71,7 @@
             <li><a href="{{ route('backend.roles.index') }}">Roles </a></li>
             <li><a href="{{ route('backend.admins.index') }}">Admins</a></li>
             <li><a href="{{ route('backend.settings.index') }}">{{ __('message.setting') }}</a></li>
-            <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><span
+            {{-- <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><span
                         class="hide-menu">{{ __('message.changelanguage') }}</span></a>
                 <ul aria-expanded="false" class="collapse">
                     <li>
@@ -89,7 +89,7 @@
                         @endforeach
                     </li>
                 </ul>
-            </li>
+            </li> --}}
         </ul>
         <!-- Left navbar-header end -->
     </div>

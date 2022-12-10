@@ -126,22 +126,26 @@ class BookRentController extends Controller
     {
         $Author = $this->BookRentRepository->where('id', $id)->first();
         if ($Author) {
-            $currentTime = Carbon::now();
-            if ($request->has('images')) {
-                foreach ($request->file('images') as $iamge) {
-                    $data[] = $iamge;
-                }
-                $request->merge([
-                    'image' => json_encode($data, true),
-                    'updatedat' => $currentTime,
-                ]);
-            } else {
-                $data = $Author->image;
-                $request->merge([
-                    'image' => $Author->image,
-                    'updatedat' => $currentTime,
-                ]);
-            }
+            $strtime= $request->startdate;
+            $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
+            $book_return_date = Carbon::parse($strtime);
+            $enddate = $book_return_date->addDays($book_rent_duration);
+            $request->merge(['enddate' => $enddate,'startdate'=>$strtime]);
+            $this->BookRentRepository->updateById($Author->id, $request->all());
+            return redirect()->route('stduent.bookRent.index')->with(['success' => 'Successfully Updated!']);
+        } else {
+            return view('errorpage.404');
+        }
+    }
+    public function continuce(Request $request, $id)
+    {
+        $Author = $this->BookRentRepository->where('id', $id)->first();
+        if ($Author) {
+            $strtime= $Author->enddate;
+            $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
+            $book_return_date = Carbon::parse($strtime);
+            $enddate = $book_return_date->addDays($book_rent_duration);
+            $request->merge(['enddate' => $enddate,'startdate'=>$strtime, 'books_id' =>$Author->books_id,'stduents_id' =>$Author->stduents_id, 'remark' => "Continuced" ]);
             $this->BookRentRepository->updateById($Author->id, $request->all());
             return redirect()->route('stduent.bookRent.index')->with(['success' => 'Successfully Updated!']);
         } else {
@@ -194,7 +198,8 @@ class BookRentController extends Controller
         $this->BookRentRepository->deleteMultipleById($request->ids);
         return redirect()->route('stduent.bookRent.index')->with('success', 'Author  deleted successfully');
     }
-    public function approve(Request $request, $id)
+
+    public function approve($id)
     {
         $contactListdata = $this->BookRentRepository->where('id', $id)->first();
         if ($contactListdata) {

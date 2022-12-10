@@ -136,6 +136,7 @@ Route::middleware('globalSetting')->group(function () {
         Route::delete('bookrent/destroy/{id}', 'BookRentController@destroy')->name('bookRent.destroy');
         Route::post('bookrent/mass/destroy', 'BookRentController@mass_destroy')->name('bookRent.mass.destroy');
         Route::get('bookrent/approve/{slug}', 'BookRentController@approve')->name('bookRent.approve');
+        Route::get('continuce/approve/{slug}', 'BookRentController@continuce')->name('bookRent.continuce');
 
 
         //PreBook Request Book
