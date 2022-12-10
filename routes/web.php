@@ -124,6 +124,7 @@ Route::middleware('globalSetting')->group(function () {
         Route::post('stduent/mass/destroy', 'StduentController@mass_destroy')->name('stduents.mass.destroy');
         Route::get('stduent/approve/{slug}', 'StduentController@approve')->name('stduents.approve');
         Route::post('stduent/mass/approve', 'StduentController@mass_approve')->name('stduents.mass.approve');
+        Route::get('stduent/excel/export', 'StduentController@excelexport')->name('stduents.excel.excelexport');
 
         //Book Rents
         Route::get('bookrent', 'BookRentController@index')->name('bookRent.index');
@@ -135,6 +136,7 @@ Route::middleware('globalSetting')->group(function () {
         Route::delete('bookrent/destroy/{id}', 'BookRentController@destroy')->name('bookRent.destroy');
         Route::post('bookrent/mass/destroy', 'BookRentController@mass_destroy')->name('bookRent.mass.destroy');
         Route::get('bookrent/approve/{slug}', 'BookRentController@approve')->name('bookRent.approve');
+
 
         //PreBook Request Book
         Route::get('preRequestBook', 'PreRequestController@index')->name('preRequestBooks.index');
@@ -171,6 +173,8 @@ Route::middleware('globalSetting')->group(function () {
         Route::post('staff/mass/destroy', 'TeacherController@mass_destroy')->name('staffs.mass.destroy');
         Route::get('staff/approve/{slug}', 'TeacherController@approve')->name('staffs.approve');
         Route::post('staff/mass/approve', 'TeacherController@mass_approve')->name('staffs.mass.approve');
+        Route::get('staff/excel/export', 'TeacherController@excelexport')->name('staffs.excel.excelexport');
+
 
         //Book Rents
         Route::get('rentbystaff', 'TeacherrentController@index')->name('rentbyStaff.index');

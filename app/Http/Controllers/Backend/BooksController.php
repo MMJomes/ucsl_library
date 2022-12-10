@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Exports\ExportMemberList;
+use App\Exports\BookExport;
 use App\Helpers\BookHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -38,7 +38,7 @@ class BooksController extends Controller
 
         if (request()->ajax()) {
             $user = auth()->user();
-        $data = Books::with('author','category')->get();
+            $data = Books::with('author', 'category')->get();
             return $this->booking_datatable($data, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
@@ -67,7 +67,7 @@ class BooksController extends Controller
             $authors = Author::all();
             $categories = EventCategory::all();
             view()->share(['form' => true, 'select' => true]);
-            return view('backend.books.detail', compact('book','authors','categories'));
+            return view('backend.books.detail', compact('book', 'authors', 'categories'));
         } else {
             return view('errorpage.404');
         }
@@ -150,7 +150,6 @@ class BooksController extends Controller
 
     public function approve(Request $request)
     {
-
     }
 
     public function mass_approve(Request $request)
@@ -159,6 +158,6 @@ class BooksController extends Controller
 
     public function excelexport()
     {
-        return Excel::download(new ExportMemberList(), 'member_List.xlsx');
+        return Excel::download(new BookExport(), 'Book_List.xlsx');
     }
 }

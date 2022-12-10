@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Teacher;
 
+use App\Exports\StaffExport;
 use App\Helpers\StduentHelper;
 use App\Http\Controllers\Controller;
 use App\Imports\AuthorListImport;
@@ -219,5 +220,9 @@ class TeacherController extends Controller
             }
         }
         return redirect()->route('staff.staffs.index')->with('success', 'Stduents Approved successfully');
+    }
+    public function excelexport()
+    {
+        return Excel::download(new StaffExport(), 'Staff_List.xlsx');
     }
 }

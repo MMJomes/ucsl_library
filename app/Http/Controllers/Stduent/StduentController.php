@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Stduent;
 
-
+use App\Exports\StduentExport;
 use App\Helpers\StduentHelper;
 use App\Http\Controllers\Controller;
 use App\Imports\AuthorListImport;
@@ -106,12 +106,6 @@ class StduentController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($slug)
     {
         $stduent = $this->studentRepository->where('slug', $slug)->first();
@@ -123,18 +117,8 @@ class StduentController extends Controller
             return view('errorpage.404');
         }
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $slug)
     {
-
-
         $stduent = $this->studentRepository->where('slug', $slug)->first();
         if ($stduent) {
             if ($request->hasfile('logos')) {
@@ -227,7 +211,7 @@ class StduentController extends Controller
     }
     public function mass_approve(Request $request)
     {
-         $this->studentRepository->massUpdate($request->ids, ['status' => ON]);
+        $this->studentRepository->massUpdate($request->ids, ['status' => ON]);
         $sned_email_to_user_account = Setting::where('key', 'sned_email_to_user_account')->first();
         if ($sned_email_to_user_account->value = ON) {
             $curListdata = $this->studentRepository->where('slug', $request->slug)->first();
@@ -236,5 +220,9 @@ class StduentController extends Controller
             }
         }
         return redirect()->route('stduent.stduents.index')->with('success', 'Stduents Approved successfully');
+    }
+    public function excelexport()
+    {
+        return Excel::download(new StduentExport(), 'Stduent_List.xlsx');
     }
 }

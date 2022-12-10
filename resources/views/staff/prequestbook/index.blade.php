@@ -25,7 +25,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">{{ __('message.dataexport') }}</h4>
-                    <h6 class="card-subtitle">Export data to Copy, CSV, Excel, PDF & Print</h6>
+                    <h6 class="card-subtitle">Export data to Copy, CSV</h6>
                     <div class="table-responsive m-t-40">
                         <table id="dataTable" class="display nowrap table table-hover table-striped table-bordered"
                             cellspacing="0" width="100%">
@@ -96,7 +96,7 @@
                                 }
                             },
                         @endcan
-                        'copy', 'csv', 'excel', 'pdf', 'print', {
+                        'copy', 'csv', {
                             text: 'Delete Selected',
                             className: "btn btn-primary",
                             action: function(e, dt, node, config) {

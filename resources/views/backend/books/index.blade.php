@@ -26,7 +26,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">{{ __('message.dataexport') }}</h4>
-                    <h6 class="card-subtitle">Export data to Copy, CSV, Excel, PDF & Print</h6>
+                    <h6 class="card-subtitle">Export data to Excel Export, Copy</h6>
                     <div class="table-responsive m-t-40">
                         <table id="dataTable" class="display nowrap table table-hover table-striped table-bordered"
                             cellspacing="0" width="100%" style="font-size: 14px !important">
@@ -108,7 +108,7 @@
                         @endcan
                         @can('book.create')
                             {
-                                text: 'Export',
+                                text: 'Excel Export',
                                 className: "btn btn-primary",
                                 action: function(e, dt, node, config) {
                                     window.location.href =
@@ -116,7 +116,7 @@
                                 }
                             },
                         @endcan
-                        'copy', 'csv', 'pdf', {
+                        'copy', {
                             text: 'Delete Selected',
                             className: "btn btn-primary",
                             action: function(e, dt, node, config) {
