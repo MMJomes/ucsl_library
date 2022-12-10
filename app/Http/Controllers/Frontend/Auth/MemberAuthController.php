@@ -32,28 +32,38 @@ class MemberAuthController extends Controller
 
     public function login()
     {
+        $site_maintenance = Setting::where('key', 'site_maintenance')->first();
+        if ($site_maintenance->value == 'on') {
 
-        $already_registered = auth()->guard('members')->user();
-        if ($already_registered) {
-            return redirect()->route('/');
+            return view('frontend.auth.coming_soon');
+        } else {
+
+            $already_registered = auth()->guard('members')->user();
+            if ($already_registered) {
+                return redirect()->route('/');
+            }
+            $dcategories  = Departement::all();
+            $categories  = StdClass::all();
+            view()->share(['form' => true, 'select' => true]);
+            return view('frontend.auth.login', compact('categories', 'dcategories'));
         }
-        $dcategories  = Departement::all();
-        $categories  = StdClass::all();
-        view()->share(['form' => true, 'select' => true]);
-        return view('frontend.auth.login', compact('categories', 'dcategories'));
     }
-
     public function register()
     {
 
-        $already_registered = auth()->guard('members')->user();
-        if ($already_registered) {
-            return redirect()->route('/');
+        $site_maintenance = Setting::where('key', 'site_maintenance')->first();
+        if ($site_maintenance->value == 'on') {
+            return view('frontend.auth.coming_soon');
+        } else {
+            $already_registered = auth()->guard('members')->user();
+            if ($already_registered) {
+                return redirect()->route('/');
+            }
+            $dcategories  = Departement::all();
+            $categories  = StdClass::all();
+            view()->share(['form' => true, 'select' => true]);
+            return view('frontend.auth.register', compact('categories', 'dcategories'));
         }
-        $dcategories  = Departement::all();
-        $categories  = StdClass::all();
-        view()->share(['form' => true, 'select' => true]);
-        return view('frontend.auth.register', compact('categories', 'dcategories'));
     }
 
     public function loginAction(Request $request)
@@ -64,7 +74,7 @@ class MemberAuthController extends Controller
                 if ($staffemail->status = ON) {
                     return "OK";
                 }
-            }else{
+            } else {
                 return "NO";
             }
         } elseif ($request->usertype = 'staff') {
