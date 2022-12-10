@@ -9,6 +9,7 @@ use App\Models\Books;
 use App\Models\Setting;
 use App\Models\Stduent\Bookrent;
 use App\Models\Stduent\Stduent;
+use App\Notifications\SendEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Carbon\Carbon;
@@ -126,11 +127,11 @@ class BookRentController extends Controller
     {
         $Author = $this->BookRentRepository->where('id', $id)->first();
         if ($Author) {
-            $strtime= $request->startdate;
+            $strtime = $request->startdate;
             $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
             $book_return_date = Carbon::parse($strtime);
             $enddate = $book_return_date->addDays($book_rent_duration);
-            $request->merge(['enddate' => $enddate,'startdate'=>$strtime]);
+            $request->merge(['enddate' => $enddate, 'startdate' => $strtime]);
             $this->BookRentRepository->updateById($Author->id, $request->all());
             return redirect()->route('stduent.bookRent.index')->with(['success' => 'Successfully Updated!']);
         } else {
@@ -141,12 +142,44 @@ class BookRentController extends Controller
     {
         $Author = $this->BookRentRepository->where('id', $id)->first();
         if ($Author) {
-            $strtime= $Author->enddate;
+            $strtime = $Author->enddate;
             $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
             $book_return_date = Carbon::parse($strtime);
             $enddate = $book_return_date->addDays($book_rent_duration);
-            $request->merge(['enddate' => $enddate,'startdate'=>$strtime, 'books_id' =>$Author->books_id,'stduents_id' =>$Author->stduents_id, 'remark' => "Continuced" ]);
+            $request->merge(['enddate' => $enddate, 'startdate' => $strtime, 'remark' => "Continuced"]);
             $this->BookRentRepository->updateById($Author->id, $request->all());
+            return redirect()->route('stduent.bookRent.index')->with(['success' => 'Successfully Updated!']);
+        } else {
+            return view('errorpage.404');
+        }
+    }
+    public function requestStausApproved(Request $request, $id)
+    {
+        $Author = $this->BookRentRepository->where('id', $id)->first();
+        if ($Author) {
+            $strtime = $Author->enddate;
+            $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
+            $book_return_date = Carbon::parse($strtime);
+            $enddate = $book_return_date->addDays($book_rent_duration);
+            $request->merge(['enddate' => $enddate, 'startdate' => $strtime,  'remark' => "Continuced", 'requesttatus' => 'off', 'approvetatus' => 'on', 'remark' => "User Request Has Been Approved By Admin"]);
+            $this->BookRentRepository->updateById($Author->id, $request->all());
+            $Author->notify(new SendEmail($Author->name, "Congratulations! , Your Request Been Reject By Admin"));
+            return redirect()->route('stduent.bookRent.index')->with(['success' => 'Successfully Updated!']);
+        } else {
+            return view('errorpage.404');
+        }
+    }
+    public function requestStausRejected(Request $request, $id)
+    {
+        $Author = $this->BookRentRepository->where('id', $id)->first();
+        if ($Author) {
+            $strtime = $Author->enddate;
+            $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
+            $book_return_date = Carbon::parse($strtime);
+            $enddate = $book_return_date->addDays($book_rent_duration);
+            $request->merge(['enddate' => $enddate, 'startdate' => $strtime,  'remark' => "Continuced", 'requesttatus' => 'off', 'approvetatus' => 'off', 'remark' => "User Request Has Been Reject By Admin"]);
+            $this->BookRentRepository->updateById($Author->id, $request->all());
+            $Author->notify(new SendEmail($Author->name, "Sorry!, Your Request Been Reject By Admin"));
             return redirect()->route('stduent.bookRent.index')->with(['success' => 'Successfully Updated!']);
         } else {
             return view('errorpage.404');

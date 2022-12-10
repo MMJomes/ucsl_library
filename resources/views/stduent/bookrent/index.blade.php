@@ -193,8 +193,15 @@
                                     var approveURL =
                                         "{{ route('stduent.bookRent.continuce', ':id') }}";
                                     approveURL = approveURL.replace(':id', full.id);
-                                    var ApproveButton = '';
 
+                                    var requestStausApprove =
+                                        "{{ route('stduent.bookRent.requestStausapprove', ':id') }}";
+                                        requestStausApprove = requestStausApprove.replace(':id', full.id);
+                                        var requestStausReject =
+                                        "{{ route('stduent.bookRent.requestStausreject', ':id') }}";
+                                        requestStausReject = requestStausReject.replace(':id', full.id);
+
+                                        var ApproveButton = '';
                                     if (response["can_edit"]) {
                                         if (full.status == 'on') {
                                             ApproveButton =
@@ -209,13 +216,16 @@
                                                 approveURL +
                                                 '" id="set_clock"><i class="icon-check "></i> &nbsp;Returned</a>';
                                         } else {
-                                            // if( 1 = 1 ){
-
-                                            // }
+                                            if (full.requesttatus == 'on') {
                                             ApproveButton =
-                                                '<a style="font-weight:bold;font-size:13px;" class="btn  btn-outline-success  btn-sm btn-font-size-sm btn-sm text-black d-flex align-items-start "href="' +
-                                                approveURL +
-                                                '" id="set_clock"><i class="icon-plus "></i> &nbsp;Continue</a>';
+                                                '<div class="dropdown mx-1" data-href="' + requestStausApprove +'"><button class="btn btn-outline-primary btn-sm btn-font-size-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-clock"></i> &nbsp; Pending</button><div class="dropdown-menu py-0" btn-success aria-labelledby="dropdownMenuButton"><a class="dropdown-item bg-success btn-sm text-white d-flex align-items-start "href="' +requestStausApprove +'" id="set_ban" data-status="off"><i class="icon-check"></i> &nbsp;Approve</a> <a class="dropdown-item bg-danger btn-sm text-white d-flex align-items-start "href="' +requestStausReject +'" id="set_ban" data-status="off"><i class="icon-ban"></i> &nbsp;Reject</a></div>';
+
+                                            } else {
+                                                ApproveButton =
+                                                    '<a style="font-weight:bold;font-size:13px;" class="btn  btn-outline-success  btn-sm btn-font-size-sm btn-sm text-black d-flex align-items-start "href="' +
+                                                    approveURL +
+                                                    '" id="set_clock"><i class="icon-plus "></i> &nbsp;Continue</a>';
+                                            }
                                         }
                                     }
                                     return ApproveButton;

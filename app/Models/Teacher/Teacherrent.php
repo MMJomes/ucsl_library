@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 
 class Teacherrent extends Model
 {
-    use  HasFactory,Notifiable;
+    use  HasFactory, Notifiable;
 
     protected $table = 'teacherrents';
     protected $fillable = [
@@ -21,6 +21,9 @@ class Teacherrent extends Model
         'rentstatus',
         'status',
         'numberofbook',
+        'requesttatus',
+        'approvetatus',
+
     ];
     public function teacher()
     {
@@ -32,4 +35,3 @@ class Teacherrent extends Model
         return $this->belongsTo(Books::class, 'books_id', 'id');
     }
 }
-

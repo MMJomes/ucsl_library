@@ -23,6 +23,8 @@ class CreateTeacherrentsTable extends Migration
             $table->string('status')->nullable();
             $table->string('numberofbook')->nullable();
             $table->enum('rentstatus', [ON, OFF])->default(OFF);
+            $table->enum('requesttatus', [ON, OFF])->default(OFF);
+            $table->enum('approvetatus', [ON, OFF])->default(OFF);
             $table->foreign('books_id')->references('id')->on('books')->onDelete('cascade');
             $table->foreign('teachers_id')->references('id')->on('teachers')->onDelete('cascade');
             $table->timestamps();

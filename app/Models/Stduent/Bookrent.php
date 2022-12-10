@@ -21,6 +21,8 @@ class Bookrent extends Model
         'rentstatus',
         'status',
         'numberofbook',
+        'requesttatus',
+        'approvetatus',
     ];
 
 
