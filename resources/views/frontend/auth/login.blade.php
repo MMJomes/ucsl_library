@@ -11,14 +11,13 @@
                 <div class="card" style="background-color: hsl(200, 53%, 96%)">
                     <center><img src="{{ url('assets/images/logo.png') }}"
                             style="width: 5%;height: 10%;margin-right: 12px" class="card-img-top" alt="logo"> <samp
-                            style="font-size: 22px;font-family: 'Times New Roman', Times, serif;font-weight: bold;color: blue">Welcome
-                            to CUSL Library System</samp><img src="{{ url('assets/images/logo.png') }}"
-                            style="width: 5%;height: 10%;margin-left: 12px" class="card-img-top" alt="logo">
+                            style="font-size: 22px;font-family: 'Times New Roman', Times, serif;font-weight: bold;color: blue">DIGITAL
+                            LIBRARY MANAGENMENT SYSTEM</samp>
                     </center>
                     <div class="card-title">
                         <div class="card-body">
-                            <form action={{ route('member.login') }} method="POST"
-                                enctype="multipart/form-data" class="needs-validation" novalidate>
+                            <form action={{ route('member.login') }} method="POST" enctype="multipart/form-data"
+                                class="needs-validation" novalidate>
                                 @csrf
                                 <div class="body">
                                     <h6>{{ __('Select User Type ') }}</h6>
@@ -105,10 +104,11 @@
                                         </div>
                                     </div> --}}
                                     <div class="mt-5">
-                                        <button type="submit" id="mysubmit" class="btn btn-info"><i class="fa fa-save"></i>
-                                            {{ (' Login ') }}</button>
+                                        <button type="submit" id="mysubmit" class="btn btn-info"><i
+                                                class="fa fa-save"></i>
+                                            {{ ' Login ' }}</button>
                                         <a href="{{ url('/register') }}" class="btn btn-danger"><i
-                                                class="icon-logout"></i> {{ ('Register') }}</a>
+                                                class="icon-logout"></i> {{ 'Register' }}</a>
                                     </div>
                                 </div>
                             </form>

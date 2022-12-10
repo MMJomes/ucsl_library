@@ -9,9 +9,9 @@
                 <b>
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon -->
-                    <img src="{{ url('assets/images/logo.jpg') }}" alt="homepage" class="dark-logo" width="50" height="50" />
+                    <img src="{{ url('assets/images/logo.png') }}"  alt="homepage" class="dark-logo" width="40" height="50" />
                     <!-- Light Logo icon -->
-                    <img src="{{ url('assets/images/logo.jpg') }}" alt="homepage" class="light-logo" width="50" height="50" />
+                    <img src="{{ url('assets/images/logo.png') }}" alt="homepage" class="light-logo" width="40" height="50" />
                 </b>
                 <!--End Logo icon -->
             </a>
@@ -27,7 +27,7 @@
                 <li class="d-none d-md-block d-lg-block">
                     <a href="javascript:void(0)" class="p-l-15">
                         <!--This is logo text-->
-                        <span style="font-size: 18px; color: white; font-family: sans-serif;font-weight: bold;">USCL LIBRARY MANGEMENT SYSTEM</span>
+                        <span style="font-size: 20px; color: white; font-family: sans-serif;font-weight: bold;">DIGITAL LIBRARY MANAGENMENT SYSTEM</span>
 
                     </a>
                 </li>
@@ -56,11 +56,7 @@
                         <!-- text-->
                         <a href="{{ route('backend.profile') }}" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
 
-                        <div class="dropdown-divider"></div>
-                        <!-- text-->
-                        <a href="javascript:void(0)" class="dropdown-item"><i class="ti-settings"></i> Account
-                            Setting</a>
-                        <!-- text-->
+
                         <div class="dropdown-divider"></div>
                         <!-- text-->
                         <a href="{{ route('logout') }}" class="dropdown-item"

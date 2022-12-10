@@ -96,8 +96,6 @@ class StduentController extends Controller
      */
     public function show($slug)
     {
-
-
         $stduent = $this->studentRepository->where('slug', $slug)->first();
         if ($stduent) {
             $categories = StdClass::all();
@@ -210,7 +208,7 @@ class StduentController extends Controller
     {
         $contactListdata = $this->studentRepository->where('slug', $request->slug)->first();
         if ($contactListdata) {
-            $sned_email_to_user_account = Setting::where('key', 'sned_email_to_user_account')->first()->value;
+            $sned_email_to_user_account = Setting::where('key', 'sned_email_to_user_account')->first();
             if ($contactListdata->status == ON) {
                 $contactListdata->update(['status' => OFF]);
             } else {
@@ -227,11 +225,10 @@ class StduentController extends Controller
             return view('errorpage.404');
         }
     }
-
     public function mass_approve(Request $request)
     {
          $this->studentRepository->massUpdate($request->ids, ['status' => ON]);
-        $sned_email_to_user_account = Setting::where('key', 'sned_email_to_user_account')->first()->value;
+        $sned_email_to_user_account = Setting::where('key', 'sned_email_to_user_account')->first();
         if ($sned_email_to_user_account->value = ON) {
             $curListdata = $this->studentRepository->where('slug', $request->slug)->first();
             if ($curListdata) {

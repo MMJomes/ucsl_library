@@ -189,7 +189,7 @@ class TeacherController extends Controller
     {
         $contactListdata = $this->StaffRepository->where('slug', $request->slug)->first();
         if ($contactListdata) {
-            $sned_email_to_user_account = Setting::where('key', 'sned_email_to_user_account')->first()->value;
+            $sned_email_to_user_account = Setting::where('key', 'sned_email_to_user_account')->first();
 
             if ($contactListdata->status == ON) {
                 $contactListdata->update(['status' => OFF]);
@@ -211,7 +211,7 @@ class TeacherController extends Controller
     public function mass_approve(Request $request)
     {
         $this->StaffRepository->massUpdate($request->ids, ['status' => ON]);
-        $sned_email_to_user_account = Setting::where('key', 'sned_email_to_user_account')->first()->value;
+        $sned_email_to_user_account = Setting::where('key', 'sned_email_to_user_account')->first();
         if ($sned_email_to_user_account->value = ON) {
             $curListdata = $this->StaffRepository->where('slug', $request->slug)->first();
             if ($curListdata) {

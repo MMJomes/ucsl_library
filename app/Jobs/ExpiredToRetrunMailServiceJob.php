@@ -37,7 +37,7 @@ class ExpiredToRetrunMailServiceJob implements ShouldQueue
     {
         $sned_email_to_user_overred_time = Setting::where('key', 'sned_email_to_user_overred_time')->first()->value;
         if ($sned_email_to_user_overred_time == ON) {
-            $notification_setting_date = 12;
+            $notification_setting_date = 24;
             $notification_datetime = Carbon::now()->addHour($notification_setting_date)->format('Y-m-d H:i:s');
             Bookrent::with('stduent')->where('status', null)->each(function ($teacher)  use ($notification_datetime) {
                 if ($notification_datetime == $teacher->enddate) {
