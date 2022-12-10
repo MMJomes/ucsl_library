@@ -39,7 +39,7 @@
                                     <h5>Select Event </h5>
                                     <select class="selectpicker form-control" disabled
                                         data-style="form-control btn-secondary" name="event_categories_id" required="true">
-                                        @foreach ($eventCategory as $eventcategory)
+                                        @foreach ($stduents as $eventcategory)
                                             <option value="{{ $eventcategory->id }}"
                                                 {{ $eventcategory->event_categories_id == $eventcategory->id ? 'selected' : '' }}>
                                                 {{ $eventcategory->name }}
@@ -57,24 +57,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row clearfix">
+                             <div class="row clearfix">
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
-                                        <label for="createdate">Created At</label>
-                                        <input type="datetime" class="form-control" name="createdate" id="createdate"
-                                            placeholder="Createde At" value="{{ old('createdate', $Author->created_at) }}">
+                                        <label for="startdate">Created At</label>
+                                        <input type="date" class="form-control" name="startdate" id="startdate"
+                                            placeholder="Enter Rent Date " value="{{ old('startdate',$Author->startdate) }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
-                                        <label for="updatedate">Updated At</label>
-                                        <input type="datetime" class="form-control" name="updatedate" id="updatedate"
-                                            placeholder="Updated At" value="{{ old('updatedate', $Author->updated_at) }}">
+                                        <label for="remark">Remark</label>
+                                        <input type="text" class="form-control" name="remark" id="remark"
+                                            placeholder="Enter Remark" value="{{ old('remark',$Author->remark) }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="mt-5">
-                                <a href="{{ route('backend.author.index') }}" class="btn btn-danger"><i
+                                <a href="{{ route('stduent.bookRent.index') }}" class="btn btn-danger"><i
                                         class="icon-logout"></i> {{ __('message.back') }}</a>
                             </div>
 

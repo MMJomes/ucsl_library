@@ -138,7 +138,7 @@ Route::middleware('globalSetting')->group(function () {
         Route::get('bookrent/approve/{slug}', 'BookRentController@approve')->name('bookRent.approve');
         Route::get('continuce/approve/{slug}', 'BookRentController@continuce')->name('bookRent.continuce');
         Route::get('requestStausapprove/approve/{slug}', 'BookRentController@requestStausApproved')->name('bookRent.requestStausapprove');
-        Route::get('requestStausreject/approve/{slug}', 'BookRentController@requestStausRejected')->name('bookRent.requestStausreject');
+        Route::get('requestStausreject/approve/{slug}', 'BookRentController@requestStausRejected')->name('bookRent.requestStausReject');
 
 
         //PreBook Request Book
@@ -189,6 +189,10 @@ Route::middleware('globalSetting')->group(function () {
         Route::delete('rentbystaff/destroy/{id}', 'TeacherrentController@destroy')->name('rentbyStaff.destroy');
         Route::post('rentbystaff/mass/destroy', 'TeacherrentController@mass_destroy')->name('rentbyStaff.mass.destroy');
         Route::get('rentbystaff/approve/{slug}', 'TeacherrentController@approve')->name('rentbyStaff.approve');
+        Route::get('stfrequestStausapprove/approve/{slug}', 'TeacherrentController@requestStausApproved')->name('rentbyStaff.requestStausapprove');
+        Route::get('stfrequestStausreject/approve/{slug}', 'TeacherrentController@requestStausRejected')->name('rentbyStaff.requestStausreject');
+        Route::get('stfcontinuce/approve/{slug}', 'TeacherrentController@continuce')->name('rentbyStaff.continuce');
+
 
         //PreBook Request By Staff Book
         Route::get('requestbyStaff', 'StaffPreRequestController@index')->name('requestbyStaffs.index');

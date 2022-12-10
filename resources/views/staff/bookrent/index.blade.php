@@ -40,6 +40,7 @@
                                     <th>{{ 'Start Date' }}</th>
                                     <th>{{ 'Retrun Date' }}</th>
                                     <th>{{ 'Status' }}</th>
+                                    <th>{{ 'Continuce' }}</th>
                                     <th>{{ 'Rent Status' }}</th>
                                     @canany(['author.edit', 'author.delete'])
                                         <th>{{ __('message.action') }}</th>
@@ -155,13 +156,12 @@
                                         var rentingTime = (ent
                                             .getTime() - updatetim.getTime()) / 1000;
                                         if (rentingTime >= 0) {
-                                            return '<p style="font-weight:bold;" class="btn btn-outline-success btn-sm btn-font-size-sm "aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i> &nbsp;Duration Time';
+                                            return '<p style="font-weight:bold;" class="btn btn-outline-info btn-sm btn-font-size-sm" aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i>&nbsp;Returned Duration Time';
                                         } else {
-                                            return '<p style="font-weight:bold;" class="btn btn-outline-danger btn-sm btn-font-size-sm "aria-haspopup="true" aria-expanded="false"><i class="icon-clock"></i> &nbsp;Overred  Time  &nbsp;';
+                                            return '<p style="font-weight:bold;" class="btn btn-outline-danger btn-sm btn-font-size-sm "aria-haspopup="true" aria-expanded="false"><i class="icon-clock"></i>&nbsp;Returned Overed Time';
                                         }
                                     } else {
-                                        return '<p style="font-weight:bold;" class="btn btn-outline-info btn-sm btn-font-size-sm "aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i> &nbsp;Returned Time';
-
+                                        return '<p style="font-weight:bold;" class="btn btn-outline-info btn-sm btn-font-size-sm"aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i> &nbsp;Returned Time';
                                     }
 
                                 } else {
@@ -185,6 +185,55 @@
                             }
 
                         },
+                        @canany(['member.approve', 'member.mass_approve'])
+                            {
+                                orderable: false,
+                                "render": function(data, type, full, meta) {
+                                    var sle = full.status;
+                                    var approveURL =
+                                        "{{ route('staff.rentbyStaff.requestStausapprove', ':id') }}";
+                                    approveURL = approveURL.replace(':id', full.id);
+
+                                    var requestStausApprove =
+                                        "{{ route('staff.rentbyStaff.requestStausapprove', ':id') }}";
+                                        requestStausApprove = requestStausApprove.replace(':id', full.id);
+                                        var requestStausReject =
+                                        "{{ route('staff.rentbyStaff.requestStausapprove', ':id') }}";
+                                        requestStausReject = requestStausReject.replace(':id', full.id);
+
+                                        var ApproveButton = '';
+                                    if (response["can_edit"]) {
+                                        if (full.status == 'on') {
+                                            ApproveButton =
+                                                '<div class=" mx-1 " data-href="' +
+                                                approveURL +
+                                                '"><button style="font-weight:bold;font-size:13px;" class="btn disabled btn-outline-success btn-sm btn-font-size-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-check"></i> &nbsp; Return</button><div class="dropdown-menu py-0" btn-success aria-labelledby="dropdownMenuButton"><a class="dropdown-item bg-danger btn-sm text-white d-flex align-items-start "href="' +
+                                                approveURL +
+                                                '" id="set_clock" data-status="off"><i class="icon-clock"></i> &nbsp;Pending</a></div>';
+
+                                            ApproveButton =
+                                                '<a style="font-weight:bold;font-size:13px;" class="btn  disabled btn-block  btn-sm btn-font-size-sm btn-sm text-black d-flex align-items-start "href="' +
+                                                approveURL +
+                                                '" id="set_clock"><i class="icon-check "></i> &nbsp;Returned</a>';
+                                        } else {
+                                            if (full.requesttatus == 'on') {
+                                            ApproveButton =
+                                                '<div class="dropdown mx-1" data-href="' + requestStausApprove +'"><button class="btn btn-outline-primary btn-sm btn-font-size-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-clock"></i> &nbsp; Pending</button><div class="dropdown-menu py-0" btn-success aria-labelledby="dropdownMenuButton"><a class="dropdown-item bg-success btn-sm text-white d-flex align-items-start "href="' +requestStausApprove +'" id="set_ban" data-status="off"><i class="icon-check"></i> &nbsp;Approve</a> <a class="dropdown-item bg-danger btn-sm text-white d-flex align-items-start "href="' +requestStausReject +'" id="set_ban" data-status="off"><i class="icon-ban"></i> &nbsp;Reject</a></div>';
+
+                                            } else {
+                                                ApproveButton =
+                                                    '<a style="font-weight:bold;font-size:13px;" class="btn  btn-outline-success  btn-sm btn-font-size-sm btn-sm text-black d-flex align-items-start "href="' +
+                                                    approveURL +
+                                                    '" id="set_clock"><i class="icon-plus "></i> &nbsp;Continue</a>';
+                                            }
+                                        }
+                                    }
+                                    return ApproveButton;
+                                }
+
+                            },
+                        @endcanany
+
                         @canany(['member.approve', 'member.mass_approve'])
                             {
                                 orderable: false,

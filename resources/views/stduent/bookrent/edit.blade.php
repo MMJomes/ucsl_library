@@ -66,7 +66,7 @@
                             <div class="row clearfix">
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
-                                        <label for="startdate">PreRequest Date</label>
+                                        <label for="startdate">Create Date</label>
                                         <input type="date" class="form-control" name="startdate" id="startdate"
                                             placeholder="Enter Rent Date " value="{{ old('startdate',$author->startdate) }}">
                                     </div>

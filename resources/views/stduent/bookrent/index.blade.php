@@ -198,7 +198,7 @@
                                         "{{ route('stduent.bookRent.requestStausapprove', ':id') }}";
                                         requestStausApprove = requestStausApprove.replace(':id', full.id);
                                         var requestStausReject =
-                                        "{{ route('stduent.bookRent.requestStausreject', ':id') }}";
+                                        "{{ route('stduent.bookRent.requestStausReject', ':id') }}";
                                         requestStausReject = requestStausReject.replace(':id', full.id);
 
                                         var ApproveButton = '';
