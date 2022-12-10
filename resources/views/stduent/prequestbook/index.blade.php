@@ -96,7 +96,7 @@
                                 }
                             },
                         @endcan
-                        'copy', 'csv' {
+                        'copy', 'csv',{
                             text: 'Delete Selected',
                             className: "btn btn-primary",
                             action: function(e, dt, node, config) {

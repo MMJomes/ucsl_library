@@ -25,6 +25,7 @@ class Books extends Model
         'availablebook',
         'totalbook',
         'createdat',
+        'bookpdflink',
         'publishername',
         'updatedat',
     ];

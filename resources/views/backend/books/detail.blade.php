@@ -129,15 +129,21 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row clearfix">
-                                <div class="col-lg-12 col-md-12">
+                            <div class=" mt-4 row clearfix">
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label for="httpLinks">{{ __('Book PDF Link') }}</label>
+                                        <input type="url" class="form-control" name="bookpdflink" id="httpLinks"
+                                            placeholder="Enter Book PDF Link" value="{{ old('bookpdflink',$book->bookpdflink) }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="remark">{{ __('message.remark') }}</label>
                                         <input type="text" class="form-control" name="remark" id="remark"
                                             placeholder="{{ __('message.remark') }}" value="{{ old('remark',$book->remark) }}">
                                     </div>
                                 </div>
-
                             </div>
                             <div class="mt-5">
                                 <a href="{{ route('backend.book.index') }}" class="btn btn-danger"><i

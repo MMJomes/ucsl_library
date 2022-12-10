@@ -126,23 +126,34 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
-                                    <div class="form-group">
-                                        <label for="availablereason">{{ __('message.availablereason') }}</label>
-                                        <input type="text" class="form-control" name="availablereason"
-                                            placeholder="{{ __('message.availablereason') }}"
-                                            value="{{ old('availablereason',$book->availablereason) }}">
-                                    </div>
+                                    <h5>{{ __('Select Available Reason') }} </h5>
+                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
+                                        name="availablereason" required="true">
+                                        <option value="Buy" {{ $event->availablereason == 'Buy' ? 'selected' : '' }}>
+                                            Buy
+                                        </option>
+
+                                        <option value="Donation" {{ $event->availablereason == 'Donation' ? 'selected' : '' }}>
+                                            Donation
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="row clearfix">
-                                <div class="col-lg-12 col-md-12">
+                            <div class=" mt-4 row clearfix">
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label for="httpLinks">{{ __('Book PDF Link') }}</label>
+                                        <input type="url" class="form-control" name="bookpdflink" id="httpLinks"
+                                            placeholder="Enter Book PDF Link" value="{{ old('bookpdflink',$book->bookpdflink) }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="remark">{{ __('message.remark') }}</label>
                                         <input type="text" class="form-control" name="remark" id="remark"
                                             placeholder="{{ __('message.remark') }}" value="{{ old('remark',$book->remark) }}">
                                     </div>
                                 </div>
-
                             </div>
                             <div class="mt-5">
                                 <button type="submit" class="btn btn-info"><i class="fa fa-save"></i>

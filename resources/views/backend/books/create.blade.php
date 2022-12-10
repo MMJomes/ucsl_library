@@ -60,7 +60,7 @@
                             </div>
                             <div class="row clearfix">
                                 <div class="col-lg-6 col-md-12">
-                                    <h5>{{ __('message.author') }} </h5>
+                                    <h5>{{ __('Select Author') }} </h5>
                                     <select class="selectpicker form-control" data-style="form-control btn-secondary"
                                         name="authors_id" required="true">
                                         @foreach ($authors as $event)
@@ -115,9 +115,8 @@
                                 </div>
                             </div>
                             <div class="row clearfix">
-
                                 <div class="col-lg-6 col-md-12">
-                                    <h5>{{ __('message.category') }} </h5>
+                                    <h5>{{ ('Select Category') }} </h5>
                                     <select class="selectpicker form-control" data-style="form-control btn-secondary"
                                         name="categories_id" required="true">
                                         @foreach ($categories as $event)
@@ -128,23 +127,34 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
-                                    <div class="form-group">
-                                        <label for="office_address">{{ __('message.availablereason') }}</label>
-                                        <input type="text" class="form-control" name="availablereason"
-                                            placeholder="{{ __('message.availablereason') }}"
-                                            value="{{ old('office_address') }}">
-                                    </div>
+                                    <h5>{{ __('Select Available Reason') }} </h5>
+                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
+                                        name="availablereason" required="true">
+                                        <option value="Buy">
+                                            Buy
+                                        </option>
+
+                                        <option value="Donation">
+                                            Donation
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="row clearfix">
-                                <div class="col-lg-12 col-md-12">
+                            <div class=" mt-4 row clearfix">
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label for="httpLinks">{{ __('Book PDF Link') }}</label>
+                                        <input type="url" class="form-control" name="bookpdflink" id="httpLinks"
+                                            placeholder="Enter Book PDF Link" value="{{ old('bookpdflink') }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="remark">{{ __('message.remark') }}</label>
                                         <input type="text" class="form-control" name="remark" id="remark"
                                             placeholder="{{ __('message.remark') }}" value="{{ old('remark') }}">
                                     </div>
                                 </div>
-
                             </div>
                             <div class="mt-5">
                                 @if (count($authors) <= 0)

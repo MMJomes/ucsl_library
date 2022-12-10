@@ -199,7 +199,7 @@ class PreRequestController extends Controller
                 $enddate = $book_return_date->addDays($book_rent_duration);
                 $studentid = $contactListdata->stduents_id;
                 $bookid = $contactListdata->books_id;
-                $datas = $request->merge(['books_id' => $studentid, 'stduents_id' => $bookid, 'startdate' => $current_date, 'enddate' => $enddate, 'remark' => 'PreRequest Book.']);
+                $datas = $request->merge(['books_id' => $bookid, 'stduents_id' => $studentid, 'startdate' => $current_date, 'enddate' => $enddate, 'remark' => 'PreRequest Book.']);
                 $data = $this->BookRentRepository->create($datas->all());
                 $stdeunt = Stduent::where('id', $studentid)->first();
                 if ($stdeunt) {

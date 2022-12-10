@@ -28,6 +28,7 @@ class BookExport implements FromQuery, WithHeadings
             'remark',
             'availablebook',
             'totalbook',
+            'bookpdflink',
         );
     }
 
@@ -44,8 +45,9 @@ class BookExport implements FromQuery, WithHeadings
             'Price',
             'Available Reason',
             'Remark',
-            'Total Book',
+            'Total Book Count',
             'Available Book Count',
+            'Book Online PDF Link',
         ];
     }
 }

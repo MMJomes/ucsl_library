@@ -28,6 +28,7 @@ class CreateBooksTable extends Migration
             $table->string('remark')->nullable();
             $table->string('availablebook')->nullable();
             $table->string('totalbook')->nullable();
+            $table->string('bookpdflink')->nullable();
             $table->string('slug');
             $table->dateTime('createdat')->nullable();
             $table->dateTime('updatedat')->nullable();
