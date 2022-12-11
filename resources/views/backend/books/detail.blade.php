@@ -51,14 +51,12 @@
                             <div class="row clearfix">
 
                                 <div class="col-lg-6 col-md-12">
-                                    <h5>Select Author </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
+                                    <h5> Author Name </h5>
+                                    <select disabled class="selectpicker form-control" data-style="form-control btn-secondary"
                                         name="event_categories_id" required="true">
                                         @foreach ($authors as $event)
-                                            <option value="{{ $event->id }}"
-                                                {{ $event->events_id == $event->id ? 'selected' : '' }}>
-                                                {{ $event->name }}
-                                            </option>
+                                        <option value="{{ $event->id }}" {{ $event->id == $book->authors_id ? 'selected' : '' }} style="font-weight: bold ">
+                                            {{ $event->name }}
                                         @endforeach
                                     </select>
                                 </div>
@@ -109,14 +107,12 @@
                             <div class="row clearfix">
 
                                 <div class="col-lg-6 col-md-12">
-                                    <h5>Select Category </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
+                                    <h5> Category Name </h5>
+                                    <select disabled class="selectpicker form-control" data-style="form-control btn-secondary"
                                         name="event_categories_id" required="true">
                                         @foreach ($categories as $event)
-                                            <option value="{{ $event->id }}"
-                                                {{ $event->events_id == $event->id ? 'selected' : '' }}>
-                                                {{ $event->name }}
-                                            </option>
+                                        <option value="{{ $event->id }}" {{ $event->id == $book->categories_id ? 'selected' : '' }} style="font-weight: bold ">
+                                            {{ $event->name }}
                                         @endforeach
                                     </select>
                                 </div>

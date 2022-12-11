@@ -107,8 +107,8 @@
         </div>
     </div>
 @endsection
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('assets/dist/select2/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/dist/select2/bootstrap.bundle.min.js') }}"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('.stdclasses').select2({

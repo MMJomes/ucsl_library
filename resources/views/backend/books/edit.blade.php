@@ -42,7 +42,7 @@
                                         <label for="titlenumber">{{ __('message.titlenumber') }}</label>
                                         <input type="text" class="form-control" name="titlename" id="titlenumber"
                                             placeholder="{{ __('message.titlenumber') }}"
-                                            value="{{ old('titlenumber',$book->titlenumber) }}">
+                                            value="{{ old('titlenumber',$book->titlename) }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
@@ -54,14 +54,14 @@
                                 </div>
                             </div>
                             <div class="row clearfix">
-
                                 <div class="col-lg-6 col-md-12">
-                                    <h5>Select Author </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
-                                        name="event_categories_id" required="true">
+                                    <h5 style="margin-bottom: 10px">{{ 'Select Author Name' }} </h5>
+                                    <select class="stdclasses form-select-lg " data-style="btn-secondary"
+                                        name="authors_id" required="true">
+                                        <option selected value="0" class="text-black-50" disabled>--- Select Author Name ---
+                                        </option>
                                         @foreach ($authors as $event)
-                                            <option value="{{ $event->id }}"
-                                                {{ $event->events_id == $event->id ? 'selected' : '' }}>
+                                            <option value="{{ $event->id }}" {{ $event->id == $book->authors_id ? 'selected' : '' }} style="font-weight: bold ">
                                                 {{ $event->name }}
                                             </option>
                                         @endforeach
@@ -112,14 +112,14 @@
                                 </div>
                             </div>
                             <div class="row clearfix">
-
                                 <div class="col-lg-6 col-md-12">
-                                    <h5>Select Category </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
-                                        name="event_categories_id" required="true">
+                                    <h5 style="margin-bottom: 10px">{{ 'Select Category Name' }} </h5>
+                                    <select class="stdclasses form-select-lg " data-style="btn-secondary"
+                                        name="categories_id" required="true">
+                                        <option selected value="0" class="text-black-50" disabled>--- Select Category Name ---
+                                        </option>
                                         @foreach ($categories as $event)
-                                            <option value="{{ $event->id }}"
-                                                {{ $event->events_id == $event->id ? 'selected' : '' }}>
+                                            <option value="{{ $event->id }}" {{ $event->id == $book->categories_id ? 'selected' : '' }} style="font-weight: bold ">
                                                 {{ $event->name }}
                                             </option>
                                         @endforeach
@@ -129,11 +129,11 @@
                                     <h5>{{ __('Select Available Reason') }} </h5>
                                     <select class="selectpicker form-control" data-style="form-control btn-secondary"
                                         name="availablereason" required="true">
-                                        <option value="Buy" {{ $event->availablereason == 'Buy' ? 'selected' : '' }}>
+                                        <option value="Buy" {{ $book->availablereason == 'Buy' ? 'selected' : '' }}>
                                             Buy
                                         </option>
 
-                                        <option value="Donation" {{ $event->availablereason == 'Donation' ? 'selected' : '' }}>
+                                        <option value="Donation" {{ $book->availablereason == 'Donation' ? 'selected' : '' }}>
                                             Donation
                                         </option>
                                     </select>
@@ -169,5 +169,12 @@
         </div>
     </div>
 @endsection
-@push('scripts')
-@endpush
+<script src="{{ asset('assets/dist/select2/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/dist/select2/bootstrap.bundle.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.stdclasses').select2({
+            closeOnSelect: true
+        });
+    });
+</script>

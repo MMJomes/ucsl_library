@@ -60,11 +60,13 @@
                             </div>
                             <div class="row clearfix">
                                 <div class="col-lg-6 col-md-12">
-                                    <h5>{{ __('Select Author') }} </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
+                                    <h5 style="margin-bottom: 10px">{{ 'Select Author Name' }} </h5>
+                                    <select class="stdclasses form-select-lg " data-style="btn-secondary"
                                         name="authors_id" required="true">
+                                        <option selected value="0" class="text-black-50" disabled>--- Select Author Name ---
+                                        </option>
                                         @foreach ($authors as $event)
-                                            <option value="{{ $event->id }}">
+                                            <option value="{{ $event->id }}" style="font-weight: bold ">
                                                 {{ $event->name }}
                                             </option>
                                         @endforeach
@@ -116,11 +118,13 @@
                             </div>
                             <div class="row clearfix">
                                 <div class="col-lg-6 col-md-12">
-                                    <h5>{{ ('Select Category') }} </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
+                                    <h5 style="margin-bottom: 10px">{{ 'Select Category Name' }} </h5>
+                                    <select class="stdclasses form-select-lg " data-style="btn-secondary"
                                         name="categories_id" required="true">
+                                        <option selected value="0" class="text-black-50" disabled>--- Select Category Name ---
+                                        </option>
                                         @foreach ($categories as $event)
-                                            <option value="{{ $event->id }}">
+                                            <option value="{{ $event->id }}" style="font-weight: bold ">
                                                 {{ $event->name }}
                                             </option>
                                         @endforeach
@@ -176,54 +180,13 @@
         </div>
     </div>
 @endsection
-@push('scripts')
-    <script>
-        $(document).ready(function() {
-            $('#nameandpassword').hide();
-            $('#name,#mobile,#dob').keyup(function(e) {
-                var name = document.getElementById('name').value
-                var mobile = document.getElementById('mobile').value
-                var dob = document.getElementById('dob').value
-                if (name.length > 1 && mobile.length > 1 && dob.length > 1) {
-                    showauthdata(name, mobile, dob);
-                }
-                if (name.length == 0 || mobile.length == 0 || dob.length == 0) {
-                    $('#nameandpasswords').hide();
-                }
-            });
+
+<script src="{{ asset('assets/dist/select2/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/dist/select2/bootstrap.bundle.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.stdclasses').select2({
+            closeOnSelect: true
         });
-
-        function showauthdata(name, mobile, dob) {
-            var usernamed = name.replace(/\s/g, '');
-            var usernamefirst = usernamed.substring(0, 3);
-
-            var usermobiles = mobile.replace(/\s/g, '');
-            var usermobile = usermobiles.substr(usermobiles.length - 4);
-            var userfullname = usernamefirst + usermobile;
-            const [year, month, day] = dob.split('-');
-            const result = [month, day, year].join('');
-            var html = '';
-            html += `
-                                <h6>User Auth Information</h6>
-                                <hr>
-                                <div class="row clearfix">
-                                    <div class="col-lg-6 col-md-12">
-                                        <div class="form-group">
-                                            <label for="username">User Name</label>
-                                            <input class="form-control" readonly value="${userfullname}" type="text" id="mytext">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-12">
-                                        <div class="form-group">
-                                            <label for="password">User Password</label>
-                                            <input class="form-control" readonly value="${result}" type="text" id="mytextpassword">
-                                        </div>
-                                    </div>
-                                </div>
-                `;
-
-
-            $('#nameandpasswords').html(html);
-        }
-    </script>
-@endpush
+    });
+</script>

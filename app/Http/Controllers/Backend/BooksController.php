@@ -82,6 +82,7 @@ class BooksController extends Controller
     public function edit($member_slug)
     {
         $book = $this->bookListAllRepository->where('slug', $member_slug)->first();
+        //dd($book);
         if ($book) {
 
             $categories = EventCategory::all();
