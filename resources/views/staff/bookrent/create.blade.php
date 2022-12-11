@@ -42,24 +42,27 @@
                             <hr>
                             <div class="row clearfix mb-4">
                                 <div class="col-lg-6 col-md-12">
-                                    <h5>{{ ('Select  Staff Name') }} </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
+                                    <h5 style="margin-bottom: 10px">{{ 'Select Staff Name' }} </h5>
+                                    <select class="stdclasses form-select-lg " data-style="btn-secondary"
                                         name="teachers_id" required="true">
+                                        <option selected value="0" class="text-black-50" disabled>--- Select Staff Name  ---
+                                        </option>
                                         @foreach ($teachers as $event)
-                                            <option value="{{ $event->id }}">
-                                                {{ $event->name }}
+                                            <option value="{{ $event->id }}" style="font-weight: bold ">
+                                                {{ $event->name }} ( {{$event->department->stfdepartment }}   )
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
-
                                 <div class="col-lg-6 col-md-12">
-                                    <h5>{{ ('Select Book Name') }} </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
+                                    <h5 style="margin-bottom: 10px">{{ 'Select Book Name' }} </h5>
+                                    <select class="stdclasses form-select-lg " data-style="btn-secondary"
                                         name="books_id" required="true">
+                                        <option selected value="0" class="text-black-50" disabled>--- Select Book Name  ---
+                                        </option>
                                         @foreach ($books as $event)
-                                            <option value="{{ $event->id }}">
-                                                {{ $event->bookname }}
+                                            <option value="{{ $event->id }}" style="font-weight: bold ">
+                                                {{ $event->bookname }} (Edtion = {{ $event->edtion }})
                                             </option>
                                         @endforeach
                                     </select>
@@ -68,7 +71,7 @@
                             <div class="row clearfix">
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
-                                        <label for="startdate">PreRequest Date</label>
+                                        <label for="startdate">Create Date</label>
                                         <input type="date" class="form-control" name="startdate" id="startdate"
                                             placeholder="Enter Rent Date " value="{{ old('startdate') }}">
                                     </div>
@@ -101,3 +104,13 @@
         </div>
     </div>
 @endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.stdclasses').select2({
+            closeOnSelect: true
+        });
+    });
+</script>
+

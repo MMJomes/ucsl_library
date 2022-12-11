@@ -36,13 +36,13 @@
                             <hr>
                             <div class="row clearfix mb-4">
                                 <div class="col-lg-6 col-md-12">
-                                    <h5>{{ ('Stduent Name') }} </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
+                                    <h5>{{ ('Staff Name') }} </h5>
+                                    <select disabled class="selectpicker form-control" data-style="form-control btn-secondary"
                                         name="stduents_id" required="true">
-                                        @foreach ($stduents as $event)
+                                        @foreach ($teachers as $event)
                                                 <option value="{{ $event->id }}"
                                                     {{ $event->stduent_id == $author->id ? 'selected' : '' }}>
-                                                    {{ $event->name }}
+                                                    {{ $event->name }} (Dep : {{$event->department->stfdepartment }}   )
                                             </option>
                                         @endforeach
                                     </select>
@@ -50,13 +50,13 @@
 
                                 <div class="col-lg-6 col-md-12">
                                     <h5>{{ ('Book Name') }} </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
+                                    <select disabled class="selectpicker form-control" data-style="form-control btn-secondary"
                                         name="books_id" required="true">
                                         @foreach ($books as $event)
 
                                                 <option value="{{ $event->id }}"
                                                     {{ $event->book_id == $author->id ? 'selected' : '' }}>
-                                                {{ $event->bookname }}
+                                                {{ $event->bookname }}  (Edtion : {{ $event->edtion }})
                                             </option>
                                         @endforeach
                                     </select>
@@ -65,7 +65,7 @@
                             <div class="row clearfix">
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
-                                        <label for="startdate">PreRequest Date</label>
+                                        <label for="startdate">Created Date</label>
                                         <input type="date" class="form-control" name="startdate" id="startdate"
                                             placeholder="Enter Rent Date " value="{{ old('startdate',$author->startdate) }}">
                                     </div>

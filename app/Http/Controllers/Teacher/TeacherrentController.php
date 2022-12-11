@@ -48,7 +48,7 @@ class TeacherrentController extends Controller
      */
     public function create()
     {
-        $teachers  = Teacher::all();
+        $teachers  = Teacher::with('department')->get();
         $books  = Books::all();
         view()->share(['form' => true, 'select' => true]);
         return view('staff.bookrent.create', compact('books', 'teachers'));
@@ -81,10 +81,11 @@ class TeacherrentController extends Controller
     {
         $author = $this->StaffRentRepository->where('id', $id)->first();
         if ($author) {
-            $stduents  = Teacher::all();
+
+            $teachers  = Teacher::with('department')->get();
             $books  = Books::all();
             view()->share(['form' => true, 'select' => true]);
-            return view('staff.bookrent.detail', compact('author', 'stduents', 'books'));
+            return view('staff.bookrent.detail', compact('author', 'teachers', 'books'));
         } else {
             return view('errorpage.404');
         }
@@ -100,10 +101,10 @@ class TeacherrentController extends Controller
     {
         $author = $this->StaffRentRepository->where('id', $id)->first();
         if ($author) {
-            $stduents  = Stduent::all();
+            $teachers  = Teacher::with('department')->get();
             $books  = Books::all();
             view()->share(['form' => true, 'select' => true]);
-            return view('staff.bookrent.edit', compact('author', 'stduents', 'books'));
+            return view('staff.bookrent.edit', compact('author', 'teachers', 'books'));
         } else {
             return view('errorpage.404');
         }
@@ -120,6 +121,11 @@ class TeacherrentController extends Controller
     {
         $Author = $this->StaffRentRepository->where('id', $id)->first();
         if ($Author) {
+            $strtime = $request->startdate;
+            $book_rent_duration = Setting::where('key', 'staff_book_rent_duration')->first()->value;
+            $book_return_date = Carbon::parse($strtime);
+            $enddate = $book_return_date->addDays($book_rent_duration);
+            $request->merge(['enddate' => $enddate, 'startdate' => $strtime]);
             $this->StaffRentRepository->updateById($Author->id, $request->all());
             return redirect()->route('staff.rentbyStaff.index')->with(['success' => 'Successfully Updated!']);
         } else {
