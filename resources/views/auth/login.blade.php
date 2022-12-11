@@ -247,12 +247,13 @@
                     <form class="form-horizontal form-material" id="loginform" action="{{ route('login') }}" method="POST">
                         @csrf
                         <div class="row justify-content-center my-auto">
-                            <div class="col-md-8 col-10 my-5">
+                            <div class="col-md-9 col-10 my-5">
                                 <div class="row justify-content-center px-3 mb-3">
                                     <img id="logo" src="{{ url('/assets/images/backlogo.jpg') }}"
                                         style="width: 30%;height: 12%;">
                                 </div>
-                                <h4 class="mb-1 text-center heading">Library Management System</h4>
+                                <h4 class="mb-1 text-center heading" style="font-family: 'Times New Roman', Times, serif">DIGITAL
+                                    LIBRARY MANAGENMENT SYSTEM</h4>
                                 <hr>
                                 <h6 class="msg-info">Please login to your account</h6>
 

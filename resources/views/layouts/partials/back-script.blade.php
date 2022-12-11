@@ -11,6 +11,9 @@
 <!--stickey kit -->
 <script src="{{ asset('assets/node_modules/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
 <script src="{{ asset('assets/node_modules/sparkline/jquery.sparkline.min.js') }}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 <!--Custom JavaScript -->
 <script src="{{ asset('assets/dist/js/custom.min.js') }}"></script>
 
@@ -32,6 +35,11 @@
 @if ($toast ?? false)
     <script src="{{ asset('assets/node_modules/toast-master/js/jquery.toast.js') }}"></script>
     <script>
+        $(document).ready(function() {
+    $('.select2').select2({
+    closeOnSelect: false
+});
+});
         @if ($errors->any())
             let errors = @json($errors->all());
             errors.forEach(element => {
