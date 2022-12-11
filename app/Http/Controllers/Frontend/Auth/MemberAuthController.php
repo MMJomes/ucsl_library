@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Member\Auth\MemberLoginRequest;
+use App\Models\Books;
 use App\Models\Setting;
 use App\Models\Stduent\StdClass;
 use App\Models\Stduent\Stduent;
@@ -13,6 +14,7 @@ use App\Repositories\Backend\Interf\StaffRentRepository;
 use App\Repositories\Backend\Interf\StudentRepository;
 use App\Repositories\Frontend\Interf\MemberAuthRepository;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class MemberAuthController extends Controller
 {
@@ -125,4 +127,22 @@ class MemberAuthController extends Controller
     {
         return view('frontend.auth.email');
     }
+    public function books(Request $request){
+
+        if ($request->ajax()) {
+            $data = Books::with('author', 'category')->get();
+            return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+
+                           $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('frontend.userpage.totalbook');
+
+     }
 }

@@ -12,7 +12,7 @@
     <div class="preloader">
         <div class="loader">
             <div class="loader__figure"></div>
-            <p class="loader__label">UCSL Library</p>
+            <p class="loader__label">DIGITAL LIBRARY MANAGENMENT SYSTEM</p>
         </div>
     </div>
     <!-- ============================================================== -->

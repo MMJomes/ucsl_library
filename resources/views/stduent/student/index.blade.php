@@ -83,6 +83,7 @@
             }).then(function(data, textStatus, jqXHR) {
                 var response = JSON.parse(data);
                 $('#dataTable').DataTable({
+                    "scrollX": true,
                     data: response["data"],
                     dom: 'Bfrtip',
                     buttons: [

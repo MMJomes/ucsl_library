@@ -209,12 +209,12 @@ Route::middleware('globalSetting')->group(function () {
 
 
     Route::namespace('App\Http\Controllers\Frontend')->prefix('')->group(function () {
-        //Route::get('/', 'MemberDashboardController@index')->name('user');
-        Route::post('login', 'Auth\MemberAuthController@loginAction')->name('member.login');
-        Route::post('reg', 'Auth\MemberAuthController@regAction')->name('member.reg');
-        Route::get('/', 'Auth\MemberAuthController@login')->name('member.index');
-        Route::get('login', 'Auth\MemberAuthController@login')->name('member.index');
-        Route::get('register', 'Auth\MemberAuthController@register')->name('member.register');
+        Route::get('/', 'Auth\MemberAuthController@books')->name('users.index');
+        // Route::post('login', 'Auth\MemberAuthController@loginAction')->name('member.login');
+        // Route::post('reg', 'Auth\MemberAuthController@regAction')->name('member.reg');
+        // Route::get('/', 'Auth\MemberAuthController@login')->name('member.index');
+        // Route::get('login', 'Auth\MemberAuthController@login')->name('member.index');
+        // Route::get('register', 'Auth\MemberAuthController@register')->name('member.register');
     });
 
 
@@ -224,14 +224,14 @@ Route::middleware('globalSetting')->group(function () {
     });
 
 
-    Route::prefix('user')->as('user.')->namespace('App\Http\Controllers\Frontend')->group(function () {
+    // Route::prefix('user')->as('user.')->namespace('App\Http\Controllers\Frontend')->group(function () {
 
-        Route::get('login', 'Auth\MemberAuthController@login')->name('member.index');
-        Route::get('/', 'MemberDashboardController@index')->name('user');
-        Route::middleware('member')->group(function () {
-            Route::get('/', 'MemberDashboardController@index')->name('user');
-            Route::get('login', 'Auth\MemberAuthController@login')->name('member.index');
-            Route::get('password/reset', 'Auth\MemberAuthController@passwordReset')->name('password.reset');
-        });
-    });
+    //     Route::get('login', 'Auth\MemberAuthController@login')->name('member.index');
+    //     Route::get('/', 'MemberDashboardController@index')->name('user');
+    //     Route::middleware('member')->group(function () {
+    //         Route::get('/', 'MemberDashboardController@index')->name('user');
+    //         Route::get('login', 'Auth\MemberAuthController@login')->name('member.index');
+    //         Route::get('password/reset', 'Auth\MemberAuthController@passwordReset')->name('password.reset');
+    //     });
+    // });
 });
