@@ -27,6 +27,14 @@
                                 </div>
                             </div>
                         @endif
+
+                        @if (\Session::get('success'))
+                            <div class="alert alert-success">
+                                <ul>
+                                    <li>{!! \Session::get('success') !!}</li>
+                                </ul>
+                            </div>
+                        @endif
                         <div class="row">
                             <div class="col-md-12">
                                 @if ($errors->any())
@@ -36,6 +44,7 @@
                                 @endif
                             </div>
                         </div>
+                        {{Session::get('success');}}
                         <h6>Stduent Photo</h6>
                         <hr>
                         <div class="media photo center">

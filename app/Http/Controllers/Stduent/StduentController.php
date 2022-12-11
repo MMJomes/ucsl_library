@@ -48,8 +48,9 @@ class StduentController extends Controller
      */
     public function create()
     {
+
         $categories  = StdClass::all();
-        view()->share(['form' => true,'select' => true ]);
+        view()->share(['form' => true, 'select' => true]);
         return view('stduent.student.create', compact('categories'));
     }
 
@@ -61,31 +62,43 @@ class StduentController extends Controller
      */
     public function store(Request $request)
     {
-        $data1 = DB::table('stduents')->latest('id')->first();
-        if ($data1 == null) {
-            $last_id = 1;
+
+        $email = $request->email;
+        $emailValid = substr($email, -17);
+        if ($emailValid == "@ucsloikaw.edu.mm") {
+            $data1 = DB::table('stduents')->latest('id')->first();
+            if ($data1 == null) {
+                $last_id = 1;
+            } else {
+                $id = Stduent::latest()->first()->id;
+                $last_id = $id + 1;
+            }
+            if ($request->hasfile('logos')) {
+                $img = $request->file('logos');
+                $upload_path = public_path() . '/upload/stduents/';
+                $file = $img->getClientOriginalName();
+                $name = $last_id . $file;
+                $img->move($upload_path, $name);
+                $path = '/upload/stduents/' . $name;
+            } else {
+                $path = "/default-user.png";
+            }
+            $request->merge([
+                'image' => $path,
+                'status' => 'on',
+            ]);
+            $this->studentRepository->create($request->all());
+            return redirect()
+                ->route('stduent.stduents.index')
+                ->with('success', 'Successfully Added');
         } else {
-            $id = Stduent::latest()->first()->id;
-            $last_id = $id + 1;
+
+            //return redirect()->back()->with('success', 'Invail Email Address!');
+
+            return redirect()
+                ->route('stduent.stduents.create')
+                ->with('success', 'Invail Email Address!');
         }
-        if ($request->hasfile('logos')) {
-            $img = $request->file('logos');
-            $upload_path = public_path() . '/upload/stduents/';
-            $file = $img->getClientOriginalName();
-            $name = $last_id . $file;
-            $img->move($upload_path, $name);
-            $path = '/upload/stduents/' . $name;
-        } else {
-            $path = "/default-user.png";
-        }
-        $request->merge([
-            'image' => $path,
-            'status' => 'on',
-        ]);
-        $this->studentRepository->create($request->all());
-        return redirect()
-            ->route('stduent.stduents.index')
-            ->with(['success' => 'Successfully Added']);
     }
 
     /**
@@ -121,22 +134,29 @@ class StduentController extends Controller
     {
         $stduent = $this->studentRepository->where('slug', $slug)->first();
         if ($stduent) {
-            if ($request->hasfile('logos')) {
-                $img = $request->file('logos');
-                $upload_path = public_path() . '/upload/stduent/';
-                $file = $img->getClientOriginalName();
-                $name = $stduent->id . $file;
-                $img->move($upload_path, $name);
-                $path = '/upload/stduent/' . $name;
+
+            $email = $request->email;
+            $emailValid = substr($email, -17);
+            if ($emailValid == "@ucsloikaw.edu.mm") {
+                if ($request->hasfile('logos')) {
+                    $img = $request->file('logos');
+                    $upload_path = public_path() . '/upload/stduent/';
+                    $file = $img->getClientOriginalName();
+                    $name = $stduent->id . $file;
+                    $img->move($upload_path, $name);
+                    $path = '/upload/stduent/' . $name;
+                } else {
+                    $path = $request->oldimg;
+                }
+                $request->merge([
+                    'logo' => $path,
+                ]);
+                $request->merge(['image' => $path]);
+                $this->studentRepository->updateById($stduent->id, $request->all());
+                return redirect()->route('stduent.stduents.index')->with(['success' => 'Successfully Updated!']);
             } else {
-                $path = $request->oldimg;
+                redirect()->back()->with('success', 'Invail Email Address!');
             }
-            $request->merge([
-                'logo' => $path,
-            ]);
-            $request->merge(['image' => $path]);
-            $this->studentRepository->updateById($stduent->id, $request->all());
-            return redirect()->route('stduent.stduents.index')->with(['success' => 'Successfully Updated!']);
         } else {
             return view('errorpage.404');
         }
