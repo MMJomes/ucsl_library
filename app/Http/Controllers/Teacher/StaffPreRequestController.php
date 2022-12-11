@@ -119,7 +119,7 @@ class StaffPreRequestController extends Controller
         $eventcategory = $this->StaffPreQuestRepository->where('slug', $request->slug)->first();
         if ($eventcategory) {
             $this->StaffPreQuestRepository->deleteById($eventcategory->id);
-            return redirect()->route('backend.author.index')->with('success', 'Event  deleted successfully');
+            return redirect()->route('staff.requestbyStaffs.index')->with('success', 'Event  deleted successfully');
         }
         return view('errorpage.404');
     }

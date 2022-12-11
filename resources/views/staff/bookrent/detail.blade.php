@@ -8,7 +8,7 @@
         <div class="col-md-6">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('backend.author.index') }}"> {{ __('message.authorlist') }}</a>
+                <li class="breadcrumb-item"><a href="{{ route('staff.rentbyStaff.index') }}"> {{ __('message.authorlist') }}</a>
                 </li>
                 <li class="breadcrumb-item active">{{ __('message.authorlist') }}</li>
             </ol>
@@ -19,7 +19,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action={{ route('backend.author.store') }} method="POST" enctype="multipart/form-data">
+                    <form action={{ route('staff.rentbyStaff.store') }} method="POST" enctype="multipart/form-data">
                         @csrf
                         {{ csrf_field() }}
                         <div class="row">

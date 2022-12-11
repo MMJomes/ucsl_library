@@ -8,7 +8,7 @@
         <div class="col-md-6">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('backend.author.index') }}"> {{ __('message.authorlist') }}</a>
+                <li class="breadcrumb-item"><a href="{{ route('stduent.stduents.index') }}"> {{ __('message.authorlist') }}</a>
                 </li>
                 <li class="breadcrumb-item active">{{ __('message.authorlist') }}</li>
             </ol>
@@ -65,12 +65,12 @@
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <h5>{{ 'Select Class' }} </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
+                                    <select class="selectpicker  form-control" disabled data-style="form-control btn-secondary"
                                         name="std_classes_id" required="true">
                                         {{ $categories }}
                                         @foreach ($categories as $event)
                                             <option value="{{ $event->id }}"
-                                                {{ $event->id = $stduent->std_classes_id ? 'selected' : '' }}>
+                                                {{ $event->id == $stduent->std_classes_id ? 'selected' : '' }}>
                                                 {{ $event->stduentclass }}
                                             </option>
                                         @endforeach

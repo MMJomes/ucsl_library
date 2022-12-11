@@ -113,7 +113,7 @@
                                     {{ __('message.save') }}</button>
                             @endif
 
-                            <a href="{{ route('backend.author.index') }}" class="btn btn-danger"><i
+                            <a href="{{ route('staff.staffs.index') }}" class="btn btn-danger"><i
                                     class="icon-logout"></i> {{ __('message.back') }}</a>
                         </div>
 

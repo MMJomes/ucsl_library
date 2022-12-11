@@ -137,7 +137,7 @@ class PreRequestController extends Controller
                 ]);
             }
             $this->PreQuestRepository->updateById($Author->id, $request->all());
-            return redirect()->route('backend.author.index')->with(['success' => 'Successfully Updated!']);
+            return redirect()->route('stduent.preRequestBooks.index')->with(['success' => 'Successfully Updated!']);
         } else {
             return view('errorpage.404');
         }
@@ -147,7 +147,7 @@ class PreRequestController extends Controller
         $eventcategory = $this->PreQuestRepository->where('slug', $request->slug)->first();
         if ($eventcategory) {
             $this->PreQuestRepository->deleteById($eventcategory->id);
-            return redirect()->route('backend.author.index')->with('success', 'Event  deleted successfully');
+            return redirect()->route('stduent.preRequestBooks.index')->with('success', 'Event  deleted successfully');
         }
         return view('errorpage.404');
     }
@@ -181,12 +181,12 @@ class PreRequestController extends Controller
             $failures = $e->failures();
             return redirect()->back()->withErrors($failures);
         }
-        return redirect()->route('backend.author.index')->with(['success' => 'Successfully Upload!']);
+        return redirect()->route('stduent.preRequestBooks.index')->with(['success' => 'Successfully Upload!']);
     }
     public function mass_destroy(Request $request)
     {
         $this->PreQuestRepository->deleteMultipleById($request->ids);
-        return redirect()->route('backend.author.index')->with('success', 'Author  deleted successfully');
+        return redirect()->route('stduent.preRequestBooks.index')->with('success', 'Author  deleted successfully');
     }
     public function approve(Request $request, $id)
     {

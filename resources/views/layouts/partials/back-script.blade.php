@@ -12,8 +12,6 @@
 <script src="{{ asset('assets/node_modules/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
 <script src="{{ asset('assets/node_modules/sparkline/jquery.sparkline.min.js') }}"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 <!--Custom JavaScript -->
 <script src="{{ asset('assets/dist/js/custom.min.js') }}"></script>
 
@@ -26,6 +24,8 @@
 
 @if ($select ?? false)
 <script src="{{ asset('assets/node_modules/bootstrap-select/bootstrap-select.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 @endif
 
 @if ($rolesJS ?? false)

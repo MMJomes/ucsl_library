@@ -49,7 +49,7 @@ class StduentController extends Controller
     public function create()
     {
         $categories  = StdClass::all();
-        view()->share(['form' => true, 'select' => true]);
+        view()->share(['form' => true,'select' => true ]);
         return view('stduent.student.create', compact('categories'));
     }
 
@@ -110,9 +110,9 @@ class StduentController extends Controller
     {
         $stduent = $this->studentRepository->where('slug', $slug)->first();
         if ($stduent) {
-            $categories = StdClass::all();
+            $stduentCls = StdClass::all();
             view()->share(['form' => true, 'select' => true]);
-            return view('stduent.student.edit', compact('stduent', 'categories'));
+            return view('stduent.student.edit', compact('stduent', 'stduentCls'));
         } else {
             return view('errorpage.404');
         }

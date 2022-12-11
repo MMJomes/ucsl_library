@@ -47,7 +47,7 @@ class BookRentController extends Controller
      */
     public function create()
     {
-        $stduents  = Stduent::all();
+        $stduents  = Stduent::with('stdclass')->get();
         $books  = Books::all();
         view()->share(['form' => true, 'select' => true]);
         return view('stduent.bookrent.create', compact('books', 'stduents'));
@@ -107,8 +107,8 @@ class BookRentController extends Controller
     {
         $author = $this->BookRentRepository->where('id', $id)->first();
         if ($author) {
-            $stduents  = Stduent::all();
-            $books  = Books::all();
+            $stduents  = Stduent::get();
+            $books  = Books::get();
             view()->share(['form' => true, 'select' => true]);
             return view('stduent.bookrent.edit', compact('author', 'stduents', 'books'));
         } else {
