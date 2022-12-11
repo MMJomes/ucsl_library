@@ -32,8 +32,6 @@ class TeacherrentController extends Controller
     }
     public function index()
     {
-
-
         if (request()->ajax()) {
             $user = auth()->user();
             $datas = Teacherrent::with('book', 'teacher')->orderBy('id', 'ASC')->get();

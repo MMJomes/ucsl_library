@@ -52,7 +52,8 @@ class PreRequestController extends Controller
      */
     public function create()
     {
-        $stduents  = Stduent::all();
+
+        $stduents  = Stduent::with('stdclass')->get();
         $books  = Books::all();
         view()->share(['form' => true, 'select' => true]);
         return view('stduent.prequestbook.create', compact('books', 'stduents'));

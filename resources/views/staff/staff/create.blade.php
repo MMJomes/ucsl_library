@@ -68,12 +68,13 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
-                                    <h5>{{ 'Select Staff Department' }} </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
+                                    <h5 style="margin-bottom: 10px">{{ 'Select Class' }} </h5>
+                                    <select class="stdclasses form-select-lg " data-style="btn-secondary"
                                         name="departements_id" required="true">
-                                        {{ $categories }}
+                                        <option selected value="0" class="text-black-50" disabled>--- Select Class---
+                                        </option>
                                         @foreach ($categories as $event)
-                                            <option value="{{ $event->id }}">
+                                            <option value="{{ $event->id }}" style="font-weight: bold ">
                                                 {{ $event->stfdepartment }}
                                             </option>
                                         @endforeach
@@ -124,3 +125,12 @@
     </div>
     </div>
 @endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.stdclasses').select2({
+            closeOnSelect: true
+        });
+    });
+</script>

@@ -96,11 +96,13 @@ class TeacherController extends Controller
 
     public function edit($slug)
     {
+
+
         $stduent = $this->StaffRepository->where('slug', $slug)->first();
         if ($stduent) {
-            $categories = Departement::all();
+            $depart = Departement::all();
             view()->share(['form' => true, 'select' => true]);
-            return view('staff.staff.edit', compact('stduent', 'categories'));
+            return view('staff.staff.edit', compact('stduent', 'depart'));
         } else {
             return view('errorpage.404');
         }

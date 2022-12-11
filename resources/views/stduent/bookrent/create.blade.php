@@ -43,17 +43,6 @@
                             <h6>{{ __('message.basicinfo') }}</h6>
                             <hr>
                             <div class="row clearfix mb-4">
-                                {{-- <div class="col-lg-6 col-md-12">
-                                    <h5>{{ 'Stduent Name' }} </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
-                                        name="stduents_id" required="true">
-                                        @foreach ($stduents as $event)
-                                            <option value="{{ $event->id }}">
-                                                {{ $event->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div> --}}
                                 <div class="col-lg-6 col-md-12">
                                     <h5 style="margin-bottom: 10px">{{ 'Select Stduent Name' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary"
@@ -80,18 +69,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-
-                                {{-- <div class="col-lg-6 col-md-12">
-                                    <h5>{{ 'Book Name' }} </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
-                                        name="books_id" required="true">
-                                        @foreach ($books as $event)
-                                            <option value="{{ $event->id }}">
-                                                {{ $event->bookname }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div> --}}
                             </div>
                             <div class="row clearfix">
                                 <div class="col-lg-6 col-md-12">

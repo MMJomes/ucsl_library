@@ -1,18 +1,18 @@
 @extends('layouts.myapp')
 
 @section('content')
-<div class="row page-titles">
-    <div class="col-md-12">
-        <h4 class="text-white">{{ 'Staff Lists' }} </h4>
+    <div class="row page-titles">
+        <div class="col-md-12">
+            <h4 class="text-white">{{ 'Staff Lists' }} </h4>
+        </div>
+        <div class="col-md-6">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('staff.staffs.index') }}"> {{ __('Staff Lists') }}</a></li>
+                <li class="breadcrumb-item active">{{ 'Staff Lists' }}</li>
+            </ol>
+        </div>
     </div>
-    <div class="col-md-6">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('staff.staffs.index') }}"> {{ __('Staff Lists') }}</a></li>
-            <li class="breadcrumb-item active">{{ 'Staff Lists' }}</li>
-        </ol>
-    </div>
-</div>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -61,14 +61,15 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
-                                    <h5>{{ 'Select Class' }} </h5>
-                                    <select class="selectpicker form-control" data-style="form-control btn-secondary"
+                                    <h5 style="margin-bottom: 10px">{{ 'Select Class' }} </h5>
+                                    <select class="stdclasses form-select-lg " data-style="btn-secondary"
                                         name="departements_id" required="true">
-                                        {{ $categories }}
-                                        @foreach ($categories as $event)
-                                            <option value="{{ $event->id }}"
-                                                {{ $event->id = $stduent->departements_id ? 'selected' : '' }}>
-                                                {{ $event->stfdepartment }}
+                                        <option selected value="0" class="text-black-50" disabled>--- Select Class---
+                                        </option>
+                                        @foreach ($depart as $des)
+                                            <option value="{{ $des->id }}" {{ $des->id == $stduent->departements_id ? 'selected' : '' }} style="font-weight: bold ">
+                                                {{ $des->stfdepartment }}
+
                                             </option>
                                         @endforeach
                                     </select>
@@ -101,19 +102,25 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="mt-5">
                                 <button type="submit" class="btn btn-info"><i class="fa fa-save"></i>
                                     {{ __('message.save') }}</button>
                                 <a href="{{ route('staff.staffs.index') }}" class="btn btn-danger"><i
                                         class="icon-logout"></i> {{ __('message.back') }}</a>
                             </div>
-
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
     </div>
 @endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.stdclasses').select2({
+            closeOnSelect: true
+        });
+    });
+</script>
