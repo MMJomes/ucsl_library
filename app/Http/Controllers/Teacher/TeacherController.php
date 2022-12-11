@@ -49,31 +49,41 @@ class TeacherController extends Controller
     }
     public function store(Request $request)
     {
-        $data1 = DB::table('teachers')->latest('id')->first();
-        if ($data1 == null) {
-            $last_id = 1;
+
+        $email = $request->email;
+        $emailValid = substr($email, -17);
+        if ($emailValid == "@ucsloikaw.edu.mm") {
+            $data1 = DB::table('teachers')->latest('id')->first();
+            if ($data1 == null) {
+                $last_id = 1;
+            } else {
+                $id = Teacher::latest()->first()->id;
+                $last_id = $id + 1;
+            }
+            if ($request->hasfile('logos')) {
+                $img = $request->file('logos');
+                $upload_path = public_path() . '/upload/staff/';
+                $file = $img->getClientOriginalName();
+                $name = $last_id . $file;
+                $img->move($upload_path, $name);
+                $path = '/upload/staff/' . $name;
+            } else {
+                $path = "/default-user.png";
+            }
+            $request->merge([
+                'image' => $path,
+                'status' => 'on',
+            ]);
+            $this->StaffRepository->create($request->all());
+            return redirect()
+                ->route('staff.staffs.index')
+                ->with(['success' => 'Successfully Added']);
         } else {
-            $id = Teacher::latest()->first()->id;
-            $last_id = $id + 1;
+
+            return redirect()
+                ->route('stduent.stduents.create')
+                ->with('success', 'Invail Email Address!');
         }
-        if ($request->hasfile('logos')) {
-            $img = $request->file('logos');
-            $upload_path = public_path() . '/upload/staff/';
-            $file = $img->getClientOriginalName();
-            $name = $last_id . $file;
-            $img->move($upload_path, $name);
-            $path = '/upload/staff/' . $name;
-        } else {
-            $path = "/default-user.png";
-        }
-        $request->merge([
-            'image' => $path,
-            'status' => 'on',
-        ]);
-        $this->StaffRepository->create($request->all());
-        return redirect()
-            ->route('staff.staffs.index')
-            ->with(['success' => 'Successfully Added']);
     }
 
     /**
@@ -121,6 +131,10 @@ class TeacherController extends Controller
 
         $stduent = $this->StaffRepository->where('slug', $slug)->first();
         if ($stduent) {
+
+            $email = $request->email;
+            $emailValid = substr($email, -17);
+            if ($emailValid == "@ucsloikaw.edu.mm") {
             if ($request->hasfile('logos')) {
                 $img = $request->file('logos');
                 $upload_path = public_path() . '/upload/stduent/';
@@ -137,6 +151,11 @@ class TeacherController extends Controller
             $request->merge(['image' => $path]);
             $this->StaffRepository->updateById($stduent->id, $request->all());
             return redirect()->route('staff.staffs.index')->with(['success' => 'Successfully Updated!']);
+        }else{
+            return redirect()
+                ->route('staff.staffs.index')
+                ->with('success', 'Invail Email Address!');
+        }
         } else {
             return view('errorpage.404');
         }
