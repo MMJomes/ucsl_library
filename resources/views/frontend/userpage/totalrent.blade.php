@@ -10,7 +10,7 @@
         <div class="container">
             <h2 style="font-family:Verdana, sans-serif">DIGITAL LIBRARY MANAGENMENT SYSTEM</h2>
             <hr style="font-weight:bold ">
-            <h6 style="font-family:Verdana, sans-serif">Total Number Books Your Have Rented & There're Information!</h6>
+            <h6 style="font-family:Verdana, sans-serif">Total Number Books & There're Information!</h6>
             <table class="table table-bordered data-table " id="existingRulesDataTable">
                 <thead>
                     <tr>
@@ -41,6 +41,7 @@
                 </div>
                 <div class="modal-body" id="smallBody">
                     <div>
+                        <!-- the result to be displayed apply here -->
                     </div>
                 </div>
             </div>
@@ -48,8 +49,6 @@
     </div>
     <script type="text/javascript">
         $(function() {
-
-
             var existingRuleTable;
             window.route_mass_crud_entries_destroy = "{{ route('backend.book.mass.destroy') }}";
             existingRuleTable = $('#existingRulesDataTable').DataTable({
@@ -81,7 +80,6 @@
                         data: 'enddate',
                         defaultContent: "-"
                     },
-
                     {
                         defaultContent: "-",
                         name: 'remark',
@@ -130,36 +128,45 @@
                         }
 
                     },
+
                     {
                         orderable: false,
                         "render": function(data, type, full, meta) {
-                            var bookPreorder =
+                            var booksOrder =
                                 "{{ route('users.rentbooks', ':id') }}";
-                            bookPreorder = bookPreorder.replace(':id', full.id);
+                            booksOrder = booksOrder.replace(':id', full.id);
                             var endTime = full.enddate;
-                            var ent = new Date(endTime);
-                            var currentTime = new Date();
-                            var rentingTime = (ent.getTime() - currentTime
-                                .getTime()) / 1000;
-                            if (rentingTime > 0) {
-                                var pdfURL = full.bookpdflink;
-                                return '<a href="' + bookPreorder +
-                                    '" class="btn btn-outline-info orderbutton btn-sm mx-2"  style="font-weight:bold;  font-size:12px"  data-attr="' +
-                                    bookPreorder +
-                                    '" data-target="#smallModal" data-toggle="tooltip" title=" PreOrder to Rent This Book!"><i class="fa fa-plus"></i> Continue </a>';
-                            } else {
-                                var pdfURL = full.bookpdflink;
-                                return '<a href="javascript:void(0)" class="btn btn-outline-danger btn-sm mx-2" disabled disabled=true  style="font-weight:bold;  font-size:12px"  data-attr="" data-target="#smallModal" data-toggle="tooltip" disabled title=" Come To Library To Take Continue This Book!"><i class="fa fa-ban"></i> Overed </a>';
-                            }
+                            var rentstatus = full.requesttatus;
+                            if (rentstatus == 'on') {
+                                return '<a href="javascript:void(0)" class="btn btn-outline-info btn-sm mx-2" disabled disabled=true  style="font-weight:bold;  font-size:12px"  data-attr="" data-target="#smallModal" data-toggle="tooltip" disabled title=" Your  Continue State Is Pending Now!"><i class="icon-clock"></i> Pending </a>';
 
+                            } else {
+
+
+                                var ent = new Date(endTime);
+                                var currentTime = new Date();
+                                var rentingTime = (ent.getTime() - currentTime
+                                    .getTime()) / 1000;
+                                var mybutton = '';
+                                var exitbook = '';
+                                if (rentingTime > 0) {
+                                    exitbook = "Continue";
+                                    mybutton = '<button name="deleteRuleButton" href="' +
+                                        booksOrder +
+                                        '" class="btn btn-outline-success orderbutton  btn-sm mx-2 orderConfirm" id="orderConfirm"  style="font-weight:bold; font-size:12px"  data-toggle="modal" data-target="#delete-confirmation-modal"  title="Order to Rent This Book!"><i class="fa fa-tasks"></i> ' +
+                                        exitbook + ' </button>';
+                                } else {
+                                    mybutton =
+                                        '<a href="javascript:void(0)" class="btn btn-outline-danger btn-sm mx-2" disabled disabled=true  style="font-weight:bold;  font-size:12px"  data-attr="" data-target="#smallModal" data-toggle="tooltip" disabled title=" Come To Library To Take Continue This Book!"><i class="fa fa-ban"></i> Overed </a>';
+                                }
+                                return mybutton;
+                            }
                         }
                     },
-
                 ]
             });
-            $('#existingRulesDataTable').on('click', 'tbody .orderbutton', function() {
+            $('#existingRulesDataTable').on('click', 'tbody .orderbutton ', function() {
                 deleteRecordData = existingRuleTable.row($(this).closest('tr')).data();
-                console.log(deleteRecordData);
                 var myid = deleteRecordData['id'];
                 $.ajax({
                     url: "{{ route('users.rentbooks', 'id') }}".replace(
@@ -169,7 +176,7 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function() {
-                        return confirm("Are You Sure You Want To Continue Rent This Book?");
+                        return confirm("Are You Sure You Want This Book?");
                     },
                     complete: function() {
                         $(this).prop('disabled', false);

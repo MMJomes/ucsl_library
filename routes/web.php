@@ -213,7 +213,7 @@ Route::middleware('globalSetting')->group(function () {
         Route::get('order/{id}', 'Auth\MemberAuthController@bookorder')->name('users.bookorders');
 
         Route::get('totalrent', 'Auth\MemberAuthController@rent')->name('users.rents');
-        Route::get('rent/{id}', 'Auth\MemberAuthController@rent')->name('users.rentbooks');
+        Route::get('totalrent/{id}', 'Auth\MemberAuthController@prenent')->name('users.rentbooks');
 
         Route::get('totalreq', 'Auth\MemberAuthController@prerequest')->name('users.prerequest');
         Route::get('prerequestAction/{id}', 'Auth\MemberAuthController@prerequestAction')->name('users.prerequestAction');

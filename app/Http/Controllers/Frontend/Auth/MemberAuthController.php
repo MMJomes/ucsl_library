@@ -10,29 +10,46 @@ use App\Models\Stduent\PreRequest;
 use App\Models\Stduent\StdClass;
 use App\Models\Stduent\Stduent;
 use App\Models\Teacher\Departement;
+use App\Models\Teacher\StaffPreRequest;
 use App\Models\Teacher\Teacher;
+use App\Models\Teacher\Teacherrent;
 use App\Repositories\Backend\Interf\StaffRentRepository;
 use App\Repositories\Backend\Interf\StudentRepository;
 use App\Repositories\Frontend\Interf\MemberAuthRepository;
+use App\Repositories\Backend\Interf\BookRentRepository;
+use App\Repositories\Backend\Interf\PreQuestRepository;
+use App\Repositories\Backend\Interf\StaffPreQuestRepository;
+use App\Repositories\Backend\Interf\StaffRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
 
 class MemberAuthController extends Controller
 {
-
-    private MemberAuthRepository $repository;
     private StudentRepository $studentRepository;
+    private StaffRepository $StaffRepository;
     private StaffRentRepository $StaffRentRepository;
+    private BookRentRepository $BookRentRepository;
+    private PreQuestRepository $PreQuestRepository;
+    private StaffPreQuestRepository $StaffPreQuestRepository;
 
 
-
-    public function __construct(MemberAuthRepository $repository, StudentRepository $studentRepository, StaffRentRepository $StaffRentRepository)
-    {
-        $this->repository = $repository;
+    public function __construct(
+        StaffRepository $StaffRepository,
+        PreQuestRepository $PreQuestRepository,
+        MemberAuthRepository $repository,
+        StudentRepository $studentRepository,
+        StaffRentRepository $StaffRentRepository,
+        BookRentRepository $BookRentRepository,
+        StaffPreQuestRepository $StaffPreQuestRepository
+    ) {
         $this->studentRepository = $studentRepository;
         $this->StaffRentRepository = $StaffRentRepository;
+        $this->BookRentRepository = $BookRentRepository;
+        $this->PreQuestRepository = $PreQuestRepository;
+        $this->StaffRepository = $StaffRepository;
+        $this->StaffPreQuestRepository =  $StaffPreQuestRepository;
     }
 
     public function login()
@@ -133,7 +150,7 @@ class MemberAuthController extends Controller
             }
         } else {
             Session::put('email', $request->email);
-            $data = $this->StaffRentRepository->create($request->all());
+            $data = $this->StaffRepository->create($request->all());
         }
         if ($data) {
             return redirect()->route('users.totalbook');
@@ -165,104 +182,217 @@ class MemberAuthController extends Controller
             return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
         }
     }
-    public function bookorder(Request $request, $bookid)
+    public function bookorder(Request $request, $id)
     {
+
         $useremail  = Session::get('email');
+        //dd($useremail);
         $staffemail = Teacher::where('email', $useremail)->first();
         $stdemail = Stduent::where('email', $useremail)->first();
-        if ($staffemail != null || $stdemail != null) {
-            dd($bookid);
-            //     dd($bookid);
-            //  dd($bookid);
-            //     dd($request->all());
-
-            return response()->json([
-                'message' => 'Auction BOOKORDER Created Successfully',
-            ]);
-        } else {
-            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
-        }
-    }
-    public function rent(Request $request, $stduent_id = 5)
-    {
-        $useremail  = Session::get('email');
-        $staffemail = Teacher::where('email', $useremail)->first();
-        $stdemail = Stduent::where('email', $useremail)->first();
-        if ($staffemail != null || $stdemail != null) {
-            if ($request->ajax()) {
-                $data = Bookrent::with('book', 'stduent')->orderBy('created_at', 'ASC')->get();
-                //$data = Bookrent::with('book', 'stduent')->where('stduents_id', $stduent_id)->orderBy('created_at', 'ASC')->get();
-                return DataTables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function ($row) {
-                        $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-
-                        return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+        if ($stdemail != null || $staffemail != null) {
+            $boookiddata = Books::with('author', 'category')->where('id', $id)->first();
+            if ($boookiddata) {
+                if ($staffemail) {
+                    // if ($boookiddata->availablebook >= 1) {
+                    //     $useremailid = $staffemail->id;
+                    //     $booksid = $boookiddata->id;
+                    //     $startdated = Carbon::now();
+                    //     $request->merge(['books_id' => $booksid, 'teachers_id' => $useremailid, 'startdate' => $startdated, 'remark', "Order By User!"]);
+                    //     $data = $this->StaffRentRepository->create($request->all());
+                    //     if ($data)
+                    //         return response()->json([
+                    //             'message' => 'Your BOOK ORDER Created Successfully',
+                    //         ]);
+                    // } else {
+                    //     $useremailid = $staffemail->id;
+                    //     $booksid = $boookiddata->id;
+                    //     $request->merge(['books_id' => $booksid, 'stduents_id' => $useremailid,  'remark', " PreOrder By User!"]);
+                    //     $data = $this->StaffPreQuestRepository->create($request->all());
+                    //     if ($data)
+                    //         return response()->json([
+                    //             'message' => 'Your BOOK PREORDER Created Successfully',
+                    //         ]);
+                    // }
+                    $useremailid = $staffemail->id;
+                    $booksid = $boookiddata->id;
+                    $request->merge(['books_id' => $booksid, 'stduents_id' => $useremailid,  'remark', " PreOrder By User!"]);
+                    $data = $this->StaffPreQuestRepository->create($request->all());
+                    if ($data)
+                        return response()->json([
+                            'message' => 'Your BOOK PREORDER Created Successfully',
+                        ]);
+                }
+                if ($stdemail) {
+                    // if ($boookiddata->availablebook >= 1) {
+                    //     $useremailid = $stdemail->id;
+                    //     $booksid = $boookiddata->id;
+                    //     $startdated = Carbon::now();
+                    //     $request->merge(['books_id' => $booksid, 'stduents_id' => $useremailid, 'startdate' => $startdated, 'remark' => "Order By User!"]);
+                    //     $data = $this->BookRentRepository->create($request->all());
+                    //     if ($data)
+                    //         return response()->json([
+                    //             'message' => 'Your BOOK ORDER Created Successfully',
+                    //         ]);
+                    // } else {
+                    //     $useremailid = $stdemail->id;
+                    //     $booksid = $boookiddata->id;
+                    //     $request->merge(['books_id' => $booksid, 'stduents_id' => $useremailid,  'remark' => " PreOrder By User!"]);
+                    //     $data = $this->PreQuestRepository->create($request->all());
+                    //     if ($data)
+                    //         return response()->json([
+                    //             'message' => 'Your BOOK PREORDER Created Successfully',
+                    //         ]);
+                    // }
+                    $useremailid = $stdemail->id;
+                    $booksid = $boookiddata->id;
+                    $request->merge(['books_id' => $booksid, 'stduents_id' => $useremailid,  'remark' => " PreOrder By User!"]);
+                    $data = $this->PreQuestRepository->create($request->all());
+                    if ($data)
+                        return response()->json([
+                            'message' => 'Your BOOK PREORDER Created Successfully',
+                        ]);
+                }
+            } else {
+                return response()->json([
+                    'message' => 'There is No Book',
+                ]);
             }
-            return view('frontend.userpage.totalrent');
         } else {
             return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
         }
     }
-    public function prenent($bookid)
+    public function rent(Request $request)
     {
-
         $useremail  = Session::get('email');
         $staffemail = Teacher::where('email', $useremail)->first();
         $stdemail = Stduent::where('email', $useremail)->first();
-        if ($staffemail != null || $stdemail != null) {
-            //     dd($bookid);
-            //  dd($bookid);
-            //     dd($request->all());
-
-            return response()->json([
-                'message' => 'Auction Created Successfully',
-            ]);
-        } else {
-            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+        if ($stdemail) {
         }
-    }
-
-
-    public function prerequest(Request $request, $stduent_id = 5)
-    {
-        $useremail  = Session::get('email');
-        $staffemail = Teacher::where('email', $useremail)->first();
-        $stdemail = Stduent::where('email', $useremail)->first();
         if ($staffemail != null || $stdemail != null) {
-            if ($request->ajax()) {
-                $data = PreRequest::with('book', 'stduent')->orderBy('created_at', 'DESC')->get();
-                //$data = Bookrent::with('book', 'stduent')->where('stduents_id', $stduent_id)->orderBy('created_at', 'ASC')->get();
-                return DataTables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function ($row) {
-                        $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+            if ($stdemail) {
+                if ($request->ajax()) {
+                    $data = Bookrent::with('book', 'stduent')->where('stduents_id', $stdemail->id)->orderBy('created_at', 'DESC')->get();
+                    return DataTables::of($data)
+                        ->addIndexColumn()
+                        ->addColumn('action', function ($row) {
+                            $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
 
-                        return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                            return $btn;
+                        })
+                        ->rawColumns(['action'])
+                        ->make(true);
+                }
+                return view('frontend.userpage.totalrent');
             }
-            return view('frontend.userpage.userprerequesttotalbook');
+            if ($staffemail) {
+                if ($request->ajax()) {
+                    $data = Teacherrent::with('book', 'teacher')->where('teachers_id', $stdemail->id)->orderBy('created_at', 'DESC')->get();
+                    return DataTables::of($data)
+                        ->addIndexColumn()
+                        ->addColumn('action', function ($row) {
+                            $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+
+                            return $btn;
+                        })
+                        ->rawColumns(['action'])
+                        ->make(true);
+                }
+                return view('frontend.userpage.totalrent');
+            }
         } else {
+            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
         }
     }
-    public function prerequestAction(Request $request)
+    public function prenent(Request $request, $id)
     {
         $useremail  = Session::get('email');
         $staffemail = Teacher::where('email', $useremail)->first();
         $stdemail = Stduent::where('email', $useremail)->first();
         if ($staffemail != null || $stdemail != null) {
-            //     dd($bookid);
-            //  dd($bookid);
-            //     dd($request->all());
+            if ($staffemail) {
+                $data = Teacherrent::where('id', $id)->first();
+                if ($data) {
+                    $data->requesttatus = 'on';
+                    $data->save();
+                    return response()->json([
+                        'message' => 'Your  Continue Rent Is Create Successfully ',
+                    ]);
+                } else {
+                    return response()->json([
+                        'message' => 'There is No Data!',
+                    ]);
+                }
+            }
+            if ($stdemail) {
+                $data = Bookrent::where('id', $id)->first();
+                if ($data) {
+                    $data->requesttatus = 'on';
+                    $data->save();
+                    return response()->json([
+                        'message' => 'Your  Continue Rent Is Create Successfully ',
+                    ]);
+                } else {
+                    return response()->json([
+                        'message' => 'There is No Data!',
+                    ]);
+                }
+            }
+        } else {
+            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+        }
+    }
+    public function prerequest(Request $request)
+    {
+        $useremail  = Session::get('email');
+        $staffemail = Teacher::where('email', $useremail)->first();
+        $stdemail = Stduent::where('email', $useremail)->first();
+        if ($staffemail != null || $stdemail != null) {
+            if ($stdemail) {
+                if ($request->ajax()) {
+                    $data = PreRequest::with('book', 'stduent')->where('stduents_id', $stdemail->id)->orderBy('created_at', 'DESC')->get();
+                    return DataTables::of($data)
+                        ->addIndexColumn()
+                        ->make(true);
+                }
+                return view('frontend.userpage.userprerequesttotalbook');
+            }
+            if ($staffemail) {
+                if ($request->ajax()) {
+                    $data = StaffPreRequest::with('book', 'teacher')->where('teachers_id', $staffemail->id)->orderBy('created_at', 'DESC')->get();
+                    return DataTables::of($data)
+                        ->addIndexColumn()
+                        ->addColumn('action', function ($row) {
+                            $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
 
-            return response()->json([
-                'message' => 'Auction Created Successfully',
-            ]);
+                            return $btn;
+                        })
+                        ->rawColumns(['action'])
+                        ->make(true);
+                }
+                return view('frontend.userpage.userprerequesttotalbook');
+            }
+        } else {
+            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+        }
+    }
+    public function prerequestAction(Request $request, $id)
+    {
+        $useremail  = Session::get('email');
+        $staffemail = Teacher::where('email', $useremail)->first();
+        $stdemail = Stduent::where('email', $useremail)->first();
+        if ($staffemail != null || $stdemail != null) {
+            if ($stdemail) {
+                PreRequest::where('id', $id)->delete();
+                return response()->json([
+                    'message' => 'You Have Been Cancel PreRequst Book!',
+                ]);
+            }
+            if ($staffemail) {
+                StaffPreRequest::where('id', $id)->delete();
+                return response()->json([
+                    'message' => 'You Have Been Cancel PreRequst Book!',
+                ]);
+            }
         } else {
             return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
         }
