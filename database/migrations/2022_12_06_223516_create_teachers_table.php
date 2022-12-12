@@ -16,7 +16,7 @@ class CreateTeachersTable extends Migration
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('departements_id');
-            $table->string('image')->nullable();
+            $table->string('image')->default('/default-user.png');;
             $table->string('name');
             $table->string('slug');
             $table->string('email')->unique()->nullable();

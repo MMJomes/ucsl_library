@@ -11,13 +11,15 @@
                 <div class="card" style="background-color: hsl(200, 53%, 96%)">
                     <center><img src="{{ url('assets/images/logo.png') }}"
                             style="width: 5%;height: 10%;margin-right: 12px" class="card-img-top" alt="logo"> <samp
-                            style="font-size: 22px;font-family: 'Times New Roman', Times, serif;font-weight: bold;color: blue">DIGITAL LIBRARY MANAGENMENT SYSTEM</samp>
+                            style="font-size: 22px;font-family: 'Times New Roman', Times, serif;font-weight: bold;color: blue">DIGITAL
+                            LIBRARY MANAGENMENT SYSTEM</samp>
                     </center>
                     <div class="card-title">
                         <div class="card-body">
-                            <form action={{ route('member.reg') }} method="POST"
-                                enctype="multipart/form-data" class="needs-validation" novalidate>
+                            <form action={{ route('member.reg') }} method="POST" enctype="multipart/form-data"
+                                class="needs-validation" novalidate>
                                 @csrf
+                                {{ csrf_field() }}
                                 <div class="body">
                                     <h6>{{ __('Select User Type ') }}</h6>
                                     <hr>
@@ -74,8 +76,8 @@
                                                 <label for="phone"></label>
                                                 <label for="tel">Phone Number.</label>
                                                 <input type="tel" min="9" maxlength="11" class="form-control"
-                                                    name="phoneNo" id="phoneNo"onkeypress="return isNumber(event);"
-                                                    placeholder="09xxxxxx" value="{{ old('phoneNo') }}" required
+                                                    name="phoneNo" id="phoneNo" onkeypress="return isNumber(event);"
+                                                    placeholder="09xxxxxx" value="{{ old('phoneNo') }}"
                                                     pattern="/^\d{10}$/[097]{9}|[0-99]{9}|[0-96]{9}|[0-96]{11}|[095]{9}">
                                                 <div class="invalid-feedback">
                                                     Phone Number is Required.
@@ -111,9 +113,9 @@
                                         <div class="col-lg-6 col-md-12">
                                             <div class="form-group">
                                                 <label for="rollno"> Roll No.(Eg: 1)</label>
-                                                <input type="tel" min="9" maxlength="11" class="form-control" name="rollno"
-                                                id="rollno" onkeypress="return isNumber(event);" required placeholder="Enter Roll No."
-                                                value="{{ old('rollno') }}">
+                                                <input type="tel" min="9" maxlength="11" class="form-control"
+                                                    name="rollno" id="rollno" onkeypress="return isNumber(event);"
+                                                    placeholder="Enter Roll No." value="{{ old('rollno') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -132,7 +134,8 @@
                                         </div>
                                     </div>
                                     <div class="mt-5">
-                                        <button type="submit" id="mysubmit" class="btn btn-info"><i class="fa fa-save"></i>
+                                        <button type="submit" id="mysubmit" class="btn btn-info"><i
+                                                class="fa fa-save"></i>
                                             {{ __('Register') }}</button>
                                         <a href="{{ url('/login') }}" class="btn btn-danger"><i
                                                 class="icon-logout"></i> {{ __('Login') }}</a>
@@ -180,11 +183,13 @@
             if ($(this).val() == 'stduent') {
                 $('button[type="submit"]').prop("disabled", false);
                 $('#stdid').show();
+                $('#staffid').show();
                 $('#staffid').hide();
             }
             if ($(this).val() == 'staff') {
                 $('button[type="submit"]').prop("disabled", false);
                 $('#staffid').show();
+                $('#stdid').show();
                 $('#stdid').hide();
             }
             if ($(this).val() == null) {

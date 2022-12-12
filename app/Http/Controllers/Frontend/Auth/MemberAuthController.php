@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Frontend\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BookRequest;
-use App\Http\Requests\Member\Auth\MemberLoginRequest;
 use App\Models\Books;
 use App\Models\Setting;
 use App\Models\Stduent\Bookrent;
@@ -17,6 +15,8 @@ use App\Repositories\Backend\Interf\StaffRentRepository;
 use App\Repositories\Backend\Interf\StudentRepository;
 use App\Repositories\Frontend\Interf\MemberAuthRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
 
 class MemberAuthController extends Controller
@@ -37,15 +37,19 @@ class MemberAuthController extends Controller
 
     public function login()
     {
+
+        // $data  = Session::get('email');
+        // dd($data);
+        // dd(Session::has('applocale'));
+        // Session::put('email', $request->email);
+
         $site_maintenance = Setting::where('key', 'site_maintenance')->first();
         if ($site_maintenance->value == 'on') {
-
             return view('frontend.auth.coming_soon');
         } else {
-
             $already_registered = auth()->guard('members')->user();
             if ($already_registered) {
-                return redirect()->route('/');
+                return redirect()->route('users.totalbook');
             }
             $dcategories  = Departement::all();
             $categories  = StdClass::all();
@@ -55,7 +59,6 @@ class MemberAuthController extends Controller
     }
     public function register()
     {
-
         $site_maintenance = Setting::where('key', 'site_maintenance')->first();
         if ($site_maintenance->value == 'on') {
             return view('frontend.auth.coming_soon');
@@ -73,57 +76,71 @@ class MemberAuthController extends Controller
 
     public function loginAction(Request $request)
     {
-        if ($request->usertype = 'staff') {
+        if ($request->usertype == 'staff') {
+            dd("Stff");
             $staffemail = Teacher::where('email', $request->email)->first();
             if ($staffemail) {
                 if ($staffemail->status = ON) {
-                    return "OK";
+                    Session::put('email', $request->email);
+                    return redirect()->route('users.totalbook');
+                } else {
+                    return redirect()->route('member.index')->withErrors(['message' => 'Your Account Is Not Active Yet! ,Please Contact to Admin.']);
                 }
             } else {
-                return "NO";
+                return redirect()->route('member.register')->withErrors(['message' => 'Your Account Already Exit']);
             }
-        } elseif ($request->usertype = 'staff') {
-
+        } elseif ($request->usertype == 'stduent') {
             $std = Stduent::where('email', $request->email)->first();
             if ($std) {
                 if ($std->status = ON) {
-                    return "OK";
+                    Session::put('email', $request->email);
+                    return redirect()->route('users.totalbook');
+                } else {
+                    return redirect()->route('member.index')->withErrors(['message' => 'Your Account Is Not Active Yet! ,Please Contact to Admin.']);
                 }
+            } else {
+                return redirect()->route('member.register')->withErrors(['message' => 'Your Account Already Exit']);
             }
         } else {
             return "There is no user";
         }
         return redirect()->back()->withInput();
     }
-    public function reg(Request $request)
+    public function regAction(Request $request)
     {
+        $useremail = $request->email;
+        $userclass = $request->std_classes_id;
+        $userrollno = $request->rollno;
         $setting_approve =  Setting::where('key', 'reg_approve')->first();
         if ($setting_approve->value == ON) {
             $request->merge(['status' => ON]);
         }
         if ($request->usertype = "stduent") {
-            $data = $this->studentRepository->create($request->all());
+            $isExit = Stduent::with('stdclass')->where('email', $useremail)->where('rollno', $userrollno)->whereHas('stdclass', function ($query) use ($userclass) {
+                $query->where('id', $userclass);
+            })->first();
+            if ($isExit) {
+                return redirect()->route('member.index')->withErrors(['message' => 'Your Account Already Exit']);
+            } else {
+                $isExit = Teacher::with('stdclass')->where('email', $useremail)->first();
+                if ($isExit) {
+                    return redirect()->route('member.index')->withErrors(['message' => 'Your Account Already Exit']);
+                } else {
+                    Session::put('email', $request->email);
+                    $data = $this->studentRepository->create($request->all());
+                    return redirect()->route('users.totalbook');
+                }
+            }
         } else {
-
+            Session::put('email', $request->email);
             $data = $this->StaffRentRepository->create($request->all());
         }
         if ($data) {
-            return "Member Login Success";
+            return redirect()->route('users.totalbook');
         } else {
             return redirect()->route('login')->withErrors(['message' => 'User Login Failed!']);
         }
-        $res = $this->repository->login($request);
-        if ($res == SUCCESS) {
-            return view('frontend.profile.index');
-            return "Member Login Success";
-            // $intendedURL = session()->get('url.intended');
-            // if ($intendedURL) {
-            //     session()->forget('url.intended');
-            //     return redirect()->intended($intendedURL)->with(['success' => 'User Login Success!']);
-            // } else {
-            //     return redirect()->route('home')->with(['success' => 'User Login Success!']);
-            // }
-        }
+
         return redirect()->back()->withInput();
     }
     public function passwordReset()
@@ -133,86 +150,157 @@ class MemberAuthController extends Controller
 
     public function totalbook(Request $request)
     {
-
-        if ($request->ajax()) {
-            $data = Books::with('author', 'category')->get();
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-
-                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+        $useremail  = Session::get('email');
+        $staffemail = Teacher::where('email', $useremail)->first();
+        $stdemail = Stduent::where('email', $useremail)->first();
+        if ($staffemail != null || $stdemail != null) {
+            if ($request->ajax()) {
+                $data = Books::with('author', 'category')->get();
+                return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->make(true);
+            }
+            return view('frontend.userpage.totalbook');
+        } else {
+            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
         }
-        return view('frontend.userpage.totalbook');
     }
     public function bookorder(Request $request, $bookid)
     {
-        //     dd($bookid);
-        //  dd($bookid);
-        //     dd($request->all());
+        $useremail  = Session::get('email');
+        $staffemail = Teacher::where('email', $useremail)->first();
+        $stdemail = Stduent::where('email', $useremail)->first();
+        if ($staffemail != null || $stdemail != null) {
+            dd($bookid);
+            //     dd($bookid);
+            //  dd($bookid);
+            //     dd($request->all());
 
-        return response()->json([
-            'message' => 'Auction BOOKORDER Created Successfully',
-        ]);
+            return response()->json([
+                'message' => 'Auction BOOKORDER Created Successfully',
+            ]);
+        } else {
+            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+        }
     }
     public function rent(Request $request, $stduent_id = 5)
     {
-        if ($request->ajax()) {
-            $data = Bookrent::with('book', 'stduent')->orderBy('created_at', 'ASC')->get();
-            //$data = Bookrent::with('book', 'stduent')->where('stduents_id', $stduent_id)->orderBy('created_at', 'ASC')->get();
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+        $useremail  = Session::get('email');
+        $staffemail = Teacher::where('email', $useremail)->first();
+        $stdemail = Stduent::where('email', $useremail)->first();
+        if ($staffemail != null || $stdemail != null) {
+            if ($request->ajax()) {
+                $data = Bookrent::with('book', 'stduent')->orderBy('created_at', 'ASC')->get();
+                //$data = Bookrent::with('book', 'stduent')->where('stduents_id', $stduent_id)->orderBy('created_at', 'ASC')->get();
+                return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function ($row) {
+                        $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
 
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+            }
+            return view('frontend.userpage.totalrent');
+        } else {
+            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
         }
-        return view('frontend.userpage.totalrent');
     }
     public function prenent($bookid)
     {
-        //     dd($bookid);
-        //  dd($bookid);
-        //     dd($request->all());
 
-        return response()->json([
-            'message' => 'Auction Created Successfully',
-        ]);
+        $useremail  = Session::get('email');
+        $staffemail = Teacher::where('email', $useremail)->first();
+        $stdemail = Stduent::where('email', $useremail)->first();
+        if ($staffemail != null || $stdemail != null) {
+            //     dd($bookid);
+            //  dd($bookid);
+            //     dd($request->all());
+
+            return response()->json([
+                'message' => 'Auction Created Successfully',
+            ]);
+        } else {
+            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+        }
     }
 
 
     public function prerequest(Request $request, $stduent_id = 5)
     {
-        if ($request->ajax()) {
-            $data = PreRequest::with('book', 'stduent')->orderBy('created_at', 'ASC')->get();
-            //$data = Bookrent::with('book', 'stduent')->where('stduents_id', $stduent_id)->orderBy('created_at', 'ASC')->get();
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+        $useremail  = Session::get('email');
+        $staffemail = Teacher::where('email', $useremail)->first();
+        $stdemail = Stduent::where('email', $useremail)->first();
+        if ($staffemail != null || $stdemail != null) {
+            if ($request->ajax()) {
+                $data = PreRequest::with('book', 'stduent')->orderBy('created_at', 'DESC')->get();
+                //$data = Bookrent::with('book', 'stduent')->where('stduents_id', $stduent_id)->orderBy('created_at', 'ASC')->get();
+                return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function ($row) {
+                        $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
 
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+            }
+            return view('frontend.userpage.userprerequesttotalbook');
+        } else {
         }
-        return view('frontend.userpage.userprerequesttotalbook');
     }
     public function prerequestAction(Request $request)
     {
-        //     dd($bookid);
-        //  dd($bookid);
-        //     dd($request->all());
+        $useremail  = Session::get('email');
+        $staffemail = Teacher::where('email', $useremail)->first();
+        $stdemail = Stduent::where('email', $useremail)->first();
+        if ($staffemail != null || $stdemail != null) {
+            //     dd($bookid);
+            //  dd($bookid);
+            //     dd($request->all());
 
-        return response()->json([
-            'message' => 'Auction Created Successfully',
-        ]);
+            return response()->json([
+                'message' => 'Auction Created Successfully',
+            ]);
+        } else {
+            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+        }
+    }
+
+    public function userProfile(Request $request)
+    {
+        $useremail  = Session::get('email');
+        $staffemail = Teacher::where('email', $useremail)->first();
+        $stdemail = Stduent::where('email', $useremail)->first();
+        if ($staffemail != null || $stdemail != null) {
+            //     dd($bookid);
+            //  dd($bookid);
+            //     dd($request->all());
+
+            return response()->json([
+                'message' => 'Auction Created Successfully',
+            ]);
+        } else {
+            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+        }
+    }
+
+    public function LoginOut(Request $request)
+    {
+        $useremail  = Session::get('email');
+        $staffemail = Teacher::where('email', $useremail)->first();
+        $stdemail = Stduent::where('email', $useremail)->first();
+        if ($staffemail != null || $stdemail != null) {
+            //     dd($bookid);
+            //  dd($bookid);
+            //     dd($request->all());
+
+            return response()->json([
+                'message' => 'Auction Created Successfully',
+            ]);
+        } else {
+            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+        }
     }
 }

@@ -17,11 +17,11 @@ class CreateStduentsTable extends Migration
             $table->id();
 
             $table->unsignedBigInteger('std_classes_id');
-            $table->string('image')->nullable();
+            $table->string('image')->default('/default-user.png');
             $table->string('name');
             $table->string('slug');
-            $table->string('rollno')->unique();
-            $table->string('email')->unique()->nullable();
+            $table->string('rollno');
+            $table->string('email')->unique();
             $table->string('phoneNo')->nullable();
             $table->string('Address')->nullable();
             $table->string('totalNoOfBooks')->default(0);

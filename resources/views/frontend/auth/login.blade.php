@@ -19,6 +19,7 @@
                             <form action={{ route('member.login') }} method="POST" enctype="multipart/form-data"
                                 class="needs-validation" novalidate>
                                 @csrf
+                                {{ csrf_field() }}
                                 <div class="body">
                                     <h6>{{ __('Select User Type ') }}</h6>
                                     <hr>
