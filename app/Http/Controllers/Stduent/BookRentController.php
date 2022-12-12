@@ -87,7 +87,6 @@ class BookRentController extends Controller
     {
         $Author = $this->BookRentRepository->where('id', $id)->first();
         if ($Author) {
-
             $stduents  = Stduent::all();
             $books  = Books::all();
             view()->share(['form' => true, 'select' => true]);

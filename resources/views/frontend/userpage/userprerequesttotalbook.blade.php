@@ -17,11 +17,10 @@
                         <th>No</th>
                         <th>Book Name</th>
                         <th>Edtion</th>
-                        <th>Author Name</th>
-                        <th>Produce Year</th>
-                        <th>Available Count</th>
-                        <th>Download </th>
-                        <th width="100px">Rent</th>
+                        <th>Request Date</th>
+                        <th>Remark</th>
+                        <th>Status </th>
+                        <th width="100px">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,82 +54,59 @@
                 "scrollX": true,
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('users.totalbook') }}",
+                ajax: "{{ route('users.prerequest') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
                     },
                     {
                         defaultContent: '-',
-                        data: 'bookname',
-                        name: 'bookname'
+                        data: 'book.bookname',
+                        name: 'book.bookname'
                     },
                     {
 
                         defaultContent: '-',
-                        data: 'edtion',
-                        name: 'edtion'
+                        data: 'book.edtion',
+                        name: 'book.edtion'
                     },
                     {
-                        data: 'category.name',
-                        defaultContent: "-"
+                        defaultContent: "-",
+                        "render": function(data, type, full, meta) {
+                            var createdDate = new Date(full.created_at);
+                            return createdDate.toLocaleString("en-US");
+                        },
 
                     },
                     {
-                        data: 'author.name',
-                        defaultContent: "-"
-                    },
-                    {
-                        defaultContent: "0",
-                        name: 'availablebook',
-                        data: 'availablebook',
+                        defaultContent: "-",
+                        name: 'remark',
+                        data: 'remark',
 
                     },
                     {
                         orderable: false,
                         "render": function(data, type, full, meta) {
-                            if (full.bookpdflink) {
+                            if (full.status == 'off') {
                                 var pdfURL = full.bookpdflink;
-                                return '<a href="' + pdfURL +
-                                    '" class="btn btn-outline-info btn-sm mx-2"  style="font-weight:bold;  font-size:12px" target="_blank" data-toggle="tooltip" title="Read OR Download On Internet!"><i class="fa fa-download"></i> Download </a>';
+                                return '<a href="javascript:void(0)" class="btn btn-outline-info btn-sm mx-2"  style="font-weight:bold;  font-size:12px"  data-toggle="tooltip" title="Your Request is Pending State!"><i class="icon-clock"></i> Pending </a>';
                             } else {
                                 return '-';
+
                             }
                         }
                     },
                     {
                         orderable: false,
                         "render": function(data, type, full, meta) {
-
-
                             var booksOrder =
-                                "{{ route('users.bookorders', ':id') }}";
+                                "{{ route('users.prerequestAction', ':id') }}";
                             booksOrder = booksOrder.replace(':id', full.id);
                             var mybutton = '';
                             var exitbook = '';
-
-                            if (full.availablebook >= 1) {
-                                exitbook = "Order";
+                            exitbook = "Cancel";
                             mybutton = '<button name="deleteRuleButton" href="' + booksOrder +
-                                '" class="btn btn-outline-success orderbutton  btn-sm mx-2 orderConfirm" id="orderConfirm"  style="font-weight:bold; font-size:12px"  data-toggle="modal" data-target="#delete-confirmation-modal"  title="Order to Rent This Book!"><i class="fa fa-tasks"></i>' +
-                                exitbook + ' </button>';
-                            } else {
-                                exitbook = "PreOrder";
-                            mybutton = '<button name="deleteRuleButton" href="' + booksOrder +
-                                '" class="btn btn-outline-primary orderbutton  btn-sm mx-2 orderConfirm" id="orderConfirm"  style="font-weight:bold; font-size:12px"  data-toggle="modal" data-target="#delete-confirmation-modal"  title="PreOrder to Rent This Book!"><i class="fa fa-first-order"> </i>' +
-                                exitbook + ' </button>';
-                            }
-
-                            // if (full.availablebook >= 1) {
-                            //     mybutton = '<button name="deleteRuleButton" href="' + booksOrder +
-                            //         '" class="btn btn-outline-success orderbutton  btn-sm mx-2 orderConfirm" id="orderConfirm"  style="font-weight:bold; font-size:12px"  data-toggle="modal" data-target="#delete-confirmation-modal"  title="Order to Rent This Book!"><i class="fa fa-tasks"></i> Order </button>';
-                            // } else {
-                            //     mybutton= '<a href="' + booksOrder +
-                            //         '" class="btn btn-outline-primary mybookorderbutton btn-sm mx-2" style="font-weight:bold;  font-size:12px"  data-attr="' +
-                            //         booksOrder +
-                            //         '" data-target="#smallModal" data-toggle="tooltip" title=" PreOrder to Rent This Book!"><i class="fa fa-first-order"></i> PreOrder </a>';
-
-                            // }
+                                '" class="btn btn-outline-danger orderbutton  btn-sm mx-2 orderConfirm" id="orderConfirm"  style="font-weight:bold; font-size:12px"  data-toggle="modal" data-target="#delete-confirmation-modal"  title="Cancel Prequest Book!"><i class="fa fa-times"> </i>  Cancel</button>';
                             return mybutton;
                         }
                     },
@@ -140,7 +116,7 @@
                 deleteRecordData = existingRuleTable.row($(this).closest('tr')).data();
                 var myid = deleteRecordData['id'];
                 $.ajax({
-                    url: "{{ route('users.bookorders', 'id') }}".replace(
+                    url: "{{ route('users.prerequestAction', 'id') }}".replace(
                         'id', myid),
                     type: 'GET',
                     data: deleteRecordData,

@@ -209,7 +209,15 @@ Route::middleware('globalSetting')->group(function () {
 
 
     Route::namespace('App\Http\Controllers\Frontend')->prefix('')->group(function () {
-        Route::get('/', 'Auth\MemberAuthController@books')->name('users.index');
+        // Route::get('/', 'Auth\MemberAuthController@totalbook')->name('users.totalbook');
+        // Route::get('order/{id}', 'Auth\MemberAuthController@bookorder')->name('users.bookorders');
+
+        // Route::get('/', 'Auth\MemberAuthController@rent')->name('users.rents');
+        // Route::get('rent/{id}', 'Auth\MemberAuthController@rent')->name('users.rentbooks');
+
+        Route::get('/', 'Auth\MemberAuthController@prerequest')->name('users.prerequest');
+        Route::get('prerequestAction/{id}', 'Auth\MemberAuthController@prerequestAction')->name('users.prerequestAction');
+
         // Route::post('login', 'Auth\MemberAuthController@loginAction')->name('member.login');
         // Route::post('reg', 'Auth\MemberAuthController@regAction')->name('member.reg');
         // Route::get('/', 'Auth\MemberAuthController@login')->name('member.index');

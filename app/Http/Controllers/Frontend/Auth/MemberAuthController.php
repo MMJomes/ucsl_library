@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Frontend\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BookRequest;
 use App\Http\Requests\Member\Auth\MemberLoginRequest;
 use App\Models\Books;
 use App\Models\Setting;
+use App\Models\Stduent\Bookrent;
+use App\Models\Stduent\PreRequest;
 use App\Models\Stduent\StdClass;
 use App\Models\Stduent\Stduent;
 use App\Models\Teacher\Departement;
@@ -127,22 +130,89 @@ class MemberAuthController extends Controller
     {
         return view('frontend.auth.email');
     }
-    public function books(Request $request){
+
+    public function totalbook(Request $request)
+    {
 
         if ($request->ajax()) {
             $data = Books::with('author', 'category')->get();
             return DataTables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row){
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
 
-                           $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
 
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
         return view('frontend.userpage.totalbook');
+    }
+    public function bookorder(Request $request, $bookid)
+    {
+        //     dd($bookid);
+        //  dd($bookid);
+        //     dd($request->all());
 
-     }
+        return response()->json([
+            'message' => 'Auction BOOKORDER Created Successfully',
+        ]);
+    }
+    public function rent(Request $request, $stduent_id = 5)
+    {
+        if ($request->ajax()) {
+            $data = Bookrent::with('book', 'stduent')->orderBy('created_at', 'ASC')->get();
+            //$data = Bookrent::with('book', 'stduent')->where('stduents_id', $stduent_id)->orderBy('created_at', 'ASC')->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('frontend.userpage.totalrent');
+    }
+    public function prenent($bookid)
+    {
+        //     dd($bookid);
+        //  dd($bookid);
+        //     dd($request->all());
+
+        return response()->json([
+            'message' => 'Auction Created Successfully',
+        ]);
+    }
+
+
+    public function prerequest(Request $request, $stduent_id = 5)
+    {
+        if ($request->ajax()) {
+            $data = PreRequest::with('book', 'stduent')->orderBy('created_at', 'ASC')->get();
+            //$data = Bookrent::with('book', 'stduent')->where('stduents_id', $stduent_id)->orderBy('created_at', 'ASC')->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('frontend.userpage.userprerequesttotalbook');
+    }
+    public function prerequestAction(Request $request)
+    {
+        //     dd($bookid);
+        //  dd($bookid);
+        //     dd($request->all());
+
+        return response()->json([
+            'message' => 'Auction Created Successfully',
+        ]);
+    }
 }
