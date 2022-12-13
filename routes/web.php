@@ -224,6 +224,8 @@ Route::middleware('globalSetting')->group(function () {
 
         Route::post('reg', 'Auth\MemberAuthController@regAction')->name('member.reg');
         Route::get('register', 'Auth\MemberAuthController@register')->name('member.register');
+        Route::get('profile', 'Auth\MemberAuthController@userProfile')->name('member.profile');
+        Route::post('profiled', 'Auth\MemberAuthController@userProfileAction')->name('member.profiled');
     });
 
 

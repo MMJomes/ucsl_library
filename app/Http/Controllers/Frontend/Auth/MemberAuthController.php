@@ -404,32 +404,96 @@ class MemberAuthController extends Controller
         $staffemail = Teacher::where('email', $useremail)->first();
         $stdemail = Stduent::where('email', $useremail)->first();
         if ($staffemail != null || $stdemail != null) {
-            //     dd($bookid);
-            //  dd($bookid);
-            //     dd($request->all());
+            if ($stdemail) {
 
-            return response()->json([
-                'message' => 'Auction Created Successfully',
-            ]);
+                $stduentCls = StdClass::all();
+
+                view()->share(['form' => true, 'select' => true]);
+                return view('frontend.userpage.userprofile', compact('stdemail', 'stduentCls',));
+            }
+            if ($staffemail) {
+                view()->share(['form' => true, 'select' => true]);
+                $stduentCls = StdClass::all();
+                return view('frontend.userpage.userprofile', compact('stdemail', 'stduentCls',));
+            }
         } else {
             return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
         }
     }
 
+    public function userProfileAction(Request $request)
+    {
+        $useremail  = Session::get('email');
+        $staffemail = Teacher::where('email', $useremail)->first();
+        $stdemail = Stduent::where('email', $useremail)->first();
+        if ($staffemail != null || $stdemail != null) {
+            if ($stdemail) {
+
+                $email = $request->email;
+                $emailValid = substr($email, -17);
+                if ($emailValid == "@ucsloikaw.edu.mm") {
+                    if ($request->hasfile('logos')) {
+                        $img = $request->file('logos');
+                        $upload_path = public_path() . '/upload/stduent/';
+                        $file = $img->getClientOriginalName();
+                        $name = $stdemail->id . $file;
+                        $img->move($upload_path, $name);
+                        $path = '/upload/stduent/' . $name;
+                    } else {
+                        $path = $request->oldimg;
+                    }
+                    $request->merge([
+                        'logo' => $path,
+                    ]);
+                    $request->merge(['image' => $path]);
+                    $datas = $this->studentRepository->updateById($stdemail->id, $request->all());
+                    if ($datas) {
+                        Session::put('email', $request->email);
+                    }
+                    return redirect()->route('member.profile')->with(['success' => 'Successfully Updated!']);
+                } else {
+                    redirect()->back()->with('success', 'Invail Email Address!');
+                }
+                $stduentCls = StdClass::all();
+                return view('frontend.userpage.userprofile', compact('stdemail', 'stduentCls',));
+            }
+            if ($staffemail) {
+                $email = $request->email;
+                $emailValid = substr($email, -17);
+                if ($emailValid == "@ucsloikaw.edu.mm") {
+                    if ($request->hasfile('logos')) {
+                        $img = $request->file('logos');
+                        $upload_path = public_path() . '/upload/stduent/';
+                        $file = $img->getClientOriginalName();
+                        $name = $staffemail->id . $file;
+                        $img->move($upload_path, $name);
+                        $path = '/upload/stduent/' . $name;
+                    } else {
+                        $path = $request->oldimg;
+                    }
+                    $request->merge([
+                        'logo' => $path,
+                    ]);
+                    $request->merge(['image' => $path]);
+                    $this->StaffRepository->updateById($staffemail->id, $request->all());
+                    return redirect()->route('member.profile')->with(['success' => 'Successfully Updated!']);
+                } else {
+                    return redirect()
+                        ->route('member.profile')
+                        ->with('success', 'Invail Email Address!');
+                }
+            }
+        } else {
+            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+        }
+    }
     public function LoginOut(Request $request)
     {
         $useremail  = Session::get('email');
         $staffemail = Teacher::where('email', $useremail)->first();
         $stdemail = Stduent::where('email', $useremail)->first();
         if ($staffemail != null || $stdemail != null) {
-            //     dd($bookid);
-            //  dd($bookid);
-            //     dd($request->all());
-
-            return response()->json([
-                'message' => 'Auction Created Successfully',
-            ]);
-        } else {
+            Session::forget('email');
             return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
         }
     }
