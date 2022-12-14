@@ -226,6 +226,7 @@ Route::middleware('globalSetting')->group(function () {
         Route::get('register', 'Auth\MemberAuthController@register')->name('member.register');
         Route::get('profile', 'Auth\MemberAuthController@userProfile')->name('member.profile');
         Route::post('profiled', 'Auth\MemberAuthController@userProfileAction')->name('member.profiled');
+        Route::get('logout', 'Auth\MemberAuthController@LogOut')->name('member.logout');
     });
 
 

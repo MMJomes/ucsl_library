@@ -34,11 +34,13 @@
                             <div class="float-center" style="text-align: center">
 
                                 <img id="frame" src="" style="border-radius: 50%;" class="img-fluid" />
-                                <br/>
-                                <br/>
-                                <img id="oldimage" src="{{ url($stdemail->image ?? '/assets/images/default-user.png') }}"  width="200" height="200" style="border-radius: 50%;">
+                                <br />
+                                <br />
+                                <img id="oldimage" src="{{ url($stdemail->image ?? '/assets/images/default-user.png') }}"
+                                    width="200" height="200" style="border-radius: 50%;">
                                 <br><br>
-                                <input type="file" name='logos' style="margin-left: 30px" id="formFile" onchange="preview()">
+                                <input type="file" name='logos' style="margin-left: 30px" id="formFile"
+                                    onchange="preview()">
 
 
                             </div>
@@ -51,7 +53,8 @@
                                         <div class="form-group">
                                             <label for="name">{{ __('message.name') }}</label>
                                             <input type="text" class="form-control" name="name" id="name"
-                                                placeholder="{{ __('message.name') }}" value="{{ old('name',$stdemail->name) }}">
+                                                placeholder="{{ __('message.name') }}"
+                                                value="{{ old('name', $stdemail->name) }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12">
@@ -71,14 +74,14 @@
                                         <div class="form-group">
                                             <label for="rollno"> Roll No.(Eg: 1)</label>
                                             <input type="tel" class="form-control" name="rollno" id="rollno"
-                                                placeholder="Enter Roll No." value="{{ old('rollno',$stdemail->rollno) }}">
+                                                placeholder="Enter Roll No." value="{{ old('rollno', $stdemail->rollno) }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12">
                                         <div class="form-group">
                                             <label for="email">Email</label>
                                             <input type="email" class="form-control" name="email" id="email"
-                                                placeholder="Enter Your Email" value="{{ old('email',$stdemail->email) }}">
+                                                placeholder="Enter Your Email" value="{{ old('email', $stdemail->email) }}">
                                         </div>
                                     </div>
                                 </div>
@@ -87,22 +90,27 @@
                                         <div class="form-group">
                                             <label for="rollint"> Phone Number</label>
                                             <input type="tel" class="form-control" name="phoneNo" id="phoneNo"
-                                                placeholder="Enter Phone Number" value="{{ old('phoneNo',$stdemail->phoneNo) }}">
+                                                placeholder="Enter Phone Number"
+                                                value="{{ old('phoneNo', $stdemail->phoneNo) }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12">
                                         <div class="form-group">
                                             <label for="address">Address</label>
                                             <input type="Address" class="form-control" name="Address" id="Address"
-                                                placeholder="Enter Your Address" value="{{ old('Address',$stdemail->Address) }}">
+                                                placeholder="Enter Your Address"
+                                                value="{{ old('Address', $stdemail->Address) }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mt-5">
-                                        <button type="submit" class="btn btn-info"><i
-                                                class="fa fa-upload"></i>
-                                            {{ __('Save') }}</button>
-                                         </div>
+                                    <button type="submit" class="btn btn-info"><i class="fa fa-upload"></i>
+                                        {{ __('Save') }}</button>
+
+                                <a href="{{ route('member.logout') }}" class="btn btn-danger"><i
+                                    class="icon-logout"></i> {{ __('Logout') }}</a>
+                                </div>
+
 
                             </div>
                         </form>
@@ -118,6 +126,7 @@
         frame.src = URL.createObjectURL(event.target.files[0]);
         $('#oldimage').hide();
     }
+
     function clearImage() {
         document.getElementById('formFile').value = null;
         frame.src = "";

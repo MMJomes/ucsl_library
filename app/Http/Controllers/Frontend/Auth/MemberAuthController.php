@@ -23,6 +23,7 @@ use App\Repositories\Backend\Interf\StaffRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class MemberAuthController extends Controller
@@ -93,18 +94,25 @@ class MemberAuthController extends Controller
 
     public function loginAction(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            "name" => "required",
+            "email" => "required|unique:registrations",
+
+        ], [
+            "email" => "Email is required Here",
+            "phone" => "Phone is required Hrer",
+        ]);
         if ($request->usertype == 'staff') {
-            dd("Stff");
             $staffemail = Teacher::where('email', $request->email)->first();
             if ($staffemail) {
                 if ($staffemail->status = ON) {
                     Session::put('email', $request->email);
                     return redirect()->route('users.totalbook');
                 } else {
-                    return redirect()->route('member.index')->withErrors(['message' => 'Your Account Is Not Active Yet! ,Please Contact to Admin.']);
+                    return back()->with('success', 'Your Account Is Not Active Yet! ,Please Contact to Admin.');
                 }
             } else {
-                return redirect()->route('member.register')->withErrors(['message' => 'Your Account Already Exit']);
+                return back()->with('success', 'Your Account Already Exit');
             }
         } elseif ($request->usertype == 'stduent') {
             $std = Stduent::where('email', $request->email)->first();
@@ -113,10 +121,21 @@ class MemberAuthController extends Controller
                     Session::put('email', $request->email);
                     return redirect()->route('users.totalbook');
                 } else {
-                    return redirect()->route('member.index')->withErrors(['message' => 'Your Account Is Not Active Yet! ,Please Contact to Admin.']);
+                    //return redirect()->back()->withErrors(['msg' => 'The Message']);
+                    return redirect()->back()->with('success', 'your message,here');
+
+                    //return redirect()->route('member.index')->withErrors('errors','Your account is not activited yet by the admin. Please contact admin for more detail.');
+                    //return back()->with('success', 'Your Account Is Not Active Yet! ,Please Contact to Admin.');
                 }
             } else {
-                return redirect()->route('member.register')->withErrors(['message' => 'Your Account Already Exit']);
+                Session::flash('', "Special message goes here");
+                //return Redirect::back();
+                return redirect()->back();
+                //return redirect()->route('member.index')->withErrors('errors','Your account is not activited yet by the admin. Please contact admin for more detail.');
+                //return redirect()->back()->withErrors('msg' , 'The Message');
+                //return redirect()->back()->with('success', 'your message,here');
+
+                //return back()->with('success', 'Your Account Already Exit');
             }
         } else {
             return "There is no user";
@@ -137,11 +156,11 @@ class MemberAuthController extends Controller
                 $query->where('id', $userclass);
             })->first();
             if ($isExit) {
-                return redirect()->route('member.index')->withErrors(['message' => 'Your Account Already Exit']);
+                return redirect()->route('member.index')->with(['error' => 'Your Account Already Exit.Please Login']);
             } else {
                 $isExit = Teacher::with('stdclass')->where('email', $useremail)->first();
                 if ($isExit) {
-                    return redirect()->route('member.index')->withErrors(['message' => 'Your Account Already Exit']);
+                    return redirect()->route('member.index')->with(['error' => 'Your Account Already Exit']);
                 } else {
                     Session::put('email', $request->email);
                     $data = $this->studentRepository->create($request->all());
@@ -155,10 +174,8 @@ class MemberAuthController extends Controller
         if ($data) {
             return redirect()->route('users.totalbook');
         } else {
-            return redirect()->route('login')->withErrors(['message' => 'User Login Failed!']);
+            return redirect()->route('member.index')->with(['message' => 'User Login Failed!']);
         }
-
-        return redirect()->back()->withInput();
     }
     public function passwordReset()
     {
@@ -179,7 +196,7 @@ class MemberAuthController extends Controller
             }
             return view('frontend.userpage.totalbook');
         } else {
-            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+            return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
         }
     }
     public function bookorder(Request $request, $id)
@@ -258,7 +275,7 @@ class MemberAuthController extends Controller
                 ]);
             }
         } else {
-            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+            return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
         }
     }
     public function rent(Request $request)
@@ -300,7 +317,7 @@ class MemberAuthController extends Controller
                 return view('frontend.userpage.totalrent');
             }
         } else {
-            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+            return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
         }
     }
     public function prenent(Request $request, $id)
@@ -338,7 +355,7 @@ class MemberAuthController extends Controller
                 }
             }
         } else {
-            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+            return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
         }
     }
     public function prerequest(Request $request)
@@ -372,7 +389,7 @@ class MemberAuthController extends Controller
                 return view('frontend.userpage.userprerequesttotalbook');
             }
         } else {
-            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+            return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
         }
     }
     public function prerequestAction(Request $request, $id)
@@ -394,7 +411,7 @@ class MemberAuthController extends Controller
                 ]);
             }
         } else {
-            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+            return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
         }
     }
 
@@ -417,7 +434,7 @@ class MemberAuthController extends Controller
                 return view('frontend.userpage.userprofile', compact('stdemail', 'stduentCls',));
             }
         } else {
-            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+            return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
         }
     }
 
@@ -484,17 +501,18 @@ class MemberAuthController extends Controller
                 }
             }
         } else {
-            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+            return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
         }
     }
-    public function LoginOut(Request $request)
+    public function LogOut(Request $request)
     {
+        //dd("OK");
         $useremail  = Session::get('email');
         $staffemail = Teacher::where('email', $useremail)->first();
         $stdemail = Stduent::where('email', $useremail)->first();
         if ($staffemail != null || $stdemail != null) {
             Session::forget('email');
-            return redirect()->route('login')->withErrors(['message' => 'Please Login First!']);
+            return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
         }
     }
 }

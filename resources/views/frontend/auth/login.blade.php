@@ -20,6 +20,54 @@
                                 class="needs-validation" novalidate>
                                 @csrf
                                 {{ csrf_field() }}
+
+                                @if (session()->has('success'))
+                                    <p class="alert alert-success">{{ session('message') }}</p>
+                                @endif
+                                @foreach ($errors->all() as $error)
+                                    <div>{{ $error }}</div>
+                                @endforeach
+                                @if ($errors->any())
+                                    <div class="bg-primary" style="padding: 10px 3px 1px 10px; margin-bottom:10px;">
+                                        <p>{{ $errors->first() }}</p>
+                                    </div>
+                                @endif
+                                @if (Session::has('success'))
+                                    <div class="alert alert-success">
+                                        {{ Session::get('success') }}
+                                        @php
+                                            Session::forget('success');
+                                        @endphp
+                                    </div>
+                                @endif
+
+                                @if (count($errors) > 0)
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
+
+                                @if (\Session::get('error'))
+                                    <div class="alert alert-success">
+                                        <ul>
+                                            <li>{!! \Session::get('error') !!}</li>
+                                        </ul>
+                                    </div>
+                                @endif
+                                {{ Session::get('error') }}
+                                @if (\Session::get('withErrors'))
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            <li>{!! \Session::get('withErrors') !!}</li>
+                                        </ul>
+                                    </div>
+                                @endif
+                                {{ Session::get('email') }}
                                 <div class="body">
                                     <h6>{{ __('Select User Type ') }}</h6>
                                     <hr>
@@ -67,43 +115,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- <div class="row clearfix" id="stdid" style="display: none">
-                                        <div class="col-lg-6 col-md-12">
-                                            <h5>{{ 'Select Class' }} </h5>
-                                            <select class="selectpicker form-control"
-                                                data-style="form-control btn-secondary" name="std_classes_id"
-                                                required="true">
-                                                {{ $categories }}
-                                                @foreach ($categories as $event)
-                                                    <option value="{{ $event->id }}">
-                                                        {{ $event->stduentclass }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-6 col-md-12">
-                                            <div class="form-group">
-                                                <label for="rollno"> Roll No.(Eg: 1)</label>
-                                                <input type="tel" min="9" maxlength="11" class="form-control" name="rollno"
-                                                id="rollno" onkeypress="return isNumber(event);" required placeholder="Enter Roll No."
-                                                value="{{ old('rollno') }}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix" id="staffid" style="display: none">
-                                        <div class="col-lg-12 col-md-12">
-                                            <h5>{{ 'Select Staff Department' }} </h5>
-                                            <select class="selectpicker form-control"
-                                                data-style="form-control btn-secondary" name="departements_id"
-                                                required="true">
-                                                @foreach ($dcategories as $event)
-                                                    <option value="{{ $event->id }}">
-                                                        {{ $event->stfdepartment }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div> --}}
                                     <div class="mt-5">
                                         <button type="submit" id="mysubmit" class="btn btn-info"><i
                                                 class="fa fa-save"></i>
@@ -123,8 +134,25 @@
 </div>
 @section('content')
 @endsection
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+<script>
+    $(document).ready(function() {
+      console.log("document.ready");
+      toastr.info('document.ready');
+    });
+     toastr['info']("lor...................................");
+    @if ($errors->any())
+        let msg = "{{ $errors->first() }}";
+        console.log(msg);
+        toastr['info'](msg);
+    @endif
+
+    @if (session('success'))
+        let msg = "{{ session('success') }}";
+        toastr['info'](msg);
+    @endif    </script>
 <script type="text/javascript">
     function isNumber(e) {
         e = e || window.event;

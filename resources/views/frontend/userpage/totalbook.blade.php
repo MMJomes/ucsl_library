@@ -171,7 +171,7 @@
                         let errors = data.responseJSON.errors;
                         if (errors) {
                             let firstErrorMsg = errors[Object.keys(errors)[0]][0];
-                            swal({
+                           new swal({
                                 title: "Error!",
                                 type: "error",
                                 text: firstErrorMsg,

@@ -14,9 +14,10 @@
 <link href="{{ asset('assets/dist/css/pages/login-register-lock.css') }}" rel="stylesheet">
 <link rel="stylesheet" type="text/css"
     href="{{ asset('assets/node_modules/bootstrap-select/bootstrap-select.min.css') }}">
-@if ($select ?? false)
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
-<link rel="stylesheet" href="{{ asset('assets/dist/css/selecteds2.css') }}">
+@if ($select ?? false)
+    <link rel="stylesheet" href="{{ asset('assets/dist/css/selecteds2.css') }}">
     <link rel="stylesheet" type="text/css"
         href="{{ asset('assets/node_modules/bootstrap-select/bootstrap-select.min.css') }}">
 @endif
