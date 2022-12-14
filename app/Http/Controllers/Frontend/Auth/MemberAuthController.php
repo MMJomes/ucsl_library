@@ -128,10 +128,10 @@ class MemberAuthController extends Controller
                     //return back()->with('success', 'Your Account Is Not Active Yet! ,Please Contact to Admin.');
                 }
             } else {
-                Session::flash('', "Special message goes here");
+                // Session::flash('', "Special message goes here");
                 //return Redirect::back();
-                return redirect()->back();
-                //return redirect()->route('member.index')->withErrors('errors','Your account is not activited yet by the admin. Please contact admin for more detail.');
+                // return redirect()->back();
+                return redirect()->route('member.index')->withErrors(['errors','Your account is not activited yet by the admin. Please contact admin for more detail.']);
                 //return redirect()->back()->withErrors('msg' , 'The Message');
                 //return redirect()->back()->with('success', 'your message,here');
 
