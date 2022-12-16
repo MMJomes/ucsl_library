@@ -34,8 +34,6 @@ class MemberAuthController extends Controller
     private BookRentRepository $BookRentRepository;
     private PreQuestRepository $PreQuestRepository;
     private StaffPreQuestRepository $StaffPreQuestRepository;
-
-
     public function __construct(
         StaffRepository $StaffRepository,
         PreQuestRepository $PreQuestRepository,
@@ -52,7 +50,6 @@ class MemberAuthController extends Controller
         $this->StaffRepository = $StaffRepository;
         $this->StaffPreQuestRepository =  $StaffPreQuestRepository;
     }
-
     public function login()
     {
         $site_maintenance = Setting::where('key', 'site_maintenance')->first();
