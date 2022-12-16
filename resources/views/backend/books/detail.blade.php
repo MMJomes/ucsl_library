@@ -34,6 +34,24 @@
                             <div class="row clearfix">
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
+                                        <label for="image">{{ __('Book Image ') }}</label>
+                                        <input type="file" class="form-control" name="logos" id="logos"
+                                            placeholder="Plase Select Book Image" value="{{ old('image', $book->image) }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label for="date">{{ __('Total Of Number Book') }}</label>
+                                        <input type="tel" class="form-control" name="totalbook" id="totalbook"
+                                            placeholder="{{ __('Please Enter Total Of Number Book') }}"
+                                            value="{{ old('totalbook', $book->totalbook) }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
                                         <label for="titlenumber">{{ __('message.titlenumber') }}</label>
                                         <input type="text" class="form-control" name="titlename" id="titlenumber"
                                             placeholder="{{ __('message.titlenumber') }}"

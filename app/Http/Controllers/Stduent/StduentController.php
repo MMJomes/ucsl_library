@@ -48,7 +48,6 @@ class StduentController extends Controller
      */
     public function create()
     {
-
         $categories  = StdClass::all();
         view()->share(['form' => true, 'select' => true]);
         return view('stduent.student.create', compact('categories'));
@@ -62,7 +61,6 @@ class StduentController extends Controller
      */
     public function store(Request $request)
     {
-
         $email = $request->email;
         $emailValid = substr($email, -17);
         if ($emailValid == "@ucsloikaw.edu.mm") {

@@ -15,6 +15,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Image</th>
                         <th>Book Name</th>
                         <th>Edtion</th>
                         <th>Author Name</th>
@@ -59,6 +60,14 @@
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'image',
+                        name: 'image',
+                        defaultContent: '',
+                        render: function(data) {
+                            return '<img src="' + data + '" width="50" height="50">';
+                        },
                     },
                     {
                         defaultContent: '-',
@@ -111,14 +120,14 @@
 
                             if (full.availablebook >= 1) {
                                 exitbook = "Order";
-                            mybutton = '<button name="deleteRuleButton" href="' + booksOrder +
-                                '" class="btn btn-outline-success orderbutton  btn-sm mx-2 orderConfirm" id="orderConfirm"  style="font-weight:bold; font-size:12px"  data-toggle="modal" data-target="#delete-confirmation-modal"  title="Order to Rent This Book!"><i class="fa fa-tasks"></i>' +
-                                exitbook + ' </button>';
+                                mybutton = '<button name="deleteRuleButton" href="' + booksOrder +
+                                    '" class="btn btn-outline-success orderbutton  btn-sm mx-2 orderConfirm" id="orderConfirm"  style="font-weight:bold; font-size:12px"  data-toggle="modal" data-target="#delete-confirmation-modal"  title="Order to Rent This Book!"><i class="fa fa-tasks"></i>' +
+                                    exitbook + ' </button>';
                             } else {
                                 exitbook = "PreOrder";
-                            mybutton = '<button name="deleteRuleButton" href="' + booksOrder +
-                                '" class="btn btn-outline-primary orderbutton  btn-sm mx-2 orderConfirm" id="orderConfirm"  style="font-weight:bold; font-size:12px"  data-toggle="modal" data-target="#delete-confirmation-modal"  title="PreOrder to Rent This Book!"><i class="fa fa-first-order"> </i>' +
-                                exitbook + ' </button>';
+                                mybutton = '<button name="deleteRuleButton" href="' + booksOrder +
+                                    '" class="btn btn-outline-primary orderbutton  btn-sm mx-2 orderConfirm" id="orderConfirm"  style="font-weight:bold; font-size:12px"  data-toggle="modal" data-target="#delete-confirmation-modal"  title="PreOrder to Rent This Book!"><i class="fa fa-first-order"> </i>' +
+                                    exitbook + ' </button>';
                             }
 
                             // if (full.availablebook >= 1) {
@@ -171,7 +180,7 @@
                         let errors = data.responseJSON.errors;
                         if (errors) {
                             let firstErrorMsg = errors[Object.keys(errors)[0]][0];
-                           new swal({
+                            new swal({
                                 title: "Error!",
                                 type: "error",
                                 text: firstErrorMsg,

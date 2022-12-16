@@ -201,7 +201,14 @@ class PreRequestController extends Controller
                 $studentid = $contactListdata->stduents_id;
                 $bookid = $contactListdata->books_id;
                 $datas = $request->merge(['books_id' => $bookid, 'stduents_id' => $studentid, 'startdate' => $current_date, 'enddate' => $enddate, 'remark' => 'PreRequest Book.']);
-                $data = $this->BookRentRepository->create($datas->all());
+                $this->BookRentRepository->create($datas->all());
+                $prerequestbook = PreRequest::with('book', 'stduent')->where('id', $contactListdata->id)->first();
+                $totalBook = Books::where('id', $prerequestbook->books_id)->first();
+                if ($totalBook && $totalBook->availablebook > 0) {
+                    $current_book = $totalBook->availablebook - 1;
+                    $totalBook->availablebook = $current_book;
+                    $totalBook->save();
+                }
                 $stdeunt = Stduent::where('id', $studentid)->first();
                 if ($stdeunt) {
                     $totalbok = $stdeunt->totalNoOfBooks + 1;
@@ -212,7 +219,7 @@ class PreRequestController extends Controller
             if ($contactListdata->status == ON) {
                 $contactListdata->status  = 'off';
                 $contactListdata->save();
-                $contactListdata->update(['status' => OFF]);
+                //$contactListdata->update(['status' => OFF]);
             } else {
                 $contactListdata->status  = 'on';
                 $contactListdata->save();

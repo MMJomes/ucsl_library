@@ -35,7 +35,8 @@
                                         <input type="checkbox" id="select-all" class="select-checkbox">
                                     </th>
                                     <th>{{__('message.no')}}</th>
-                                    <th>{{ __('message.name') }}</th>
+                                    <th>{{ __('Category Name') }}</th>
+                                    <th>{{ __('Category Code') }}</th>
                                     <th>{{ __('message.createddate') }}</th>
                                     <th>{{ __('message.updateddate') }}</th>
                                     @canany(['eventcategory.edit', 'eventcategory.delete'])
@@ -127,15 +128,22 @@
                             },
                         },
                         {
+                            defaultContent:'-',
                             data: 'name'
                         },
                         {
+                            defaultContent:'-',
+                            data: 'code'
+                        },
+                        {
+                            dedaultContent:'-',
                             "render": function(data, type, full, meta) {
                                 var createdDate = new  Date(full.created_at);
                                 return createdDate.toLocaleString("en-US");
                             },
                         },
                         {
+                            dedaultContent:'-',
                             "render": function(data, type, full, meta) {
                                 var createdDate = new  Date(full.created_at);
                                 return createdDate.toLocaleString("en-US");

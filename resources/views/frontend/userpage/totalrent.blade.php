@@ -15,6 +15,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Image</th>
                         <th>Book Name</th>
                         <th>Edtion</th>
                         <th>Start Date</th>
@@ -59,6 +60,14 @@
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'book.image',
+                        name: 'book.image',
+                        defaultContent: '',
+                        render: function(data) {
+                            return '<img src="' + data + '" width="50" height="50">';
+                        },
                     },
                     {
                         defaultContent: '-',
@@ -136,30 +145,36 @@
                                 "{{ route('users.rentbooks', ':id') }}";
                             booksOrder = booksOrder.replace(':id', full.id);
                             var endTime = full.enddate;
-                            var rentstatus = full.requesttatus;
-                            if (rentstatus == 'on') {
+                            var rentstatusd = full.requesttatus;
+                            if (rentstatusd == 'on') {
                                 return '<a href="javascript:void(0)" class="btn btn-outline-info btn-sm mx-2" disabled disabled=true  style="font-weight:bold;  font-size:12px"  data-attr="" data-target="#smallModal" data-toggle="tooltip" disabled title=" Your  Continue State Is Pending Now!"><i class="icon-clock"></i> Pending </a>';
 
                             } else {
-
-
-                                var ent = new Date(endTime);
-                                var currentTime = new Date();
-                                var rentingTime = (ent.getTime() - currentTime
-                                    .getTime()) / 1000;
-                                var mybutton = '';
-                                var exitbook = '';
-                                if (rentingTime > 0) {
-                                    exitbook = "Continue";
-                                    mybutton = '<button name="deleteRuleButton" href="' +
-                                        booksOrder +
-                                        '" class="btn btn-outline-success orderbutton  btn-sm mx-2 orderConfirm" id="orderConfirm"  style="font-weight:bold; font-size:12px"  data-toggle="modal" data-target="#delete-confirmation-modal"  title="Order to Rent This Book!"><i class="fa fa-tasks"></i> ' +
-                                        exitbook + ' </button>';
+                                var status = full.status;
+                                var returnStatus = full.rentstatus;
+                                if (returnStatus == 'on') {
+                                    if (status == 'on') {
+                                        return '<a href="javascript:void(0)" class="btn btn-outline-danger btn-sm mx-2" disabled disabled=true  style="font-weight:bold;  font-size:12px"  data-attr="" data-target="#smallModal" data-toggle="tooltip" disabled title=" Come To Library To Take Continue This Book!"><i class="fa fa-ban"></i> Returned </a>';
+                                    }
                                 } else {
-                                    mybutton =
-                                        '<a href="javascript:void(0)" class="btn btn-outline-danger btn-sm mx-2" disabled disabled=true  style="font-weight:bold;  font-size:12px"  data-attr="" data-target="#smallModal" data-toggle="tooltip" disabled title=" Come To Library To Take Continue This Book!"><i class="fa fa-ban"></i> Overed </a>';
+                                    var ent = new Date(endTime);
+                                    var currentTime = new Date();
+                                    var rentingTime = (ent.getTime() - currentTime
+                                        .getTime()) / 1000;
+                                    var mybutton = '';
+                                    var exitbook = '';
+                                    if (rentingTime > 0) {
+                                        exitbook = "Continue";
+                                        mybutton = '<button name="deleteRuleButton" href="' +
+                                            booksOrder +
+                                            '" class="btn btn-outline-success orderbutton  btn-sm mx-2 orderConfirm" id="orderConfirm"  style="font-weight:bold; font-size:12px"  data-toggle="modal" data-target="#delete-confirmation-modal"  title="Order to Rent This Book!"><i class="fa fa-tasks"></i> ' +
+                                            exitbook + ' </button>';
+                                    } else {
+                                        mybutton =
+                                            '<a href="javascript:void(0)" class="btn btn-outline-danger btn-sm mx-2" disabled disabled=true  style="font-weight:bold;  font-size:12px"  data-attr="" data-target="#smallModal" data-toggle="tooltip" disabled title=" Come To Library To Take Continue This Book!"><i class="fa fa-ban"></i> Overed </a>';
+                                    }
+                                    return mybutton;
                                 }
-                                return mybutton;
                             }
                         }
                     },

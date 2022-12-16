@@ -14,6 +14,7 @@ class EventCategory extends Model
     protected $table = 'categories';
     protected $fillable = [
         'name',
+        'code',
         'createdat',
         'updatedat',
     ];

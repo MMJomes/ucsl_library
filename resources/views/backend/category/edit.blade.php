@@ -36,11 +36,19 @@
                             <h6>{{ __('message.basicinfo') }}</h6>
                             <hr>
                             <div class="row clearfix">
-                                <div class="col-lg-12 col-md-12">
+                                <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
-                                        <label for="name">Name</label>
+                                        <label for="name">Category Name</label>
                                         <input type="text" class="form-control" name="name" id="name"
-                                            placeholder="Name" value="{{ old('name', $eventcategory->name) }}">
+                                            placeholder="Enter Category Name" value="{{ old('name', $eventcategory->name) }}">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label for="code">Category Code</label>
+                                        <input type="tel" class="form-control" name="code" id="name"
+                                            placeholder="Enter Category Code" value="{{ old('name', $eventcategory->code) }}">
 
                                     </div>
                                 </div>
@@ -49,17 +57,17 @@
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="createdat">Created At</label>
-                                        <input type="datetime" class="form-control" name="createdat" id="createdat"
+                                        <input type="text" class="form-control" name="createdat" id="createdat"
                                             placeholder="Created At"
-                                            value="{{ old('createdat', $eventcategory->createdat) }}">
+                                            value="{{ old('createdat', $eventcategory->created_at) }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="updatedat">Updated At</label>
-                                        <input type="datetime" class="form-control" name="updatedat" id="updatedat"
+                                        <input type="text" class="form-control" name="updatedat" id="updatedat"
                                             placeholder="Updated At"
-                                            value="{{ old('updatedat', $eventcategory->updatedat) }}">
+                                            value="{{ old('updatedat', $eventcategory->updated_at) }}">
                                     </div>
                                 </div>
                             </div>

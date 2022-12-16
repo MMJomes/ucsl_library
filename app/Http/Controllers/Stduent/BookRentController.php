@@ -10,6 +10,7 @@ use App\Models\Setting;
 use App\Models\Stduent\Bookrent;
 use App\Models\Stduent\Stduent;
 use App\Notifications\SendEmail;
+use App\Repositories\Backend\Interf\BookListRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Carbon\Carbon;
@@ -20,17 +21,23 @@ class BookRentController extends Controller
 {
     use BookRentHelper;
     private BookRentRepository $BookRentRepository;
+    private BookListRepository $BookListRepository;
 
-    public function __construct(BookRentRepository $BookRentRepository)
+    public function __construct(BookRentRepository $BookRentRepository, BookListRepository $BookListRepository)
     {
         $this->middleware('permission:event.create', ['only' => ['create', 'store']]);
         $this->middleware('permission:event.edit', ['only' => ['edit']]);
         $this->middleware('permission:event.view', ['only' => ['index']]);
         $this->BookRentRepository = $BookRentRepository;
+        $this->BookListRepository = $BookListRepository;
     }
 
     public function index()
     {
+        // $bookid= Books::pluck('id');
+
+        // $datas = Bookrent::with('book', 'stduent')->orderBy('id', 'ASC')->get();
+        // dd($datas);
         if (request()->ajax()) {
             $user = auth()->user();
             $datas = Bookrent::with('book', 'stduent')->orderBy('id', 'ASC')->get();
@@ -66,6 +73,20 @@ class BookRentController extends Controller
         $enddate = $book_return_date->addDays($book_rent_duration);
         $request->merge(['enddate' => $enddate]);
         $data = $this->BookRentRepository->create($request->all());
+        $book = Books::where('id', $data->books_id)->first();
+        if ($book) {
+            $totalbooks = $book->totalbook;
+            if ($totalbooks > 0) {
+                $bookrentstatus = Bookrent::where('id', $data->id)->where('books_id', $data->books_id)->first();
+                if ($bookrentstatus) {
+                    if ($bookrentstatus->rentstatus == OFF) {
+                        $currentavailablebook  = $book->availablebook - 1;
+                        $book->availablebook = $currentavailablebook;
+                        $book->save();
+                    }
+                }
+            }
+        }
         $stdeunt = Stduent::where('id', $data->stduents_id)->first();
         if ($stdeunt) {
             $totalbok = $stdeunt->totalNoOfBooks + 1;
@@ -236,6 +257,12 @@ class BookRentController extends Controller
         $contactListdata = $this->BookRentRepository->where('id', $id)->first();
         if ($contactListdata) {
             if ($contactListdata->rentstatus = OFF) {
+                $booktotal = Books::where('id', $contactListdata->books_id)->first();
+                if ($booktotal) {
+                    $curnbooktotal = $booktotal->availablebook + 1;
+                    $booktotal->availablebook = $curnbooktotal;
+                    $booktotal->save();
+                }
                 $contactListdata->rentstatus = 'on';
                 $contactListdata->status = 'on';
                 $contactListdata->save();

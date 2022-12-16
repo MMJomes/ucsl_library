@@ -36,32 +36,53 @@
                         <div class="body mt-5">
                             <h6>{{ __('message.basicinfo') }}</h6>
                             <hr>
+                            <input type="hidden" value="{{ $book->image }}" name="oldimg">
+                            <div class="row clearfix">
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label for="image">{{ __('Book Image ') }}</label>
+                                        <input type="file" class="form-control" name="logos" id="logos"
+                                            placeholder="Plase Select Book Image" value="{{ old('image', $book->image) }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label for="date">{{ __('Total Of Number Book') }}</label>
+                                        <input type="tel" class="form-control" name="totalbook" id="totalbook"
+                                            placeholder="{{ __('Please Enter Total Of Number Book') }}"
+                                            value="{{ old('totalbook', $book->totalbook) }}">
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row clearfix">
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="titlenumber">{{ __('message.titlenumber') }}</label>
                                         <input type="text" class="form-control" name="titlename" id="titlenumber"
                                             placeholder="{{ __('message.titlenumber') }}"
-                                            value="{{ old('titlenumber',$book->titlename) }}">
+                                            value="{{ old('titlenumber', $book->titlename) }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="date">{{ __('message.date') }}</label>
                                         <input type="date" class="form-control" name="date" id="date"
-                                            placeholder="{{ __('message.date') }}" value="{{ old('date',$book->date) }}">
+                                            placeholder="{{ __('message.date') }}" value="{{ old('date', $book->date) }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="row clearfix">
                                 <div class="col-lg-6 col-md-12">
                                     <h5 style="margin-bottom: 10px">{{ 'Select Author Name' }} </h5>
-                                    <select class="stdclasses form-select-lg " data-style="btn-secondary"
-                                        name="authors_id" required="true">
-                                        <option selected value="0" class="text-black-50" disabled>--- Select Author Name ---
+                                    <select class="stdclasses form-select-lg " data-style="btn-secondary" name="authors_id"
+                                        required="true">
+                                        <option selected value="0" class="text-black-50" disabled>--- Select Author
+                                            Name ---
                                         </option>
                                         @foreach ($authors as $event)
-                                            <option value="{{ $event->id }}" {{ $event->id == $book->authors_id ? 'selected' : '' }} style="font-weight: bold ">
+                                            <option value="{{ $event->id }}"
+                                                {{ $event->id == $book->authors_id ? 'selected' : '' }}
+                                                style="font-weight: bold ">
                                                 {{ $event->name }}
                                             </option>
                                         @endforeach
@@ -71,7 +92,8 @@
                                     <div class="form-group">
                                         <label for="name">{{ __('message.bookname') }}</label>
                                         <input type="text" class="form-control" id="name" name="bookname"
-                                            placeholder="{{ __('message.bookname') }}" value="{{ old('bookname',$book->bookname) }}">
+                                            placeholder="{{ __('message.bookname') }}"
+                                            value="{{ old('bookname', $book->bookname) }}">
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +104,7 @@
                                         <label for="dob">{{ __('message.bookpublisher') }}</label>
                                         <input type="text" class="form-control" name="publishername" id="dob"
                                             placeholder="{{ __('message.bookpublisher') }}"
-                                            value="{{ old('publishername',$book->publishername) }}">
+                                            value="{{ old('publishername', $book->publishername) }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
@@ -90,7 +112,7 @@
                                         <label for="qualification">{{ __('message.producetime') }}</label>
                                         <input type="text" class="form-control" name="producetime"
                                             placeholder="{{ __('message.producetime') }}"
-                                            value="{{ old('producetime',$book->edtion) }}">
+                                            value="{{ old('producetime', $book->edtion) }}">
                                     </div>
                                 </div>
                             </div>
@@ -100,14 +122,15 @@
                                         <label for="produceyear">{{ __('message.produceyear') }}</label>
                                         <input type="text" class="form-control" name="produceyear"
                                             placeholder="{{ __('message.produceyear') }}"
-                                            value="{{ old('produceyear',$book->produceyear) }}">
+                                            value="{{ old('produceyear', $book->produceyear) }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="departement">{{ __('message.price') }}</label>
                                         <input type="text" class="form-control" name="price"
-                                            placeholder="{{ __('message.price') }}" value="{{ old('price',$book->price) }}">
+                                            placeholder="{{ __('message.price') }}"
+                                            value="{{ old('price', $book->price) }}">
                                     </div>
                                 </div>
                             </div>
@@ -116,10 +139,13 @@
                                     <h5 style="margin-bottom: 10px">{{ 'Select Category Name' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary"
                                         name="categories_id" required="true">
-                                        <option selected value="0" class="text-black-50" disabled>--- Select Category Name ---
+                                        <option selected value="0" class="text-black-50" disabled>--- Select Category
+                                            Name ---
                                         </option>
                                         @foreach ($categories as $event)
-                                            <option value="{{ $event->id }}" {{ $event->id == $book->categories_id ? 'selected' : '' }} style="font-weight: bold ">
+                                            <option value="{{ $event->id }}"
+                                                {{ $event->id == $book->categories_id ? 'selected' : '' }}
+                                                style="font-weight: bold ">
                                                 {{ $event->name }}
                                             </option>
                                         @endforeach
@@ -133,7 +159,8 @@
                                             Buy
                                         </option>
 
-                                        <option value="Donation" {{ $book->availablereason == 'Donation' ? 'selected' : '' }}>
+                                        <option value="Donation"
+                                            {{ $book->availablereason == 'Donation' ? 'selected' : '' }}>
                                             Donation
                                         </option>
                                     </select>
@@ -144,14 +171,16 @@
                                     <div class="form-group">
                                         <label for="httpLinks">{{ __('Book PDF Link') }}</label>
                                         <input type="url" class="form-control" name="bookpdflink" id="httpLinks"
-                                            placeholder="Enter Book PDF Link" value="{{ old('bookpdflink',$book->bookpdflink) }}">
+                                            placeholder="Enter Book PDF Link"
+                                            value="{{ old('bookpdflink', $book->bookpdflink) }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="remark">{{ __('message.remark') }}</label>
                                         <input type="text" class="form-control" name="remark" id="remark"
-                                            placeholder="{{ __('message.remark') }}" value="{{ old('remark',$book->remark) }}">
+                                            placeholder="{{ __('message.remark') }}"
+                                            value="{{ old('remark', $book->remark) }}">
                                     </div>
                                 </div>
                             </div>

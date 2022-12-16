@@ -15,6 +15,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Image</th>
                         <th>Book Name</th>
                         <th>Edtion</th>
                         <th>Request Date</th>
@@ -60,6 +61,14 @@
                         name: 'DT_RowIndex'
                     },
                     {
+                        data: 'book.image',
+                        name: 'book.image',
+                        defaultContent: '',
+                        render: function(data) {
+                            return '<img src="' + data + '" width="50" height="50">';
+                        },
+                    },
+                    {
                         defaultContent: '-',
                         data: 'book.bookname',
                         name: 'book.bookname'
@@ -91,23 +100,29 @@
                                 var pdfURL = full.bookpdflink;
                                 return '<a href="javascript:void(0)" class="btn btn-outline-info btn-sm mx-2"  style="font-weight:bold;  font-size:12px"  data-toggle="tooltip" title="Your Request is Pending State!"><i class="icon-clock"></i> Pending </a>';
                             } else {
-                                return '-';
-
+                                return '<a href="javascript:void(0)" class="btn btn-outline-success btn-sm mx-2"  style="font-weight:bold;  font-size:12px"  data-toggle="tooltip" title="Your Request is State! Approved"><i class="icon-clock"></i> Approved </a>';
                             }
                         }
                     },
                     {
+
                         orderable: false,
                         "render": function(data, type, full, meta) {
-                            var booksOrder =
-                                "{{ route('users.prerequestAction', ':id') }}";
-                            booksOrder = booksOrder.replace(':id', full.id);
-                            var mybutton = '';
-                            var exitbook = '';
-                            exitbook = "Cancel";
-                            mybutton = '<button name="deleteRuleButton" href="' + booksOrder +
-                                '" class="btn btn-outline-danger orderbutton  btn-sm mx-2 orderConfirm" id="orderConfirm"  style="font-weight:bold; font-size:12px"  data-toggle="modal" data-target="#delete-confirmation-modal"  title="Cancel Prequest Book!"><i class="fa fa-times"> </i>  Cancel</button>';
-                            return mybutton;
+                            if (full.status == 'on') {
+                                return '<a href="javascript:void(0)" class="btn btn-outline-info btn-sm mx-2"  style="font-weight:bold;  font-size:12px"  data-toggle="tooltip" title="Your Request is State! Approved"><i class="icon-clock"></i> Approved </a>';
+
+                            } else {
+
+                                var booksOrder =
+                                    "{{ route('users.prerequestAction', ':id') }}";
+                                booksOrder = booksOrder.replace(':id', full.id);
+                                var mybutton = '';
+                                var exitbook = '';
+                                exitbook = "Cancel";
+                                mybutton = '<button name="deleteRuleButton" href="' + booksOrder +
+                                    '" class="btn btn-outline-danger orderbutton  btn-sm mx-2 orderConfirm" id="orderConfirm"  style="font-weight:bold; font-size:12px"  data-toggle="modal" data-target="#delete-confirmation-modal"  title="Cancel Prequest Book!"><i class="fa fa-times"> </i>  Cancel</button>';
+                                return mybutton;
+                            }
                         }
                     },
                 ]

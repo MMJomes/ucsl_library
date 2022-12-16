@@ -16,6 +16,7 @@ class CreateEventCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('code');
             $table->string('slug');
             $table->dateTime('createdat')->nullable();
             $table->dateTime('updatedat')->nullable();

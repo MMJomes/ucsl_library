@@ -55,12 +55,6 @@ class MemberAuthController extends Controller
 
     public function login()
     {
-
-        // $data  = Session::get('email');
-        // dd($data);
-        // dd(Session::has('applocale'));
-        // Session::put('email', $request->email);
-
         $site_maintenance = Setting::where('key', 'site_maintenance')->first();
         if ($site_maintenance->value == 'on') {
             return view('frontend.auth.coming_soon');
@@ -121,21 +115,10 @@ class MemberAuthController extends Controller
                     Session::put('email', $request->email);
                     return redirect()->route('users.totalbook');
                 } else {
-                    //return redirect()->back()->withErrors(['msg' => 'The Message']);
                     return redirect()->back()->with('success', 'your message,here');
-
-                    //return redirect()->route('member.index')->withErrors('errors','Your account is not activited yet by the admin. Please contact admin for more detail.');
-                    //return back()->with('success', 'Your Account Is Not Active Yet! ,Please Contact to Admin.');
-                }
+               }
             } else {
-                // Session::flash('', "Special message goes here");
-                //return Redirect::back();
-                // return redirect()->back();
                 return redirect()->route('member.index')->withErrors(['errors','Your account is not activited yet by the admin. Please contact admin for more detail.']);
-                //return redirect()->back()->withErrors('msg' , 'The Message');
-                //return redirect()->back()->with('success', 'your message,here');
-
-                //return back()->with('success', 'Your Account Already Exit');
             }
         } else {
             return "There is no user";

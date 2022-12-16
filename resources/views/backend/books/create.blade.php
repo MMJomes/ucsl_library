@@ -38,14 +38,48 @@
                                 @endif
                             </div>
                         </div>
+                        {{-- <h6>Stduent Photo</h6>
+                        <hr>
+                        <div class="media photo center">
+                            <div class="media-left m-r-15">
+                                <img src="{{ url('/assets/images/default-user.png') }}" id="user-photo"
+                                    class="rounded-circle user-photo media-object im" alt="User"
+                                    style="object-fit: fill" width="140px">
+                            </div>
+                            <div class="media-body">
+                                <p>Upload Book photo.
+                                </p>
+                                <button type="button" class="btn btn-default-dark" id="btn-upload-photo">Upload
+                                    Photo</button>
+                                <input type="file" name="logos" id="filePhoto" class="sr-only" accept="image/*"
+                                    style="object-fit: fill" width="200" height="200">
+                            </div>
+                        </div> --}}
                         <div class="body mt-5">
                             <h6>{{ __('message.basicinfo') }}</h6>
                             <hr>
                             <div class="row clearfix">
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
+                                        <label for="image">{{ __('Book Image ') }}</label>
+                                        <input type="file" class="form-control" name="logos" id="logos"
+                                            placeholder="Plase Select Book Image"
+                                            value="{{ old('image') }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label for="date">{{ __('Total Of Number Book') }}</label>
+                                        <input type="tel" class="form-control" name="totalbook" id="totalbook"
+                                            placeholder="{{ __('Please Enter Total Of Number Book') }}" value="{{ old('totalbook') }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
                                         <label for="titlenumber">{{ __('message.titlenumber') }}</label>
-                                        <input type="text" class="form-control" name="titlename" id="titlenumber"
+                                        <input type="tel" class="form-control" name="titlename" id="titlenumber"
                                             placeholder="{{ __('message.titlenumber') }}"
                                             value="{{ old('titlenumber') }}">
                                     </div>

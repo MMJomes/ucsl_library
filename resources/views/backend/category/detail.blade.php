@@ -32,11 +32,19 @@
                         <h6>{{ __('message.basicinfo') }}</h6>
                         <hr>
                         <div class="row clearfix">
-                            <div class="col-lg-12 col-md-12">
+                            <div class="col-lg-6 col-md-12">
                                 <div class="form-group">
                                     <label for="name">Name</label>
                                     <input type="text" class="form-control" name="name" id="name"
                                         placeholder="Name" value="{{ old('name', $eventCategory->name) }}">
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group">
+                                    <label for="name">Code</label>
+                                    <input type="text" class="form-control" name="code" id="code"
+                                        placeholder="code" value="{{ old('name', $eventCategory->code) }}">
 
                                 </div>
                             </div>
@@ -46,14 +54,14 @@
                                 <div class="form-group">
                                     <label for="createdat">Created At</label>
                                     <input type="datetime" class="form-control" name="createdat" id="createdat"
-                                        placeholder="Created At" value="{{ old('createdat', $eventCategory->createdat) }}">
+                                        placeholder="Created At" value="{{ old('createdat', $eventCategory->created_at) }}">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-12">
                                 <div class="form-group">
                                     <label for="updatedat">Updated At</label>
                                     <input type="datetime" class="form-control" name="updatedat" id="updatedat"
-                                        placeholder="Updated At" value="{{ old('updatedat', $eventCategory->updatedat) }}">
+                                        placeholder="Updated At" value="{{ old('updatedat', $eventCategory->updated_at) }}">
                                 </div>
                             </div>
                         </div>

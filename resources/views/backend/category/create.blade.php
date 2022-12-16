@@ -33,11 +33,18 @@
                             <h6>{{ __('message.basicinfo') }}</h6>
                             <hr>
                             <div class="row clearfix">
-                                <div class="col-lg-12 col-md-12">
+                                <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="name">{{__('message.name')}}</label>
                                         <input type="text" class="form-control" name="name" id="name"
-                                            placeholder="{{__('message.name')}}" value="{{ old('name') }}">
+                                            placeholder="Enter Category Name" value="{{ old('name') }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label for="code">{{__('Category Code')}}</label>
+                                        <input type="tel" class="form-control" name="code" id="code"
+                                            placeholder="Enter Category Code" value="{{ old('code') }}">
                                     </div>
                                 </div>
                             </div>

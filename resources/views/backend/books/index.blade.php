@@ -37,6 +37,7 @@
                                     </th>
                                     <th>{{ __('message.no') }}</th>
                                     <th>{{ __('message.titlenumber') }}</th>
+                                    <th>{{ __('Image') }}</th>
                                     <th>{{ __('message.author') }}</th>
                                     <th>{{ __('message.bookname') }}</th>
                                     <th>{{ __('message.producetime') }}</th>
@@ -138,6 +139,14 @@
                         {
                             "render": function(data, type, full, meta) {
                                 return meta.row + 1;
+                            },
+                        },
+                        {
+                            data: 'image',
+                            name: 'image',
+                            defaultContent: '',
+                            render: function(data) {
+                                return '<img src="' + data + '" width="50" height="50">';
                             },
                         },
                         {

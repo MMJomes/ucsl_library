@@ -138,11 +138,6 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
 <script>
-    $(document).ready(function() {
-      console.log("document.ready");
-      toastr.info('document.ready');
-    });
-     toastr['info']("lor...................................");
     @if ($errors->any())
         let msg = "{{ $errors->first() }}";
         console.log(msg);

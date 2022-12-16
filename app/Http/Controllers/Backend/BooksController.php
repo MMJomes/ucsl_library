@@ -7,14 +7,13 @@ use App\Helpers\BookHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
-use App\Http\Requests\MemberRequest;
 use App\Imports\BookListImport;
-use App\Imports\ContactListImport;
 use App\Models\Author;
 use App\Models\Books;
 use App\Models\EventCategory;
 use App\Repositories\Backend\Interf\BookListAllRepository;
 use App\Repositories\Backend\Interf\BookListRepository;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -36,6 +35,7 @@ class BooksController extends Controller
     public function index()
     {
 
+
         if (request()->ajax()) {
             $user = auth()->user();
             $data = Books::with('author', 'category')->get();
@@ -54,6 +54,27 @@ class BooksController extends Controller
     }
     public function store(BookRequest $request)
     {
+        $data1 = DB::table('books')->latest('id')->first();
+        if ($data1 == null) {
+            $last_id = 1;
+        } else {
+            $id = Books::latest()->first()->id;
+            $last_id = $id + 1;
+        }
+        if ($request->hasfile('logos')) {
+            $img = $request->file('logos');
+            $upload_path = public_path() . '/upload/books/';
+            $file = $img->getClientOriginalName();
+            $name = $last_id . $file;
+            $img->move($upload_path, $name);
+            $path = '/upload/books/' . $name;
+        } else {
+            $path = "/default-user.png";
+        }
+        $request->merge([
+            'image' => $path,
+            'availablebook' => $request->totalbook,
+        ]);
         $this->bookListRepository->create($request);
         return redirect()
             ->route('backend.book.index')
@@ -61,7 +82,6 @@ class BooksController extends Controller
     }
     public function show($member_slug)
     {
-
         $book = $this->bookListAllRepository->where('slug', $member_slug)->first();
         if ($book) {
             $authors = Author::all();
@@ -84,7 +104,6 @@ class BooksController extends Controller
         $book = $this->bookListAllRepository->where('slug', $member_slug)->first();
         //dd($book);
         if ($book) {
-
             $categories = EventCategory::all();
             $authors = Author::all();
             view()->share(['form' => true, 'select' => true]);
@@ -95,8 +114,23 @@ class BooksController extends Controller
     }
     public function update(BookRequest $request, $member_slug)
     {
+
         $bookdata = $this->bookListAllRepository->where('slug', $member_slug)->first();
         if ($bookdata) {
+            if ($request->hasfile('logos')) {
+                $img = $request->file('logos');
+                $upload_path = public_path() . '/upload/books/';
+                $file = $img->getClientOriginalName();
+                $name = $bookdata->id . $file;
+                $img->move($upload_path, $name);
+                $path = '/upload/books/' . $name;
+            } else {
+                $path = $request->oldimg;
+            }
+            $request->merge([
+                'logo' => $path,
+            ]);
+            $request->merge(['image' => $path]);
             $bookdata->update($request->all());
             return redirect()->route('backend.book.index')->with(['success' => 'Successfully Updated!']);
         } else {

@@ -25,8 +25,7 @@ class EventCategoryRequest extends FormRequest
     {
             return [
                 'name' => 'required',
-                'createdat' =>'nullable',
-                'updatedat' =>'nullable',
+                'code'=> 'required',
             ];
 
     }
@@ -34,8 +33,7 @@ class EventCategoryRequest extends FormRequest
     {
         return [
             'name' => 'Name is required',
-            'createdat' => 'nullable',
-            'updatedat' => 'nullable',
+            'code' => 'Category Code is Required',
         ];
     }
 }

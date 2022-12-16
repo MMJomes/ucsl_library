@@ -18,6 +18,7 @@ class CreateBooksTable extends Migration
             $table->unsignedBigInteger('categories_id');
             $table->unsignedBigInteger('authors_id');
             $table->string('titlename')->nullable();
+            $table->string('image')->nullable();
             $table->date('date')->nullable();
             $table->string('bookname')->nullable();
             $table->string('publishername')->nullable();
@@ -26,8 +27,8 @@ class CreateBooksTable extends Migration
             $table->string('price')->nullable();
             $table->string('availablereason')->nullable();
             $table->string('remark')->nullable();
-            $table->string('availablebook')->nullable();
-            $table->string('totalbook')->nullable();
+            $table->string('availablebook')->default(0);
+            $table->string('totalbook')->default(0);
             $table->string('bookpdflink')->nullable();
             $table->string('slug');
             $table->dateTime('createdat')->nullable();
