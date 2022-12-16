@@ -6,7 +6,10 @@ use App\Helpers\BookRentHelper;
 use App\Http\Controllers\Controller;
 use App\Imports\AuthorListImport;
 use App\Models\Books;
-use App\Models\Setting;;
+use App\Models\Setting;
+use App\Models\Stduent\Bookrent;
+
+;
 
 use App\Models\Stduent\Stduent;
 use App\Models\Teacher\Teacher;
@@ -60,6 +63,20 @@ class TeacherrentController extends Controller
         $enddate = $book_return_date->addDays($book_rent_duration);
         $request->merge(['enddate' => $enddate]);
         $data = $this->StaffRentRepository->create($request->all());
+        $book = Books::where('id', $data->books_id)->first();
+        if ($book) {
+            $totalbooks = $book->totalbook;
+            if ($totalbooks > 0) {
+                $bookrentstatus = Teacherrent::where('id', $data->id)->where('books_id', $data->books_id)->first();
+                if ($bookrentstatus) {
+                    if ($bookrentstatus->rentstatus == OFF) {
+                        $currentavailablebook  = $book->availablebook - 1;
+                        $book->availablebook = $currentavailablebook;
+                        $book->save();
+                    }
+                }
+            }
+        }
         $stdeunt = Teacher::where('id', $data->teachers_id)->first();
         if ($stdeunt) {
             $totalbok = $stdeunt->totalNoOfBooks + 1;
@@ -230,6 +247,12 @@ class TeacherrentController extends Controller
         $contactListdata = $this->StaffRentRepository->where('id', $id)->first();
         if ($contactListdata) {
             if ($contactListdata->rentstatus = OFF) {
+                $booktotal = Books::where('id', $contactListdata->books_id)->first();
+                if ($booktotal) {
+                    $curnbooktotal = $booktotal->availablebook + 1;
+                    $booktotal->availablebook = $curnbooktotal;
+                    $booktotal->save();
+                }
                 $contactListdata->rentstatus = 'on';
                 $contactListdata->status = 'on';
                 $contactListdata->save();

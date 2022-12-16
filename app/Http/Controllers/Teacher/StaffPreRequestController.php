@@ -24,7 +24,6 @@ class StaffPreRequestController extends Controller
     use BookRentHelper;
     private StaffPreQuestRepository $StaffPreQuestRepository;
     private StaffRentRepository $StaffRentRepository;
-
     public function __construct(StaffPreQuestRepository $StaffPreQuestRepository, StaffRentRepository $StaffRentRepository)
     {
         $this->middleware('permission:event.create', ['only' => ['create', 'store']]);
@@ -33,13 +32,11 @@ class StaffPreRequestController extends Controller
         $this->StaffPreQuestRepository = $StaffPreQuestRepository;
         $this->StaffRentRepository = $StaffRentRepository;
     }
-
     public function index()
     {
         if (request()->ajax()) {
             $user = auth()->user();
             $datas = StaffPreRequest::with('book', 'teacher')->orderBy('id', 'ASC')->get();
-
             return $this->BookRent_datatable($datas, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
@@ -132,7 +129,6 @@ class StaffPreRequestController extends Controller
 
     public function template()
     {
-
     }
 
     public function importData(Request $request)
@@ -153,7 +149,14 @@ class StaffPreRequestController extends Controller
                 $studentid = $contactListdata->teachers_id;
                 $bookid = $contactListdata->books_id;
                 $datas = $request->merge(['books_id' => $studentid, 'teachers_id' => $bookid, 'startdate' => $current_date, 'enddate' => $enddate, 'remark' => 'PreRequest Book.']);
-                $data = $this->StaffRentRepository->create($datas->all());
+                $this->StaffRentRepository->create($datas->all());
+                $prerequestbook = StaffPreRequest::with('book', 'teacher')->where('id', $contactListdata->id)->first();
+                $totalBook = Books::where('id', $prerequestbook->books_id)->first();
+                if ($totalBook && $totalBook->availablebook > 0) {
+                    $current_book = $totalBook->availablebook - 1;
+                    $totalBook->availablebook = $current_book;
+                    $totalBook->save();
+                }
                 $stdeunt = Teacher::where('id', $studentid)->first();
                 if ($stdeunt) {
                     $totalbok = $stdeunt->totalNoOfBooks + 1;
