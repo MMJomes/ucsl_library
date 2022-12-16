@@ -19,8 +19,8 @@
 
 <script src="{{ asset('assets/dist/js/dataTable.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
-
 <script src="{{ asset('assets/dist/js/main.js') }}"></script>
+<script src="{{ asset('assets/dist/js/createform.js') }}"></script>
 
 @if ($select ?? false)
 <script src="{{ asset('assets/node_modules/bootstrap-select/bootstrap-select.min.js') }}"></script>

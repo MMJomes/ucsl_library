@@ -18,7 +18,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action={{ route('backend.book.store') }} method="POST" enctype="multipart/form-data">
+                    <form action={{ route('backend.book.store') }} method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                         @csrf
                         @if (count($authors) <= 0)
                             <div class="row">
@@ -70,7 +70,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="date">{{ __('Total Of Number Book') }}</label>
-                                        <input type="tel" class="form-control" name="totalbook" id="totalbook"
+                                        <input type="tel" class="form-control" required name="totalbook" id="totalbook"
                                             placeholder="{{ __('Please Enter Total Of Number Book') }}" value="{{ old('totalbook') }}">
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="titlenumber">{{ __('message.titlenumber') }}</label>
-                                        <input type="tel" class="form-control" name="titlename" id="titlenumber"
+                                        <input type="tel" class="form-control" required name="titlename" id="titlenumber"
                                             placeholder="{{ __('message.titlenumber') }}"
                                             value="{{ old('titlenumber') }}">
                                     </div>
@@ -87,7 +87,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="date">{{ __('message.date') }}</label>
-                                        <input type="date" class="form-control" name="date" id="date"
+                                        <input required type="date" class="form-control" name="date" id="date"
                                             placeholder="{{ __('message.date') }}" value="{{ old('date') }}">
                                     </div>
                                 </div>
@@ -96,8 +96,8 @@
                                 <div class="col-lg-6 col-md-12">
                                     <h5 style="margin-bottom: 10px">{{ 'Select Author Name' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary"
-                                        name="authors_id" required="true">
-                                        <option selected value="0" class="text-black-50" disabled>--- Select Author Name ---
+                                        name="authors_id" required>
+                                        <option selected value="0"  class="text-black-50" disabled>--- Select Author Name ---
                                         </option>
                                         @foreach ($authors as $event)
                                             <option value="{{ $event->id }}" style="font-weight: bold ">
@@ -109,7 +109,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="name">{{ __('message.bookname') }}</label>
-                                        <input type="text" class="form-control" id="name" name="bookname"
+                                        <input type="text" required class="form-control" id="name" name="bookname"
                                             placeholder="{{ __('message.bookname') }}" value="{{ old('name') }}">
                                     </div>
                                 </div>
@@ -154,7 +154,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <h5 style="margin-bottom: 10px">{{ 'Select Category Name' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary"
-                                        name="categories_id" required="true">
+                                        name="categories_id" required>
                                         <option selected value="0" class="text-black-50" disabled>--- Select Category Name ---
                                         </option>
                                         @foreach ($categories as $event)

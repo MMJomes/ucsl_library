@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-body">
                     <form action={{ route('backend.book.update', [$book->slug]) }} method="POST"
-                        enctype="multipart/form-data">
+                        enctype="multipart/form-data" class="needs-validation" novalidate>
                         @csrf
                         {{ csrf_field() }}
                         @method('PUT')
@@ -48,7 +48,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="date">{{ __('Total Of Number Book') }}</label>
-                                        <input type="tel" class="form-control" name="totalbook" id="totalbook"
+                                        <input type="tel" required class="form-control" name="totalbook" id="totalbook"
                                             placeholder="{{ __('Please Enter Total Of Number Book') }}"
                                             value="{{ old('totalbook', $book->totalbook) }}">
                                     </div>
@@ -58,7 +58,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="titlenumber">{{ __('message.titlenumber') }}</label>
-                                        <input type="text" class="form-control" name="titlename" id="titlenumber"
+                                        <input type="text" required class="form-control" name="titlename" id="titlenumber"
                                             placeholder="{{ __('message.titlenumber') }}"
                                             value="{{ old('titlenumber', $book->titlename) }}">
                                     </div>
@@ -75,7 +75,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <h5 style="margin-bottom: 10px">{{ 'Select Author Name' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary" name="authors_id"
-                                        required="true">
+                                        required>
                                         <option selected value="0" class="text-black-50" disabled>--- Select Author
                                             Name ---
                                         </option>
@@ -91,7 +91,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="name">{{ __('message.bookname') }}</label>
-                                        <input type="text" class="form-control" id="name" name="bookname"
+                                        <input type="text" required class="form-control" id="name" name="bookname"
                                             placeholder="{{ __('message.bookname') }}"
                                             value="{{ old('bookname', $book->bookname) }}">
                                     </div>
@@ -138,7 +138,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <h5 style="margin-bottom: 10px">{{ 'Select Category Name' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary"
-                                        name="categories_id" required="true">
+                                        name="categories_id" required>
                                         <option selected value="0" class="text-black-50" disabled>--- Select Category
                                             Name ---
                                         </option>
@@ -154,7 +154,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <h5>{{ __('Select Available Reason') }} </h5>
                                     <select class="selectpicker form-control" data-style="form-control btn-secondary"
-                                        name="availablereason" required="true">
+                                        name="availablereason" required>
                                         <option value="Buy" {{ $book->availablereason == 'Buy' ? 'selected' : '' }}>
                                             Buy
                                         </option>

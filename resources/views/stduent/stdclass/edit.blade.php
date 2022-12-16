@@ -17,7 +17,7 @@
             <div class="card">
                 <div class="card-body">
                     <form action="{{ route('stduent.stdclass.update', ['id' => $stdclass->id]) }}"
-                        method="post" enctype="multipart/form-data">
+                        method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         <div class="row">
@@ -36,7 +36,7 @@
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
                                         <label for="stduentclass">Class Name</label>
-                                        <input type="text" class="form-control" name="stduentclass" id="stduentclass"
+                                        <input type="text" required class="form-control" name="stduentclass" id="stduentclass"
                                             placeholder="Class Name" value="{{ old('stduentclass', $stdclass->stduentclass) }}">
 
                                     </div>

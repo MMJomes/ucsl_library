@@ -16,7 +16,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action={{ route('staff.requestbyStaffs.store') }} method="POST" enctype="multipart/form-data">
+                    <form action={{ route('staff.requestbyStaffs.store') }} method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                         @csrf
                         {{ csrf_field() }}
                         @if (count($stduents) <= 0)
@@ -44,7 +44,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <h5>{{ ('Select Staff Name') }} </h5>
                                     <select class="selectpicker form-control" data-style="form-control btn-secondary"
-                                        name="teachers_id" required="true">
+                                        name="teachers_id" required>
                                         @foreach ($stduents as $event)
                                             <option value="{{ $event->id }}">
                                                 {{ $event->name }}
@@ -56,7 +56,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <h5>{{ ('Select Book Name') }} </h5>
                                     <select class="selectpicker form-control" data-style="form-control btn-secondary"
-                                        name="books_id" required="true">
+                                        name="books_id" required>
                                         @foreach ($books as $event)
                                             <option value="{{ $event->id }}">
                                                 {{ $event->bookname }}
@@ -69,7 +69,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="startdate">PreRequest Date</label>
-                                        <input type="date" class="form-control" name="startdate" id="startdate"
+                                        <input type="date" required class="form-control" name="startdate" id="startdate"
                                             placeholder="Enter Rent Date " value="{{ old('startdate') }}">
                                     </div>
                                 </div>

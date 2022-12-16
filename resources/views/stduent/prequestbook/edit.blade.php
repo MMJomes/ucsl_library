@@ -18,7 +18,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action={{ route('backend.author.update',[$author->slug]) }} method="POST" enctype="multipart/form-data">
+                    <form action={{ route('backend.author.update',[$author->slug]) }} method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                         @csrf
                         {{csrf_field()}}
                         @method('PUT')
@@ -39,7 +39,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <h5>Select Category </h5>
                                     <select class="selectpicker form-control" data-style="form-control btn-secondary"
-                                        name="event_categories_id" required="true">
+                                        name="event_categories_id" required>
                                         @foreach ($categories as $event)
                                             <option value="{{ $event->id }}"
                                                 {{ $event->events_id == $event->id ? 'selected' : '' }}>
@@ -51,7 +51,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="name">{{__('message.name')}}</label>
-                                        <input type="text" class="form-control" name="name" id="name"
+                                        <input type="text" required class="form-control" name="name" id="name"
                                             placeholder="{{__('message.name')}}" value="{{ old('name',$author->name) }}">
                                     </div>
                                 </div>
@@ -60,7 +60,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="createdate">Created At</label>
-                                        <input type="datetime" class="form-control" name="createdate" id="createdate"
+                                        <input type="datetime"  class="form-control" name="createdate" id="createdate"
                                             placeholder="Createde At"
                                             value="{{ old('createdate', $author->created_at) }}">
                                     </div>

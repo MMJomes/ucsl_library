@@ -17,7 +17,7 @@
             <div class="card">
                 <div class="card-body">
                     <form action={{ route('stduent.stduents.update', [$stduent->slug]) }} method="POST"
-                        enctype="multipart/form-data">
+                        enctype="multipart/form-data" class="needs-validation" novalidate>
                         @csrf
                         {{ csrf_field() }}
                         @method('PUT')
@@ -55,7 +55,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="name">{{ __('message.name') }}</label>
-                                        <input type="text" class="form-control" name="name" id="name"
+                                        <input type="text" required class="form-control" name="name" id="name"
                                             placeholder="{{ __('message.name') }}"
                                             value="{{ old('name', $stduent->name) }}">
                                     </div>
@@ -63,7 +63,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <h5>{{ 'Select Class' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary"
-                                        name="std_classes_id" required="true">
+                                        name="std_classes_id" required>
                                         {{ $stduentCls }}
                                         @foreach ($stduentCls as $event)
                                             <option value="{{ $event->id }}"
@@ -78,14 +78,14 @@
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="rollno"> Roll No.(Eg: 1)</label>
-                                        <input type="tel" class="form-control" name="rollno" id="rollno"
+                                        <input type="tel" required class="form-control" name="rollno" id="rollno"
                                             placeholder="Enter Roll No." value="{{ old('rollno', $stduent->rollno) }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input type="email" class="form-control" name="email" id="email"
+                                        <input type="email" required class="form-control" name="email" id="email"
                                             placeholder="Enter Your Email" value="{{ old('email', $stduent->email) }}">
                                     </div>
                                 </div>
@@ -94,7 +94,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="rollint"> Phone Number</label>
-                                        <input type="tel" class="form-control" name="phoneNo" id="phoneNo"
+                                        <input type="tel" required class="form-control" name="phoneNo" id="phoneNo"
                                             placeholder="Enter Phone Number"
                                             value="{{ old('phoneNo', $stduent->phoneNo) }}">
                                     </div>

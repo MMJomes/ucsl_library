@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-body">
                     <form action="{{ route('backend.category.update', ['slug' => $eventcategory->slug]) }}"
-                        method="post" enctype="multipart/form-data">
+                        method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                         {{ csrf_field() }}
                         {{ method_field('POST') }}
                         <div class="row">
@@ -40,15 +40,15 @@
                                     <div class="form-group">
                                         <label for="name">Category Name</label>
                                         <input type="text" class="form-control" name="name" id="name"
-                                            placeholder="Enter Category Name" value="{{ old('name', $eventcategory->name) }}">
+                                            placeholder="Enter Category Name" required value="{{ old('name', $eventcategory->name) }}">
 
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="code">Category Code</label>
-                                        <input type="tel" class="form-control" name="code" id="name"
-                                            placeholder="Enter Category Code" value="{{ old('name', $eventcategory->code) }}">
+                                        <input type="tel" min="000" max="100000" class="form-control" name="code" id="name"
+                                            placeholder="Enter Category Code" required value="{{ old('name', $eventcategory->code) }}">
 
                                     </div>
                                 </div>

@@ -16,7 +16,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action={{ route('staff.rentbyStaff.update',[$author->id]) }} method="POST" enctype="multipart/form-data">
+                    <form action={{ route('staff.rentbyStaff.update',[$author->id]) }} method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                         @csrf
                         {{csrf_field()}}
                         @method('PUT')
@@ -65,7 +65,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <h5 style="margin-bottom: 10px">{{ 'Select Staff Name' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary"
-                                        name="teachers_id" required="true">
+                                        name="teachers_id" required>
                                         <option selected value="0" class="text-black-50" disabled>--- Select Staff Name  ---
                                         </option>
                                         @foreach ($teachers as $event)
@@ -78,7 +78,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <h5 style="margin-bottom: 10px">{{ 'Select Book Name' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary"
-                                        name="books_id" required="true">
+                                        name="books_id" required>
                                         <option selected value="0" class="text-black-50" disabled>--- Select Book Name  ---
                                         </option>
                                         @foreach ($books as $event)
@@ -92,8 +92,8 @@
                             <div class="row clearfix">
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
-                                        <label for="startdate">PreRequest Date</label>
-                                        <input type="date" class="form-control" name="startdate" id="startdate"
+                                        <label for="startdate">Create Date</label>
+                                        <input type="date" required class="form-control" name="startdate" id="startdate"
                                             placeholder="Enter Rent Date " value="{{ old('startdate',$author->startdate) }}">
                                     </div>
                                 </div>

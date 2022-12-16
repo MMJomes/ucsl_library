@@ -19,7 +19,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action={{ route('backend.author.store') }} method="POST" enctype="multipart/form-data">
+                    <form action={{ route('backend.author.store') }} method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                         @csrf
                         {{ csrf_field() }}
                         <div class="row">
@@ -38,7 +38,7 @@
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
                                         <label for="name">{{ __('message.name') }}</label>
-                                        <input type="text" class="form-control" name="name" id="name"
+                                        <input type="text" required class="form-control" name="name" id="name"
                                             placeholder="{{ __('message.name') }}" value="{{ old('name') }}">
                                     </div>
                                 </div>
