@@ -175,7 +175,7 @@
     if (myerror)
         toastr['info']("{{ Session::get('error') }}");
     var mysuccess = "{{ Session::get('success') }}";
-    if (myerror)
+    if (mysuccess)
         toastr['info']("{{ Session::get('success') }}");
 </script>
 <script type="text/javascript">

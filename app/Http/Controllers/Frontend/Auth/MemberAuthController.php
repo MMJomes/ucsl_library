@@ -90,11 +90,11 @@ class MemberAuthController extends Controller
             if ($emailValid == "@ucsloikaw.edu.mm") {
                 $staffemail = Teacher::where('email', $request->email)->first();
                 if ($staffemail) {
-                    if ($staffemail->status = ON) {
+                    if ($staffemail->status == ON) {
                         Session::put('email', $request->email);
                         return redirect()->route('users.totalbook');
                     } else {
-                        Session::put('errors', 'Your account is not activited yet by the admin. Please contact admin for more detail.');
+                        Session::put('error', 'Your account is not activited yet by the admin. Please contact admin for more detail.');
                         return redirect()->back();
                     }
                 } else {
@@ -111,12 +111,13 @@ class MemberAuthController extends Controller
             if ($emailValid == "@ucsloikaw.edu.mm") {
                 $std = Stduent::where('email', $request->email)->first();
                 if ($std) {
-                    if ($std->status = ON) {
+                    if ($std->status == ON) {
                         Session::put('email', $request->email);
                         return redirect()->route('users.totalbook');
                     } else {
-                        Session::put('errors', 'Your account is not activited yet by the admin. Please contact admin for more detail.');
+                        Session::put('error', 'Your account is not activited yet by the admin. Please contact admin for more detail.');
                         return redirect()->back();
+                        dd("OK");
                     }
                 } else {
                     Session::put('error', 'You Look Don\'t have an Account!.Please Register First.');
@@ -141,6 +142,8 @@ class MemberAuthController extends Controller
             $setting_approve =  Setting::where('key', 'reg_approve')->first();
             if ($setting_approve->value == ON) {
                 $request->merge(['status' => ON]);
+            }else{
+                $request->merge(['status' => OFF]);
             }
             if ($request->usertype = "stduent") {
                 $isExit = Stduent::with('stdclass')->where('email', $useremail)->where('rollno', $userrollno)->whereHas('stdclass', function ($query) use ($userclass) {
@@ -453,7 +456,6 @@ class MemberAuthController extends Controller
         $stdemail = Stduent::where('email', $useremail)->first();
         if ($staffemail != null || $stdemail != null) {
             if ($stdemail) {
-
                 $email = $request->email;
                 $emailValid = substr($email, -17);
                 if ($emailValid == "@ucsloikaw.edu.mm") {

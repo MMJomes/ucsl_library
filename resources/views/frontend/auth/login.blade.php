@@ -20,18 +20,6 @@
                                 class="needs-validation" novalidate>
                                 @csrf
                                 {{ csrf_field() }}
-
-                                @if (session()->has('success'))
-                                    <p class="alert alert-success">{{ session('message') }}</p>
-                                @endif
-                                @foreach ($errors->all() as $error)
-                                    <div>{{ $error }}</div>
-                                @endforeach
-                                @if ($errors->any())
-                                    <div class="bg-primary" style="padding: 10px 3px 1px 10px; margin-bottom:10px;">
-                                        <p>{{ $errors->first() }}</p>
-                                    </div>
-                                @endif
                                 @if (\Session::get('error'))
                                     <div class="alert alert-danger">
                                         <ul>
