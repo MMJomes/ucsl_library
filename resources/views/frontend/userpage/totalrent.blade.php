@@ -131,13 +131,9 @@
                                         return '<p style="font-weight:bold;" class=" btn-outline-danger btn-sm btn-font-size-sm "aria-haspopup="true" aria-expanded="false"><i class="icon-clock"></i> &nbsp;Overed Time  &nbsp;';
                                     }
                                 }
-
                             }
-
                         }
-
                     },
-
                     {
                         orderable: false,
                         "render": function(data, type, full, meta) {
@@ -200,7 +196,7 @@
                         if (response) {
                             new swal({
                                     title: "Success!",
-                                    text: "Hello",
+                                    text: response.message,
                                     type: "success",
                                     confirmButtonClass: "btn-success",
                                     confirmButtonText: "OK",
@@ -218,7 +214,7 @@
                             swal({
                                 title: "Error!",
                                 type: "error",
-                                text: firstErrorMsg,
+                                text: response.message,
                                 confirmButtonClass: "btn-danger"
                             });
                         }

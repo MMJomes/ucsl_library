@@ -219,7 +219,7 @@ class MemberAuthController extends Controller
                     $data = $this->StaffPreQuestRepository->create($request->all());
                     if ($data)
                         return response()->json([
-                            'message' => 'Your BOOK PREORDER Created Successfully',
+                            'message' => ' Book Order Created Successfully',
                         ]);
                 }
                 if ($stdemail) {
@@ -249,12 +249,12 @@ class MemberAuthController extends Controller
                     $data = $this->PreQuestRepository->create($request->all());
                     if ($data)
                         return response()->json([
-                            'message' => 'Your BOOK PREORDER Created Successfully',
+                            'message' => 'Your Book Order Created Successfully',
                         ]);
                 }
             } else {
                 return response()->json([
-                    'message' => 'There is No Book',
+                    'error' => 'There is No Book',
                 ]);
             }
         } else {
@@ -315,11 +315,11 @@ class MemberAuthController extends Controller
                     $data->requesttatus = 'on';
                     $data->save();
                     return response()->json([
-                        'message' => 'Your  Continue Rent Is Create Successfully ',
+                        'message' => 'Book Continue Rent Is Create Successfully ',
                     ]);
                 } else {
                     return response()->json([
-                        'message' => 'There is No Data!',
+                        'error' => 'There is No Data!',
                     ]);
                 }
             }
@@ -329,11 +329,11 @@ class MemberAuthController extends Controller
                     $data->requesttatus = 'on';
                     $data->save();
                     return response()->json([
-                        'message' => 'Your  Continue Rent Is Create Successfully ',
+                        'message' => 'Book  Continue Rent Is Create Successfully ',
                     ]);
                 } else {
                     return response()->json([
-                        'message' => 'There is No Data!',
+                        'error' => 'There is No Data!',
                     ]);
                 }
             }

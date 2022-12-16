@@ -165,7 +165,7 @@
                         if (response) {
                             new swal({
                                     title: "Success!",
-                                    text: "Hello",
+                                    text: response.message,
                                     type: "success",
                                     confirmButtonClass: "btn-success",
                                     confirmButtonText: "OK",
@@ -183,7 +183,7 @@
                             new swal({
                                 title: "Error!",
                                 type: "error",
-                                text: firstErrorMsg,
+                                text: response.message,
                                 confirmButtonClass: "btn-danger"
                             });
                         }
