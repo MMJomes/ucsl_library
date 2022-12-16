@@ -41,12 +41,12 @@ class ExpiredToRetrunMailServiceJob implements ShouldQueue
             $notification_datetime = Carbon::now()->addHour($notification_setting_date)->format('Y-m-d H:i:s');
             Bookrent::with('stduent')->where('status', null)->each(function ($teacher)  use ($notification_datetime) {
                 if ($notification_datetime == $teacher->enddate) {
-                    $teacher->notify(new SendEmail($teacher->stduent->name, $teacher->enddate));
+                    $teacher->notify(new SendEmail($teacher->stduent->name,"Warning!" , "Your Rented Books Will Be Expired on'  $teacher->enddate  '" ));
                 }
             });
             Teacherrent::with('teacher')->where('status', null)->each(function ($teacher)  use ($notification_datetime) {
                 if ($notification_datetime == $teacher->enddate) {
-                    $teacher->notify(new SendEmail($teacher->teacher->name, $teacher->enddate));
+                    $teacher->notify(new SendEmail($teacher->teacher->name,"Warning!" , "Your Rented Books Will Be Expired on' $teacher->enddate  '"));
                 }
             });
         }

@@ -183,7 +183,7 @@ class BookRentController extends Controller
             $enddate = $book_return_date->addDays($book_rent_duration);
             $request->merge(['enddate' => $enddate, 'startdate' => $strtime,  'remark' => "Continuced", 'requesttatus' => 'off', 'approvetatus' => 'on', 'remark' => "User Request Has Been Approved By Admin"]);
             $this->BookRentRepository->updateById($Author->id, $request->all());
-            $Author->notify(new SendEmail($Author->name, "Congratulations! , Your Request Been Reject By Admin"));
+            $Author->notify(new SendEmail($Author->name, "Congratulations!" , "Your Request Have Been Approved By Admin"));
             return redirect()->route('stduent.bookRent.index')->with(['success' => 'Successfully Updated!']);
         } else {
             return view('errorpage.404');
@@ -199,7 +199,7 @@ class BookRentController extends Controller
             $enddate = $book_return_date->addDays($book_rent_duration);
             $request->merge(['enddate' => $enddate, 'startdate' => $strtime,  'remark' => "Continuced", 'requesttatus' => 'off', 'approvetatus' => 'off', 'remark' => "User Request Has Been Reject By Admin"]);
             $this->BookRentRepository->updateById($Author->id, $request->all());
-            $Author->notify(new SendEmail($Author->name, "Sorry!, Your Request Been Reject By Admin"));
+            $Author->notify(new SendEmail($Author->name, "Sorry!" ,"Your Request Been Rejected By Admin"));
             return redirect()->route('stduent.bookRent.index')->with(['success' => 'Successfully Updated!']);
         } else {
             return view('errorpage.404');

@@ -30,7 +30,7 @@ class ContactMailServiceJob implements ShouldQueue
         $password = $this->password;
         $id= $this->id;
         Member::where('id', $id)->get()->each(function ($contact) use ($username, $password) {
-            $contact->notify(new SendEmail($username,$password));
+            //$contact->notify(new SendEmail($username,$password));
         });
 
         //  YueEmbaContact::each(function($contact) use ($username, $password){

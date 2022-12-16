@@ -15,22 +15,25 @@ class StduentAccountMailServiceJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     private $username;
-    private $password;
+    private $about;
+    private $message;
     private $id;
-    public function __construct($username = null, $password = null, $id = null)
+    public function __construct($username = null, $about = null, $message = null,$id = null)
     {
         $this->username = $username;
-        $this->password = $password;
-        $this->id = $id;
+        $this->about = $about;
+        $this->message = $message;
+        $this->id=$id;
     }
 
     public function handle()
     {
+        $id=$this->id;
         $username = $this->username;
-        $password = $this->password;
-        $id = $this->id;
-        Stduent::where('id', $id)->get()->each(function ($contact) use ($username, $password) {
-            $contact->notify(new SendEmail($username, $password));
+        $about = $this->about;
+        $message = $this->message;
+        Stduent::where('id', $id)->get()->each(function ($contact) use ($username, $about,$message) {
+            $contact->notify(new SendEmail($username, $about,$message));
         });
     }
 }

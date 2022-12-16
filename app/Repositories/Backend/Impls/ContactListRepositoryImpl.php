@@ -47,7 +47,7 @@ class ContactListRepositoryImpl implements ContactListRepository
         $yueembcontact = Member::create($request->all());
         if ($setting_sned_email->value == ON && $yueembcontact->email) {
             //ContactMailServiceJob::dispatch($request->username, $pwd);
-            $yueembcontact->notify(new SendEmail($pwd, $userfullname));
+            //$yueembcontact->notify(new SendEmail($pwd, $userfullname));
         }
         return $yueembcontact;
     }

@@ -25,12 +25,12 @@ class BookListRepositoryImpl implements BookListRepository
         if ($sned_email_to_new_book->value == ON) {
             Stduent::where('status', ON)->get()->each(function ($stdeunt) {
                 if ($stdeunt->email != null) {
-                    $stdeunt->notify(new SendEmail($stdeunt->name));
+                    $stdeunt->notify(new SendEmail($stdeunt->name,'Announcement','"DIGITAL LIBRARY MANAGENMENT SYSTEM" of USCL Have been Added New Books!'));
                 }
             });
             Teacher::where('status', ON)->get()->each(function ($stf) {
                 if ($stf->email != null) {
-                    $stf->notify(new SendEmail($stf->name));
+                    $stf->notify(new SendEmail($stf->name ,'Announcement','"DIGITAL LIBRARY MANAGENMENT SYSTEM" of USCL Have been Added New Books!'));
                 }
             });
         }

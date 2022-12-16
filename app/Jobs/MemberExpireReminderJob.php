@@ -31,7 +31,7 @@ class MemberExpireReminderJob implements ShouldQueue
         $notification_datetime = Carbon::now()->addMinute($notification_setting_date)->format('Y-m-d H:i:s');
         Member::where('status', OFF)->get()->each(function ($member)  use ($notification_datetime) {
             if ($notification_datetime == $member->dob) {
-                $member->notify(new SendEmail($member->name, $member->dob));
+                //$member->notify(new SendEmail($member->name, $member->dob));
             }
         });
     }

@@ -15,22 +15,23 @@ class StaffAccountMailServiceJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     private $username;
-    private $password;
-    private $id;
-    public function __construct($username = null, $password = null, $id = null)
+    private $about;
+    private $message;
+    public function __construct($username = null, $message = null, $about = null)
     {
         $this->username = $username;
-        $this->password = $password;
-        $this->id = $id;
+        $this->about = $about;
+        $this->message = $message;
     }
 
     public function handle()
     {
         $username = $this->username;
-        $password = $this->password;
+        $about = $this->about;
+        $message = $this->message;
         $id = $this->id;
-        Teacher::where('id', $id)->get()->each(function ($contact) use ($username, $password) {
-            $contact->notify(new SendEmail($username, $password));
+        Teacher::where('id', $id)->get()->each(function ($contact) use ($username, $about,$message) {
+            $contact->notify(new SendEmail($username, $about,$message));
         });
     }
 }

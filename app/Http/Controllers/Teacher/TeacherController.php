@@ -221,7 +221,8 @@ class TeacherController extends Controller
             if ($sned_email_to_user_account->value = ON) {
                 $curListdata = $this->StaffRepository->where('slug', $request->slug)->first();
                 if ($curListdata) {
-                    $curListdata->notify(new SendEmail($curListdata->name, $curListdata->status));
+                    //$mystatus= $curListdata->status;
+                    $curListdata->notify(new SendEmail($curListdata->name ,"Notification!" , "Your Request Been'  $curListdata->status  'By Admin"));
                 }
             }
             return redirect()->route('staff.staffs.index')->with(['success' => 'Successfully Updated!']);
@@ -237,7 +238,7 @@ class TeacherController extends Controller
         if ($sned_email_to_user_account->value = ON) {
             $curListdata = $this->StaffRepository->where('slug', $request->slug)->first();
             if ($curListdata) {
-                StaffAccountMailServiceJob::dispatch($curListdata->name, $curListdata->status, $curListdata->id);
+                StaffAccountMailServiceJob::dispatch($curListdata->name,"Notification!" , "Your Request Been' {{ $curListdata->status }} 'Admin");
             }
         }
         return redirect()->route('staff.staffs.index')->with('success', 'Stduents Approved successfully');

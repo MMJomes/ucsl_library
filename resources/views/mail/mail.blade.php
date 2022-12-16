@@ -1,82 +1,95 @@
-{{-- <!DOCTYPE html>
-<html>
-<style>
-    body {
-        font-family: Arial, Helvetica, sans-serif;
-    }
-
-    form {
-        border: 3px solid #f1f1f1;
-        font-family: Arial;
-    }
-
-    .button {
-        background-color: #00CCFF;
-        padding: 8px 16px;
-        display: inline-block;
-        text-decoration: none;
-        color: #FFFFFF border-radius: 3px;
-        width: 100%;
-        padding: 1px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        box-sizing: border-box;
-    }
-
-    .button:hover {
-        background-color: #0066FF;
-    }
-
-    .container {
-        padding: 20px;
-        background-color: #f1f1f1;
-    }
-
-</style>
-
-<body>
-    <form auction="#" method="POST">
-        <div class="container">
-            <h3>User Name: {{ $username }}</h3>
-            <h3>User Password:  {{ $userpassword }}</h3>
-            <h4>Date : {{ $date }} / Time: {{ $time }}<h4>
-        </div>
-{{--
-        <div class="container" style="background-color:white;text-aligin:center">
-            <center>
-                <a href="https://mti.com.mm">
-                    <img src="{{ $message->embed($image) }}" style="width: 40%" alt="Image">
-                </a>
-
-                <p>{!! $footer !!}</p>
-            </center>
-        </div>
-        @if ($type != 'voter_announce')
-        <div class="container">
-            <a href="{{ $link }}" class="button btn btn-primary">
-                <center><p style="font-weight:bold";>VOTE</p></center>
-            </a>
-        </div>
-        @endif
-    </form>
-
-</body>
-
-</html> --}}
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Mail</title>
+    <title>UCSL DIGITAL LIBRARY MANAGENMENT SYSTEM</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link href="{{ asset('assets/dist/select2/bootstrap.min.css') }}" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <style>
+    table {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    table caption {
+        font-size: 1.5em;
+        margin: .5em 0 .75em;
+    }
+
+    table tr {
+        background-color: #f8f8f8;
+        border: 1px solid #ddd;
+        padding: .35em;
+    }
+
+    table th,
+    table td {
+        padding: .625em;
+        text-align: center;
+    }
+
+    table th {
+        font-size: .85em;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+    }
+
+    @media screen and (max-width: 600px) {
+        table {
+            border: 0;
+        }
+
+        table caption {
+            font-size: 1.3em;
+        }
+
+        table thead {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
+
+        table tr {
+            border-bottom: 3px solid #ddd;
+            display: block;
+            margin-bottom: .625em;
+        }
+
+        table td {
+            border-bottom: 1px solid #ddd;
+            display: block;
+            font-size: .8em;
+            text-align: right;
+        }
+
+        table td::before {
+
+            content: attr(data-label);
+            float: left;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        table td:last-child {
+            border-bottom: 0;
+        }
+    }
+
+    body {
+        font-family: "Open Sans", sans-serif;
+        line-height: 1.25;
+    }
+
     .card {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         max-width: 80%;
@@ -93,19 +106,45 @@
 </style>
 
 <body>
-
-    <div class="container justify-content-center" style="justify-content: center">
+    <div style="justify-content: center">
         <div class="card"><br><br>
             <div class="card-header" style="font-weight: bold;">
-                Member Register Mail Notification
+                <center>
+                    <img src="{{ url('cu.jpg') }}" alt="" width="90%" style="height:auto;display:block;" />
+                </center>
+
             </div>
             <div class="card-body">
-                <p class="card-text">User Name: {{ $username }}</p>
-                <p class="card-text">User Password: {{ $userpassword }}</p>
-                <p class="card-text">Date : {{ $date }} / Time: {{ $time }}</p>
+                <table role="presentation"
+                    style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
+                    <caption style="font-size: 16px">DIGITAL LIBRARY MANAGENMENT SYSTEM </caption>
+                    <tbody>
+                        <tr>
+                            <td colspan="4">
+                                <br>
+                                <center>{{ $about }}:</center>
+                                <br/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="float:inline-start;">
+                                <br>
+                                <center>Date: <span>{{ $date }} : {{ $time }}</span></center>
+                                <br/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="card-text"
+                    style="text-decoration: underline;font-family: 'Times New Roman', Times, serif;font-size: larger;">
+                    About:</p>
+                <p class="card-text" style="text-align: left;margin-left: 8px;font-size: 12px;">
+                    Dear:<span>{{ $username }}</span></p>
+                <p class="card-text">{{ $mymessage }}</p>
             </div>
             <div class="card-footer">
-                <h6 class="card-title mb-4">Powered By MTI</h6><br>
+                <h6 class="card-title mb-4">Powered By <span><a target="_blank"
+                            href="https://www.linkedin.com/in/maungmyint/" blank> Maung Myint</a></span></h6><br>
 
             </div>
         </div>

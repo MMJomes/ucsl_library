@@ -219,7 +219,7 @@ class StduentController extends Controller
             if ($sned_email_to_user_account->value = ON) {
                 $curListdata = $this->studentRepository->where('slug', $request->slug)->first();
                 if ($curListdata) {
-                    $curListdata->notify(new SendEmail($curListdata->name, $curListdata->status));
+                    $curListdata->notify(new SendEmail($curListdata->name,'Notification!'," Your Request Been' $curListdata->status 'By Admin"));
                 }
             }
             return redirect()->route('stduent.stduents.index')->with(['success' => 'Successfully Updated!']);
@@ -234,7 +234,7 @@ class StduentController extends Controller
         if ($sned_email_to_user_account->value = ON) {
             $curListdata = $this->studentRepository->where('slug', $request->slug)->first();
             if ($curListdata) {
-                StduentAccountMailServiceJob::dispatch($curListdata->name, $curListdata->status, $curListdata->id);
+                StduentAccountMailServiceJob::dispatch($curListdata->name, "Announcement! , Your Request Been Admin");
             }
         }
         return redirect()->route('stduent.stduents.index')->with('success', 'Stduents Approved successfully');

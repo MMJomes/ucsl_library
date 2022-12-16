@@ -25,10 +25,10 @@ class AddNewBookMailServiceJob implements ShouldQueue
     {
         $username = $this->username;
         Stduent::each(function ($contact) use ($username) {
-            $contact->notify(new SendEmail($username));
+            $contact->notify(new SendEmail($username,'Announcement','"DIGITAL LIBRARY MANAGENMENT SYSTEM" of USCL Have been Added New Books!'));
         });
         Teacher::each(function ($contact) use ($username) {
-            $contact->notify(new SendEmail($username));
+            $contact->notify(new SendEmail($username,'Announcement','"DIGITAL LIBRARY MANAGENMENT SYSTEM" of USCL Have been Added New Books!'));
         });
     }
 }
