@@ -69,7 +69,7 @@ class BooksController extends Controller
             $img->move($upload_path, $name);
             $path = '/upload/books/' . $name;
         } else {
-            $path = "/default-user.png";
+            $path = "/default-book.png";
         }
         $request->merge([
             'image' => $path,

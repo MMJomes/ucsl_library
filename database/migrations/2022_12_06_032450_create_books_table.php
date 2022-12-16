@@ -18,7 +18,7 @@ class CreateBooksTable extends Migration
             $table->unsignedBigInteger('categories_id');
             $table->unsignedBigInteger('authors_id');
             $table->string('titlename')->nullable();
-            $table->string('image')->nullable();
+            $table->string('image')->default('/default_book.png');
             $table->date('date')->nullable();
             $table->string('bookname')->nullable();
             $table->string('publishername')->nullable();
