@@ -82,79 +82,108 @@ class MemberAuthController extends Controller
             return view('frontend.auth.register', compact('categories', 'dcategories'));
         }
     }
-
     public function loginAction(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            "name" => "required",
-            "email" => "required|unique:registrations",
-
-        ], [
-            "email" => "Email is required Here",
-            "phone" => "Phone is required Hrer",
-        ]);
         if ($request->usertype == 'staff') {
-            $staffemail = Teacher::where('email', $request->email)->first();
-            if ($staffemail) {
-                if ($staffemail->status = ON) {
-                    Session::put('email', $request->email);
-                    return redirect()->route('users.totalbook');
+            $email = $request->email;
+            $emailValid = substr($email, -17);
+            if ($emailValid == "@ucsloikaw.edu.mm") {
+                $staffemail = Teacher::where('email', $request->email)->first();
+                if ($staffemail) {
+                    if ($staffemail->status = ON) {
+                        Session::put('email', $request->email);
+                        return redirect()->route('users.totalbook');
+                    } else {
+                        Session::put('errors', 'Your account is not activited yet by the admin. Please contact admin for more detail.');
+                        return redirect()->back();
+                    }
                 } else {
-                    return back()->with('success', 'Your Account Is Not Active Yet! ,Please Contact to Admin.');
+                    Session::put('error', 'You Look Don\'t have an Account!.Please Register First.');
+                    return redirect()->back();
                 }
             } else {
-                return back()->with('success', 'Your Account Already Exit');
+                Session::put('error', 'Invail Email Address,Please Prodie Vaild Email Address.');
+                return redirect()->back();
             }
         } elseif ($request->usertype == 'stduent') {
-            $std = Stduent::where('email', $request->email)->first();
-            if ($std) {
-                if ($std->status = ON) {
-                    Session::put('email', $request->email);
-                    return redirect()->route('users.totalbook');
+            $email = $request->email;
+            $emailValid = substr($email, -17);
+            if ($emailValid == "@ucsloikaw.edu.mm") {
+                $std = Stduent::where('email', $request->email)->first();
+                if ($std) {
+                    if ($std->status = ON) {
+                        Session::put('email', $request->email);
+                        return redirect()->route('users.totalbook');
+                    } else {
+                        Session::put('errors', 'Your account is not activited yet by the admin. Please contact admin for more detail.');
+                        return redirect()->back();
+                    }
                 } else {
-                    return redirect()->back()->with('success', 'your message,here');
-               }
+                    Session::put('error', 'You Look Don\'t have an Account!.Please Register First.');
+                    return redirect()->back();
+                }
             } else {
-                return redirect()->route('member.index')->withErrors(['errors','Your account is not activited yet by the admin. Please contact admin for more detail.']);
+                Session::put('error', 'Invail Email Address,Please Prodie Vaild Email Address.');
+                return redirect()->back();
             }
-        } else {
-            return "There is no user";
         }
-        return redirect()->back()->withInput();
+        return redirect()->back();
     }
     public function regAction(Request $request)
     {
         $useremail = $request->email;
         $userclass = $request->std_classes_id;
         $userrollno = $request->rollno;
-        $setting_approve =  Setting::where('key', 'reg_approve')->first();
-        if ($setting_approve->value == ON) {
-            $request->merge(['status' => ON]);
-        }
-        if ($request->usertype = "stduent") {
-            $isExit = Stduent::with('stdclass')->where('email', $useremail)->where('rollno', $userrollno)->whereHas('stdclass', function ($query) use ($userclass) {
-                $query->where('id', $userclass);
-            })->first();
-            if ($isExit) {
-                return redirect()->route('member.index')->with(['error' => 'Your Account Already Exit.Please Login']);
-            } else {
-                $isExit = Teacher::with('stdclass')->where('email', $useremail)->first();
+
+        $email = $request->email;
+        $emailValid = substr($email, -17);
+        if ($emailValid == "@ucsloikaw.edu.mm") {
+            $setting_approve =  Setting::where('key', 'reg_approve')->first();
+            if ($setting_approve->value == ON) {
+                $request->merge(['status' => ON]);
+            }
+            if ($request->usertype = "stduent") {
+                $isExit = Stduent::with('stdclass')->where('email', $useremail)->where('rollno', $userrollno)->whereHas('stdclass', function ($query) use ($userclass) {
+                    $query->where('id', $userclass);
+                })->first();
                 if ($isExit) {
-                    return redirect()->route('member.index')->with(['error' => 'Your Account Already Exit']);
+                    Session::put('error', 'Email Address And Roll Number is Already Exit!');
+                    return redirect()->back();
                 } else {
-                    Session::put('email', $request->email);
-                    $data = $this->studentRepository->create($request->all());
-                    return redirect()->route('users.totalbook');
+                    $isExit = Teacher::with('stdclass')->where('email', $useremail)->first();
+                    if ($isExit) {
+                        Session::put('error', 'Email Address And Roll Number is Already Exit!');
+                        return redirect()->back();
+                    } else {
+                        Session::put('email', $request->email);
+                        $data = $this->studentRepository->create($request->all());
+                        $myStatus = $data->status;
+                        if ($myStatus == OFF) {
+                            Session::put('success', 'Your Account is Crated Successful!,And Your Account Is Review,Please Wait For Admin Approve!');
+                            return redirect()->back();
+                        } else {
+                            Session::put('email', $request->email);
+                            return redirect()->route('users.totalbook');
+                        }
+                    }
+                }
+            } else {
+                Session::put('email', $request->email);
+                $data = $this->StaffRepository->create($request->all());
+                if ($data) {
+                    $myStatus = $data->status;
+                    if ($myStatus == OFF) {
+                        Session::put('success', 'Your Account is Crated Successful!,And Your Account Is Review,Please Wait For Admin Approve!');
+                        return redirect()->back();
+                    } else {
+                        Session::put('email', $request->email);
+                        return redirect()->route('users.totalbook');
+                    }
                 }
             }
         } else {
-            Session::put('email', $request->email);
-            $data = $this->StaffRepository->create($request->all());
-        }
-        if ($data) {
-            return redirect()->route('users.totalbook');
-        } else {
-            return redirect()->route('member.index')->with(['message' => 'User Login Failed!']);
+            Session::put('error', 'Invail Email Address,Please Prodie Vaild Email Address.');
+            return redirect()->back();
         }
     }
     public function passwordReset()
@@ -181,7 +210,6 @@ class MemberAuthController extends Controller
     }
     public function bookorder(Request $request, $id)
     {
-
         $useremail  = Session::get('email');
         //dd($useremail);
         $staffemail = Teacher::where('email', $useremail)->first();

@@ -20,6 +20,20 @@
                                 class="needs-validation" novalidate>
                                 @csrf
                                 {{ csrf_field() }}
+                                @if (\Session::get('error'))
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            <li>{!! \Session::get('error') !!}</li>
+                                        </ul>
+                                    </div>
+                                @endif
+                                @if (\Session::get('success'))
+                                    <div class="alert alert-success">
+                                        <ul>
+                                            <li>{!! \Session::get('success') !!}</li>
+                                        </ul>
+                                    </div>
+                                @endif
                                 <div class="body">
                                     <h6>{{ __('Select User Type ') }}</h6>
                                     <hr>
@@ -114,8 +128,9 @@
                                             <div class="form-group">
                                                 <label for="rollno"> Roll No.(Eg: 1)</label>
                                                 <input type="tel" min="9" maxlength="11" class="form-control"
-                                                    name="rollno" id="rollno" onkeypress="return isNumber(event);"
-                                                    placeholder="Enter Roll No." value="{{ old('rollno') }}">
+                                                    name="rollno" id="rollno"
+                                                    onkeypress="return isNumber(event);" placeholder="Enter Roll No."
+                                                    value="{{ old('rollno') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -153,8 +168,20 @@
 @section('content')
 @endsection
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
 
+<script>
+    var myerror = "{{ Session::get('error') }}";
+    if (myerror)
+        toastr['info']("{{ Session::get('error') }}");
+    var mysuccess = "{{ Session::get('success') }}";
+    if (myerror)
+        toastr['info']("{{ Session::get('success') }}");
+</script>
 <script type="text/javascript">
+    {{ Session::forget('error') }}
+    {{ Session::forget('success') }}
+
     function isNumber(e) {
         e = e || window.event;
         var charCode = e.which ? e.which : e.keyCode;

@@ -32,42 +32,13 @@
                                         <p>{{ $errors->first() }}</p>
                                     </div>
                                 @endif
-                                @if (Session::has('success'))
-                                    <div class="alert alert-success">
-                                        {{ Session::get('success') }}
-                                        @php
-                                            Session::forget('success');
-                                        @endphp
-                                    </div>
-                                @endif
-
-                                @if (count($errors) > 0)
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
-
-
                                 @if (\Session::get('error'))
-                                    <div class="alert alert-success">
+                                    <div class="alert alert-danger">
                                         <ul>
                                             <li>{!! \Session::get('error') !!}</li>
                                         </ul>
                                     </div>
                                 @endif
-                                {{ Session::get('error') }}
-                                @if (\Session::get('withErrors'))
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            <li>{!! \Session::get('withErrors') !!}</li>
-                                        </ul>
-                                    </div>
-                                @endif
-                                {{ Session::get('email') }}
                                 <div class="body">
                                     <h6>{{ __('Select User Type ') }}</h6>
                                     <hr>
@@ -138,17 +109,12 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
 <script>
-    @if ($errors->any())
-        let msg = "{{ $errors->first() }}";
-        console.log(msg);
-        toastr['info'](msg);
-    @endif
-
-    @if (session('success'))
-        let msg = "{{ session('success') }}";
-        toastr['info'](msg);
-    @endif    </script>
+    var myerror = "{{ Session::get('error') }}";
+    if (myerror)
+        toastr['info']("{{ Session::get('error') }}");
+</script>
 <script type="text/javascript">
+    {{ Session::forget('error') }}
     function isNumber(e) {
         e = e || window.event;
         var charCode = e.which ? e.which : e.keyCode;
@@ -176,13 +142,13 @@
             console.log(ov);
             if ($(this).val() == 'stduent') {
                 $('button[type="submit"]').prop("disabled", false);
-                // $('#stdid').show();
-                // $('#staffid').hide();
+                $('#stdid').show();
+                $('#staffid').hide();
             }
             if ($(this).val() == 'staff') {
                 $('button[type="submit"]').prop("disabled", false);
-                // $('#staffid').show();
-                // $('#stdid').hide();
+                $('#staffid').show();
+                $('#stdid').hide();
             }
             if ($(this).val() == null) {
                 document.getElementById("mysubmit").disabled = true
