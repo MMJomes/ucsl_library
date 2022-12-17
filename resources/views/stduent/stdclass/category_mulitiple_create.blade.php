@@ -32,7 +32,7 @@
                                     <div class="col-md-4">
                                         <div class="text-center">
                                         <h3><a href="{{ url('admin/category/template') }}">{{__('message.exceldownload')}}</a></h3>
-                                        
+
                                         </div>
                                     </div>
                                     <div class="col-md-1">
@@ -40,7 +40,7 @@
                                     <div class="col-md-7">
                                         <div class="form-group">
                                             <label for="import_file" class="form-label">{{__('message.chooseexcelfile')}}</label>
-                                            <input type="file" name="import_file" class="" id="import_file">
+                                            <input type="file" required name="import_file" class="" id="import_file">
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-flat"><i
                                                 class="fa fa-upload"></i> {{__('message.upload')}}</button>
