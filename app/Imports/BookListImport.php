@@ -89,7 +89,6 @@ class BookListImport implements ToModel, WithHeadingRow, WithValidation
     public function rules(): array
     {
         return [
-            'date' => 'required',
         ];
     }
 }

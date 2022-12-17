@@ -29,8 +29,6 @@ class CategoryListImport implements ToModel, WithHeadingRow, WithValidation
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'code' => 'required',
         ];
     }
 }

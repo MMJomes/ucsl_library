@@ -23,7 +23,7 @@ class EventCategory extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
+                'source' => 'code'
             ]
         ];
     }

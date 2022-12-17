@@ -24,7 +24,7 @@ class EventCategoryRequest extends FormRequest
     public function rules()
     {
             return [
-                'name' => 'required',
+                //'name'=>'required',
                 'code'=> 'required',
             ];
 
@@ -32,7 +32,7 @@ class EventCategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'name' => 'Name is required',
+            //'name' => 'Name is required',
             'code' => 'Category Code is Required',
         ];
     }

@@ -20,11 +20,9 @@ class AuthorListImport implements ToModel, WithHeadingRow, WithValidation
      */
     public function model(array $row)
     {
-        $categories_id =$row['categories_id'];
         $name =$row['name'];
          Author::create([
             'name' => $name,
-            'categories_id' => $categories_id,
         ]);
     }
 
@@ -32,7 +30,6 @@ class AuthorListImport implements ToModel, WithHeadingRow, WithValidation
     {
         return [
             'name' => 'required',
-            'categories_id' => 'required',
         ];
     }
 }

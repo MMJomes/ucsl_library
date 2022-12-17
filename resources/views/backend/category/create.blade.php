@@ -37,7 +37,7 @@
                                     <div class="form-group">
                                         <label for="name">{{__('message.name')}}</label>
                                         <input type="text" class="form-control" name="name" id="name"
-                                            placeholder="Enter Category Name" required value="{{ old('name') }}">
+                                            placeholder="Enter Category Name"  value="{{ old('name') }}">
                                             <div class="invalid-feedback">
                                                 Name is Required.
                                             </div>
