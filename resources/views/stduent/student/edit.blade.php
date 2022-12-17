@@ -21,7 +21,20 @@
                         @csrf
                         {{ csrf_field() }}
                         @method('PUT')
-
+                        @if (\Session::get('adminerror'))
+                            <div class="alert alert-danger">
+                                <ul>
+                                    <li>{!! \Session::get('adminerror') !!}</li>
+                                </ul>
+                            </div>
+                        @endif
+                        @if (\Session::get('adminsuccess'))
+                            <div class="alert alert-success">
+                                <ul>
+                                    <li>{!! \Session::get('adminsuccess') !!}</li>
+                                </ul>
+                            </div>
+                        @endif
                         <div class="row">
                             <div class="col-md-12">
                                 @if ($errors->any())
@@ -127,6 +140,8 @@
 <script src="{{ asset('assets/dist/select2/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/dist/select2/bootstrap.bundle.min.js') }}"></script>
 <script type="text/javascript">
+    {{ Session::forget('adminerror') }}
+    {{ Session::forget('adminsuccess') }}
     $(document).ready(function() {
         $('.stdclasses').select2({
             closeOnSelect: true

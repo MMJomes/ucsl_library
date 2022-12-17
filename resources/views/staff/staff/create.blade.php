@@ -17,9 +17,24 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action={{ route('staff.staffs.store') }} method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    <form action={{ route('staff.staffs.store') }} method="POST" enctype="multipart/form-data"
+                        class="needs-validation" novalidate>
                         @csrf
                         {{ csrf_field() }}
+                        @if (\Session::get('adminerror'))
+                            <div class="alert alert-danger">
+                                <ul>
+                                    <li>{!! \Session::get('adminerror') !!}</li>
+                                </ul>
+                            </div>
+                        @endif
+                        @if (\Session::get('adminsuccess'))
+                            <div class="alert alert-success">
+                                <ul>
+                                    <li>{!! \Session::get('adminsuccess') !!}</li>
+                                </ul>
+                            </div>
+                        @endif
                         @if (count($categories) <= 0)
                             <div class="row">
                                 <div class="col-md-12">
@@ -29,6 +44,7 @@
                                 </div>
                             </div>
                         @endif
+
                         <div class="row">
                             <div class="col-md-12">
                                 @if ($errors->any())
@@ -60,7 +76,7 @@
                             <h6>{{ __('message.basicinfo') }}</h6>
                             <hr>
                             <div class="row clearfix mb-4">
-                               <div class="col-lg-6 col-md-12">
+                                <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="name">{{ 'Staff Name' }}</label>
                                         <input type="text" required class="form-control" name="name" id="name"
@@ -71,7 +87,8 @@
                                     <h5 style="margin-bottom: 10px">{{ 'Select Department' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary"
                                         name="departements_id" required>
-                                        <option selected value="0" class="text-black-50" disabled>--- Select Department---
+                                        <option selected value="0" class="text-black-50" disabled>--- Select
+                                            Department---
                                         </option>
                                         @foreach ($categories as $event)
                                             <option value="{{ $event->id }}" style="font-weight: bold ">
@@ -128,6 +145,8 @@
 <script src="{{ asset('assets/dist/select2/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/dist/select2/bootstrap.bundle.min.js') }}"></script>
 <script type="text/javascript">
+    {{ Session::forget('adminerror') }}
+    {{ Session::forget('adminsuccess') }}
     $(document).ready(function() {
         $('.stdclasses').select2({
             closeOnSelect: true

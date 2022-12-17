@@ -15,9 +15,24 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action={{ route('stduent.stduents.store') }} method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    <form action={{ route('stduent.stduents.store') }} method="POST" enctype="multipart/form-data"
+                        class="needs-validation" novalidate>
                         @csrf
                         {{ csrf_field() }}
+                        @if (\Session::get('adminerror'))
+                            <div class="alert alert-danger">
+                                <ul>
+                                    <li>{!! \Session::get('adminerror') !!}</li>
+                                </ul>
+                            </div>
+                        @endif
+                        @if (\Session::get('adminsuccess'))
+                            <div class="alert alert-success">
+                                <ul>
+                                    <li>{!! \Session::get('adminsuccess') !!}</li>
+                                </ul>
+                            </div>
+                        @endif
                         @if (count($categories) <= 0)
                             <div class="row">
                                 <div class="col-md-12">
@@ -25,14 +40,6 @@
                                         <p>Please Create Class Name First!</p>
                                     </div>
                                 </div>
-                            </div>
-                        @endif
-
-                        @if (\Session::get('success'))
-                            <div class="alert alert-success">
-                                <ul>
-                                    <li>{!! \Session::get('success') !!}</li>
-                                </ul>
                             </div>
                         @endif
                         <div class="row">
@@ -44,7 +51,6 @@
                                 @endif
                             </div>
                         </div>
-                        {{Session::get('success');}}
                         <h6>Stduent Photo</h6>
                         <hr>
                         <div class="media photo center">
@@ -99,7 +105,7 @@
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
-                                        <label for="email" >Email</label>
+                                        <label for="email">Email</label>
                                         <input type="email" required class="form-control" name="email" id="email"
                                             placeholder="Enter Your Email" value="{{ old('email') }}">
                                     </div>
@@ -146,6 +152,8 @@
 <script src="{{ asset('assets/dist/select2/bootstrap.bundle.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
+    {{ Session::forget('adminerror') }}
+    {{ Session::forget('adminsuccess') }}
     $(document).ready(function() {
         $('.stdclasses').select2({
             closeOnSelect: true

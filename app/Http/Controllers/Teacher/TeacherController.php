@@ -15,6 +15,7 @@ use App\Repositories\Backend\Interf\StaffRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TeacherController extends Controller
@@ -75,14 +76,14 @@ class TeacherController extends Controller
                 'status' => 'on',
             ]);
             $this->StaffRepository->create($request->all());
+            Session::put('adminsuccess', 'Successfully Added!');
             return redirect()
                 ->route('staff.staffs.index')
                 ->with(['success' => 'Successfully Added']);
         } else {
+            Session::put('adminerror', 'Invail Email Address,Please Prodie Vaild Email Address.');
+            return redirect()->back();
 
-            return redirect()
-                ->route('stduent.stduents.create')
-                ->with('success', 'Invail Email Address!');
         }
     }
 
@@ -150,11 +151,11 @@ class TeacherController extends Controller
             ]);
             $request->merge(['image' => $path]);
             $this->StaffRepository->updateById($stduent->id, $request->all());
+            Session::put('adminsuccess', 'Successfully Updated!');
             return redirect()->route('staff.staffs.index')->with(['success' => 'Successfully Updated!']);
         }else{
-            return redirect()
-                ->route('staff.staffs.index')
-                ->with('success', 'Invail Email Address!');
+            Session::put('adminerror', 'Invail Email Address,Please Prodie Vaild Email Address.');
+            return redirect()->back();
         }
         } else {
             return view('errorpage.404');

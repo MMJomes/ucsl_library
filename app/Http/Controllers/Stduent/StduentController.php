@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use App\Repositories\Backend\Interf\StudentRepository;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 
 class StduentController extends Controller
@@ -62,8 +63,17 @@ class StduentController extends Controller
     public function store(Request $request)
     {
         $email = $request->email;
+        $userclass = $request->std_classes_id;
+        $userrollno = $request->rollno;
         $emailValid = substr($email, -17);
         if ($emailValid == "@ucsloikaw.edu.mm") {
+            $isExit = Stduent::with('stdclass')->where('email', $email)->where('rollno', $userrollno)->whereHas('stdclass', function ($query) use ($userclass) {
+                $query->where('id', $userclass);
+            })->first();
+            if($isExit){
+                Session::put('adminerror', 'Email Address And Roll Number is Already Exit!');
+                return redirect()->back();
+            }
             $data1 = DB::table('stduents')->latest('id')->first();
             if ($data1 == null) {
                 $last_id = 1;
@@ -86,16 +96,17 @@ class StduentController extends Controller
                 'status' => 'on',
             ]);
             $this->studentRepository->create($request->all());
+            Session::put('adminsuccess', 'Successfully Added');
             return redirect()
                 ->route('stduent.stduents.index')
                 ->with('success', 'Successfully Added');
         } else {
-
+            Session::put('adminerror', 'Invail Email Address,Please Prodie Vaild Email Address.');
+            return redirect()->back();
             //return redirect()->back()->with('success', 'Invail Email Address!');
-
-            return redirect()
-                ->route('stduent.stduents.create')
-                ->with('success', 'Invail Email Address!');
+            // return redirect()
+            //     ->route('stduent.stduents.create')
+            //     ->with('success', 'Invail Email Address!');
         }
     }
 
@@ -151,9 +162,12 @@ class StduentController extends Controller
                 ]);
                 $request->merge(['image' => $path]);
                 $this->studentRepository->updateById($stduent->id, $request->all());
+                Session::put('adminsuccess', 'Successfully Updated!');
                 return redirect()->route('stduent.stduents.index')->with(['success' => 'Successfully Updated!']);
             } else {
-                redirect()->back()->with('success', 'Invail Email Address!');
+                Session::put('adminerror', 'Invail Email Address,Please Prodie Vaild Email Address.');
+                return redirect()->back();
+                //redirect()->back()->with('success', 'Invail Email Address!');
             }
         } else {
             return view('errorpage.404');
@@ -171,12 +185,14 @@ class StduentController extends Controller
 
     public function multilecreate()
     {
+
         return view('stduent.student.author_mulitiple_create');
     }
 
 
     public function template()
     {
+
         $file = public_path() . "/author_list_templated.xlsx";
 
         if (file_exists($file)) {

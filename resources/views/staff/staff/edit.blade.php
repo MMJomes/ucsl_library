@@ -22,7 +22,20 @@
                         @csrf
                         {{ csrf_field() }}
                         @method('PUT')
-
+                        @if (\Session::get('adminerror'))
+                            <div class="alert alert-danger">
+                                <ul>
+                                    <li>{!! \Session::get('adminerror') !!}</li>
+                                </ul>
+                            </div>
+                        @endif
+                        @if (\Session::get('adminsuccess'))
+                            <div class="alert alert-success">
+                                <ul>
+                                    <li>{!! \Session::get('adminsuccess') !!}</li>
+                                </ul>
+                            </div>
+                        @endif
                         <div class="row">
                             <div class="col-md-12">
                                 @if ($errors->any())
@@ -64,10 +77,13 @@
                                     <h5 style="margin-bottom: 10px">{{ 'Select Department' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary"
                                         name="departements_id" required>
-                                        <option selected value="0" class="text-black-50" disabled>--- Select Department---
+                                        <option selected value="0" class="text-black-50" disabled>--- Select
+                                            Department---
                                         </option>
                                         @foreach ($depart as $des)
-                                            <option value="{{ $des->id }}" {{ $des->id == $stduent->departements_id ? 'selected' : '' }} style="font-weight: bold ">
+                                            <option value="{{ $des->id }}"
+                                                {{ $des->id == $stduent->departements_id ? 'selected' : '' }}
+                                                style="font-weight: bold ">
                                                 {{ $des->stfdepartment }}
 
                                             </option>
@@ -118,6 +134,8 @@
 <script src="{{ asset('assets/dist/select2/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/dist/select2/bootstrap.bundle.min.js') }}"></script>
 <script type="text/javascript">
+    {{ Session::forget('adminerror') }}
+    {{ Session::forget('adminsuccess') }}
     $(document).ready(function() {
         $('.stdclasses').select2({
             closeOnSelect: true
