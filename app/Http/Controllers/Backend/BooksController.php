@@ -102,7 +102,6 @@ class BooksController extends Controller
     public function edit($member_slug)
     {
         $book = $this->bookListAllRepository->where('slug', $member_slug)->first();
-        //dd($book);
         if ($book) {
             $categories = EventCategory::all();
             $authors = Author::all();
@@ -156,8 +155,7 @@ class BooksController extends Controller
         $file = public_path() . "/book_list_templated.xlsx";
 
         if (file_exists($file)) {
-            return Response
-                ::download($file, 'book_list_templated.xlsx');
+            return Response::download($file, 'book_list_templated.xlsx');
         } else {
             return 'file not found';
         }

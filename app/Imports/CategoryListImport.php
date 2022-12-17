@@ -19,8 +19,10 @@ class CategoryListImport implements ToModel, WithHeadingRow, WithValidation
     public function model(array $row)
     {
         $name =$row['name'];
+        $code =$row['code'];
          EventCategory::create([
             'name' => $name,
+            'code' => $code,
         ]);
     }
 
@@ -28,6 +30,7 @@ class CategoryListImport implements ToModel, WithHeadingRow, WithValidation
     {
         return [
             'name' => 'required',
+            'code' => 'required',
         ];
     }
 }
