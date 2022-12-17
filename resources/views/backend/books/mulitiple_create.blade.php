@@ -23,6 +23,13 @@
                         </ul>
                     </div>
                 @endif
+                @if (\Session::get('importError'))
+                    <div class="alert alert-danger">
+                        <ul>
+                            <li>{!! \Session::get('importError') !!}</li>
+                        </ul>
+                    </div>
+                @endif
                 <div class="card-body">
                     <form action="{{ route('backend.book.upload') }}" method="POST"
                                 enctype="multipart/form-data">
@@ -64,4 +71,5 @@
 @endsection
 <script type="text/javascript">
     {{ Session::forget('admininfo') }}
+    {{ Session::forget('importError') }}
 </script>

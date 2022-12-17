@@ -163,6 +163,12 @@ class BooksController extends Controller
 
     public function importData(Request $request)
     {
+
+        $dat = strtolower($request->import_file->getClientOriginalExtension());
+        if ($dat != 'xlsx') {
+            Session::put('importError', 'Invaild  Excel Import Format. Please Correct Excel Format!.');
+            return redirect()->back();
+        } else {
         $request->validate([
             'import_file' => 'required'
         ]);
@@ -170,10 +176,12 @@ class BooksController extends Controller
             Excel::import(new BookListImport, $request->import_file);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
-            return redirect()->back()->withErrors($failures);
+            Session::put('importError', 'Invaild Data, Please Check Your Excel Data');
+            return redirect()->back();
         }
         return redirect()->route('backend.book.index')->with(['success' => 'Successfully Upload!']);
     }
+}
 
     public function mass_destroy(Request $request)
     {

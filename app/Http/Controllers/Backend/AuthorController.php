@@ -170,9 +170,13 @@ class AuthorController extends Controller
             return 'file not found';
         }
     }
-
     public function importData(Request $request)
     {
+        $dat = strtolower($request->import_file->getClientOriginalExtension());
+        if ($dat != 'xlsx') {
+            Session::put('importError', 'Invaild  Excel Import Format. Please Correct Excel Format!.');
+            return redirect()->back();
+        } else {
         $request->validate([
             'import_file' => 'required'
         ]);
@@ -180,10 +184,12 @@ class AuthorController extends Controller
             Excel::import(new AuthorListImport, $request->import_file);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
-            return redirect()->back()->withErrors($failures);
+            Session::put('importError', 'Invaild Data, Please Check Your Excel Data');
+            return redirect()->back();
         }
         return redirect()->route('backend.author.index')->with(['success' => 'Successfully Upload!']);
     }
+}
     public function mass_destroy(Request $request)
     {
         $this->AuthorRepository->deleteMultipleById($request->ids);

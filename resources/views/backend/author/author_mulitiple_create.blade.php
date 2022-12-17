@@ -16,12 +16,19 @@
         <div class="col-12">
             <div class="card">
                 @if (\Session::get('admininfo'))
-                <div class="alert alert-info">
-                    <ul>
-                        <li>{!! \Session::get('admininfo') !!}</li>
-                    </ul>
-                </div>
-            @endif
+                    <div class="alert alert-info">
+                        <ul>
+                            <li>{!! \Session::get('admininfo') !!}</li>
+                        </ul>
+                    </div>
+                @endif
+                @if (\Session::get('importError'))
+                    <div class="alert alert-danger">
+                        <ul>
+                            <li>{!! \Session::get('importError') !!}</li>
+                        </ul>
+                    </div>
+                @endif
                 <div class="card-body">
                     <form action="{{ route('backend.author.upload') }}" method="POST" enctype="multipart/form-data">
                         <div class="row">
@@ -47,7 +54,9 @@
                             <div class="col-md-7">
                                 <div class="form-group">
                                     <label for="import_file" class="form-label">{{ __('message.chooseexcelfile') }}</label>
-                                    <input type="file" name="import_file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values, text/csv, application/csv" ID="fileSelect" runat="server">
+                                    <input type="file" name="import_file"
+                                        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values, text/csv, application/csv"
+                                        ID="fileSelect" runat="server">
 
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-upload"></i>
@@ -66,4 +75,5 @@
 @endsection
 <script type="text/javascript">
     {{ Session::forget('admininfo') }}
+    {{ Session::forget('importError') }}
 </script>
