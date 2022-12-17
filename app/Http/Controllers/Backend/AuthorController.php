@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use App\Repositories\Backend\Interf\AuthorRepository;
 use App\Repositories\Backend\Interf\EventCategoryRepository;
 use App\Repositories\Backend\Interf\EventRepository;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AuthorController extends Controller
@@ -40,6 +41,7 @@ class AuthorController extends Controller
             $data = Author::get();
             return $this->Author_datatable($data, $user);
         }
+        Session::put('admininfo', 'Your Excel Import Format must be same with Author Excel Import Format.If Not,Please Download First!.');
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
         return view('backend.author.index');
     }

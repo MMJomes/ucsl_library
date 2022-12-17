@@ -16,6 +16,13 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                @if (\Session::get('admininfo'))
+                    <div class="alert alert-info">
+                        <ul>
+                            <li>{!! \Session::get('admininfo') !!}</li>
+                        </ul>
+                    </div>
+                @endif
                 <div class="card-body">
                     <form action="{{ route('backend.book.upload') }}" method="POST"
                                 enctype="multipart/form-data">
@@ -54,3 +61,6 @@
         </div>
     </div>
 @endsection
+<script type="text/javascript">
+    {{ Session::forget('admininfo') }}
+</script>

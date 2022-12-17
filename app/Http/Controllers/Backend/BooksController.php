@@ -15,6 +15,7 @@ use App\Repositories\Backend\Interf\BookListAllRepository;
 use App\Repositories\Backend\Interf\BookListRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 
 class BooksController extends Controller
@@ -34,13 +35,12 @@ class BooksController extends Controller
 
     public function index()
     {
-
-
         if (request()->ajax()) {
             $user = auth()->user();
             $data = Books::with('author', 'category')->get();
             return $this->booking_datatable($data, $user);
         }
+        Session::put('admininfo', 'Your Excel Import Format must be same with Book Excel Import Format.If Not,Please Download First!.');
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
         return view('backend.books.index');
     }

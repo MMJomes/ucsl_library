@@ -13,6 +13,7 @@ use App\Exports\ExportMemberList;
 use App\Imports\CategoryListImport;
 use App\Imports\ContactListImport;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EventCategoryController extends Controller
@@ -35,6 +36,7 @@ class EventCategoryController extends Controller
             $data = $this->eventCategoryRepository->all();
             return $this->eventcategory_datatable($data, $user);
         }
+        Session::put('admininfo', 'Your Excel Import Format must be same with Category Excel Import Format.If Not,Please Download First!.');
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
         return view('backend.category.index');
     }
@@ -136,7 +138,6 @@ $this->eventCategoryRepository->create($request->validated());
 
     public function multilecreate()
     {
-
         return view('backend.category.category_mulitiple_create');
     }
 
