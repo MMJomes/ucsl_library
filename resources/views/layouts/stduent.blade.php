@@ -1,8 +1,9 @@
+@inject('request', 'Illuminate\Http\Request')
 <!DOCTYPE html>
 <html lang="en">
 <head>
     @include('layouts.partials.back-head')
-    <title>W3.CSS Template</title>
+    <title>DIGITAL LIBRARY MANAGENMENT SYSTEM</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1">
     <link href="{{ asset('assets/dist/user/user.css') }}" rel="stylesheet" />
@@ -22,16 +23,13 @@
         }
     </style>
 </head>
-
 <body>
-
     @include('frontend.user.navbar')
     <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top"
         style="margin-top:46px">
-        <a href="#band" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">BAND</a>
-        <a href="#tour" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">TOUR</a>
-        <a href="#contact" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">CONTACT</a>
-        <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">MERCH</a>
+        <a href="{{route('users.rents')}}" class="w3-bar-item w3-button w3-padding-large">RENTED BOOKS</a>
+        <a href="{{route('users.prerequest')}}" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">PREQUEST BOOKS</a>
+        <a href="{{route('member.profile')}}" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">PROFILE</a>
     </div>
     <div class="w3-content" style="max-width:2000px;margin-top:46px">
 
