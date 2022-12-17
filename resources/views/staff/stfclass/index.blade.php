@@ -36,7 +36,7 @@
                                     </th>
                                     <th>{{__('message.no')}}</th>
                                     <th> Department Name</th>
-                                    @canany(['eventcategory.edit', 'eventcategory.delete'])
+                                    @canany(['staffDepart.edit', 'staffDepart.delete'])
                                         <th>{{__('message.actions')}}</th>
                                     @endcanany
                                 </tr>
@@ -59,10 +59,10 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            @can('eventcategory.mass_destroy')
+            @can('staffDepart.mass_destroy')
                 window.route_mass_crud_entries_destroy = "{{ route('staff.stfClass.mass.destroy') }}";
             @endcan
-            @can('eventcategory.show')
+            @can('staffDepart.show')
                 window.route_mass_crud_entries_show = "{{ route('staff.stfClass.mass.destroy') }}";
             @endcan
             $.ajax({
@@ -111,7 +111,7 @@
                         {
                             data: 'stfdepartment'
                         },
-                        @canany(['eventcategory.edit', 'eventcategory.delete','eventcategory.show'])
+                        @canany(['staffDepart.edit', 'staffDepart.delete','staffDepart.show'])
                             {
                                 orderable:false,
                                 "render": function(data, type, full, meta) {

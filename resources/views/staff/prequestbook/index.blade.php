@@ -40,9 +40,10 @@
                                     <th>{{ 'Edtion' }}</th>
                                     <th>{{ 'Request Date' }}</th>
 
-                                    <th>{{ 'Status' }}</th>
-
-                                    @canany(['author.edit', 'author.delete'])
+                                    @canany(['staffBookPreRent.approve'])
+                                        <th>{{ 'Status' }}</th>
+                                    @endcanany
+                                    @canany(['staffBookPreRent.edit', 'staffBookPreRent.delete'])
                                         <th>{{ __('message.action') }}</th>
                                     @endcanany
 
@@ -67,13 +68,13 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            @can('author.mass_destroy')
+            @can('staffBookPreRent.mass_destroy')
                 window.route_mass_crud_entries_destroy = "{{ route('staff.requestbyStaffs.mass.destroy') }}";
             @endcan
-            @can('author.show')
+            @can('staffBookPreRent.show')
                 window.route_mass_crud_entries_show = "{{ route('staff.requestbyStaffs.mass.destroy') }}";
             @endcan
-            @can('member.mass_approve')
+            @can('staffBookPreRent.mass_approve')
                 window.route_mass_crud_entries_approve = "{{ route('staff.requestbyStaffs.mass.approve') }}";
             @endcan
             $.ajax({
@@ -86,7 +87,7 @@
                     dom: 'Bfrtip',
                     buttons: [
 
-                        @can('author.create')
+                        @can('staffBookPreRent.create')
                             {
                                 text: '{{ __('message.createnew') }}',
                                 className: "btn btn-primary",
@@ -140,8 +141,7 @@
                                 return createdDate.toLocaleString("en-US");
                             },
                         },
-
-                        @canany(['member.approve', 'member.mass_approve'])
+                        @canany(['staffBookPreRent.approve'])
                             {
                                 orderable: false,
                                 "render": function(data, type, full, meta) {
@@ -173,7 +173,7 @@
 
                             },
                         @endcanany
-                        @canany(['author.edit', 'author.delete', 'author.show'])
+                        @canany(['staffBookPreRent.edit', 'staffBookPreRent.delete', 'author.show'])
                             {
                                 orderable: false,
                                 "render": function(data, type, full, meta) {
@@ -187,7 +187,7 @@
                                             '" class="btn btn-primary btn-sm mx-2"><i class="fa fa-info-circle"></i></a>';
                                     }
 
-                                    return  showButton ;
+                                    return showButton;
                                 }
                             },
                         @endcanany

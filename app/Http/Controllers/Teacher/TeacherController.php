@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Exports\StaffExport;
-use App\Helpers\StduentHelper;
+use App\Helpers\TeacherHelper;
 use App\Http\Controllers\Controller;
 use App\Imports\AuthorListImport;
 use App\Jobs\StaffAccountMailServiceJob;
@@ -19,14 +19,14 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class TeacherController extends Controller
 {
-    use StduentHelper;
+    use TeacherHelper;
     private StaffRepository $StaffRepository;
 
     public function __construct(StaffRepository $StaffRepository)
     {
-        $this->middleware('permission:event.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:event.edit', ['only' => ['edit']]);
-        $this->middleware('permission:event.view', ['only' => ['index']]);
+        $this->middleware('permission:staff.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:staff.edit', ['only' => ['edit']]);
+        $this->middleware('permission:staff.view', ['only' => ['index']]);
         $this->StaffRepository = $StaffRepository;
     }
 
@@ -36,7 +36,7 @@ class TeacherController extends Controller
         if (request()->ajax()) {
             $user = auth()->user();
             $data = Teacher::with('department')->orderBy('totalNoOfBooks', 'DESC')->get();
-            return $this->Stduent_datatable($data, $user);
+            return $this->Staff_datatable($data, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
         return view('staff.staff.index');

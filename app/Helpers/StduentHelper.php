@@ -17,6 +17,7 @@ trait StduentHelper
             'can_show' => $bizType->can('stduent.view'),
             'can_delete' => $bizType->can('stduent.delete'),
             'can_approve' => $bizType->can('stduent.edit'),
+            'can_approve' => $bizType->can('stduent.edit'),
         ]);
     }
 }

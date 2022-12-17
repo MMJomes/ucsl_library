@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Teacher;
 
-
-use App\Helpers\AuthorHelper;
+use App\Helpers\DepartmentHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Teacher\Departement;
 use Illuminate\Http\Request;
@@ -12,14 +11,14 @@ use App\Repositories\Backend\Interf\StfDepartmentRepository;
 
 class DepartementController extends Controller
 {
-    use AuthorHelper;
+    use DepartmentHelper;
     private EventCategoryRepository $eventCategoryRepository;
 
     public function __construct(StfDepartmentRepository $StfDepartmentRepository)
     {
-        $this->middleware('permission:event.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:event.edit', ['only' => ['edit']]);
-        $this->middleware('permission:event.view', ['only' => ['index']]);
+        $this->middleware('permission:staffDepart.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:staffDepart.edit', ['only' => ['edit']]);
+        $this->middleware('permission:staffDepart.view', ['only' => ['index']]);
         $this->StfDepartmentRepository = $StfDepartmentRepository;
     }
 
@@ -28,7 +27,7 @@ class DepartementController extends Controller
         if (request()->ajax()) {
             $user = auth()->user();
             $data = Departement::get();
-            return $this->Author_datatable($data, $user);
+            return $this->Department_datatable($data, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
         return view('staff.stfclass.index');

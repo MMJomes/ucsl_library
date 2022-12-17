@@ -63,7 +63,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
-                                    <h5>{{ 'Select Class' }} </h5>
+                                    <h5>{{ 'Select Department' }} </h5>
                                     <select disabled class="selectpicker  form-control" data-style="form-control btn-secondary"
                                         name="departements_id" required="true">
                                         {{ $categories }}

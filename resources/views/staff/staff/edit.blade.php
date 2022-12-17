@@ -61,10 +61,10 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
-                                    <h5 style="margin-bottom: 10px">{{ 'Select Class' }} </h5>
+                                    <h5 style="margin-bottom: 10px">{{ 'Select Department' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary"
                                         name="departements_id" required>
-                                        <option selected value="0" class="text-black-50" disabled>--- Select Class---
+                                        <option selected value="0" class="text-black-50" disabled>--- Select Department---
                                         </option>
                                         @foreach ($depart as $des)
                                             <option value="{{ $des->id }}" {{ $des->id == $stduent->departements_id ? 'selected' : '' }} style="font-weight: bold ">

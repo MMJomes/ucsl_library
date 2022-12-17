@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Teacher;
 
-use App\Helpers\BookRentHelper;
+use App\Helpers\StaffBookPreRentHelper;
 use App\Http\Controllers\Controller;
-use App\Imports\AuthorListImport;
 use App\Models\Books;
 use App\Models\EventCategory;
 use App\Models\Setting;
@@ -21,14 +20,14 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class StaffPreRequestController extends Controller
 {
-    use BookRentHelper;
+    use StaffBookPreRentHelper;
     private StaffPreQuestRepository $StaffPreQuestRepository;
     private StaffRentRepository $StaffRentRepository;
     public function __construct(StaffPreQuestRepository $StaffPreQuestRepository, StaffRentRepository $StaffRentRepository)
     {
-        $this->middleware('permission:event.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:event.edit', ['only' => ['edit']]);
-        $this->middleware('permission:event.view', ['only' => ['index']]);
+        $this->middleware('permission:staffBookPreRent.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:staffBookPreRent.edit', ['only' => ['edit']]);
+        $this->middleware('permission:staffBookPreRent.view', ['only' => ['index']]);
         $this->StaffPreQuestRepository = $StaffPreQuestRepository;
         $this->StaffRentRepository = $StaffRentRepository;
     }
@@ -37,7 +36,7 @@ class StaffPreRequestController extends Controller
         if (request()->ajax()) {
             $user = auth()->user();
             $datas = StaffPreRequest::with('book', 'teacher')->orderBy('id', 'ASC')->get();
-            return $this->BookRent_datatable($datas, $user);
+            return $this->StaffBookPReRent_datatable($datas, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
         return view('staff.prequestbook.index');

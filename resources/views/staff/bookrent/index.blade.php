@@ -40,22 +40,26 @@
                                     <th>{{ 'Start Date' }}</th>
                                     <th>{{ 'Retrun Date' }}</th>
                                     <th>{{ 'Status' }}</th>
-                                    <th>{{ 'Continuce' }}</th>
-                                    <th>{{ 'Rent Status' }}</th>
-                                    @canany(['author.edit', 'author.delete'])
-                                        <th>{{ __('message.action') }}</th>
+                                    @canany(['staffBookRent.continue'])
+                                        <th>{{ 'Continuce' }}</th>
                                     @endcanany
-                                </tr>
-                            </thead>
-                        </table>
+                                    @canany(['staffBookRent.rentStatus'])
+                                    @endcanany
+                                        <th>{{ 'Rent Status' }}</th>
+                                        @canany(['staffBookRent.edit', 'staffBookRent.delete'])
+                                            <th>{{ __('message.action') }}</th>
+                                        @endcanany
+                                    </tr>
+                                </thead>
+                            </table>
 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-@endsection
+        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+    @endsection
 
 @section('delete_route')
     {{ route('staff.rentbyStaff.destroy', 'id') }}
@@ -66,10 +70,10 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            @can('author.mass_destroy')
+            @can('staffBookRent.mass_destroy')
                 window.route_mass_crud_entries_destroy = "{{ route('staff.rentbyStaff.mass.destroy') }}";
             @endcan
-            @can('author.show')
+            @can('staffBookRent.show')
                 window.route_mass_crud_entries_show = "{{ route('staff.rentbyStaff.mass.destroy') }}";
             @endcan
 
@@ -82,7 +86,7 @@
                     data: response["data"],
                     dom: 'Bfrtip',
                     buttons: [
-                        @can('author.create')
+                        @can('staffBookRent.create')
                             {
                                 text: '{{ __('message.createnew') }}',
                                 className: "btn btn-primary",
@@ -92,7 +96,7 @@
                                 }
                             },
                         @endcan
-                        'copy', 'csv',  {
+                        'copy', 'csv', {
                             text: 'Delete Selected',
                             className: "btn btn-primary",
                             action: function(e, dt, node, config) {
@@ -185,7 +189,7 @@
                             }
 
                         },
-                        @canany(['member.approve', 'member.mass_approve'])
+                        @canany(['staffBookRent.continue'])
                             {
                                 orderable: false,
                                 "render": function(data, type, full, meta) {
@@ -196,12 +200,14 @@
 
                                     var requestStausApprove =
                                         "{{ route('staff.rentbyStaff.requestStausapprove', ':id') }}";
-                                        requestStausApprove = requestStausApprove.replace(':id', full.id);
-                                        var requestStausReject =
+                                    requestStausApprove = requestStausApprove.replace(':id',
+                                        full.id);
+                                    var requestStausReject =
                                         "{{ route('staff.rentbyStaff.requestStausapprove', ':id') }}";
-                                        requestStausReject = requestStausReject.replace(':id', full.id);
+                                    requestStausReject = requestStausReject.replace(':id',
+                                        full.id);
 
-                                        var ApproveButton = '';
+                                    var ApproveButton = '';
                                     if (response["can_edit"]) {
                                         if (full.status == 'on') {
                                             ApproveButton =
@@ -217,8 +223,14 @@
                                                 '" id="set_clock"><i class="icon-check "></i> &nbsp;Returned</a>';
                                         } else {
                                             if (full.requesttatus == 'on') {
-                                            ApproveButton =
-                                                '<div class="dropdown mx-1" data-href="' + requestStausApprove +'"><button class="btn btn-outline-primary btn-sm btn-font-size-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-clock"></i> &nbsp; Pending</button><div class="dropdown-menu py-0" btn-success aria-labelledby="dropdownMenuButton"><a class="dropdown-item bg-success btn-sm text-white d-flex align-items-start "href="' +requestStausApprove +'" id="set_ban" data-status="off"><i class="icon-check"></i> &nbsp;Approve</a> <a class="dropdown-item bg-danger btn-sm text-white d-flex align-items-start "href="' +requestStausReject +'" id="set_ban" data-status="off"><i class="icon-ban"></i> &nbsp;Reject</a></div>';
+                                                ApproveButton =
+                                                    '<div class="dropdown mx-1" data-href="' +
+                                                    requestStausApprove +
+                                                    '"><button class="btn btn-outline-primary btn-sm btn-font-size-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-clock"></i> &nbsp; Pending</button><div class="dropdown-menu py-0" btn-success aria-labelledby="dropdownMenuButton"><a class="dropdown-item bg-success btn-sm text-white d-flex align-items-start "href="' +
+                                                    requestStausApprove +
+                                                    '" id="set_ban" data-status="off"><i class="icon-check"></i> &nbsp;Approve</a> <a class="dropdown-item bg-danger btn-sm text-white d-flex align-items-start "href="' +
+                                                    requestStausReject +
+                                                    '" id="set_ban" data-status="off"><i class="icon-ban"></i> &nbsp;Reject</a></div>';
 
                                             } else {
                                                 ApproveButton =
@@ -234,7 +246,7 @@
                             },
                         @endcanany
 
-                        @canany(['member.approve', 'member.mass_approve'])
+                        @canany(['staffBookRent.rentStatus'])
                             {
                                 orderable: false,
                                 "render": function(data, type, full, meta) {
@@ -266,7 +278,7 @@
 
                             },
                         @endcanany
-                        @canany(['author.edit', 'author.delete', 'author.show'])
+                        @canany(['staffBookRent.edit', 'staffBookRent.delete', 'staffBookRent.show'])
                             {
                                 orderable: false,
                                 "render": function(data, type, full, meta) {

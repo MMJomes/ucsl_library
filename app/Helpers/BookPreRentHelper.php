@@ -13,12 +13,12 @@ trait BookPreRentHelper
             'recordsFiltered' => $data->count(),
             'draw' => 1,
             'user' => $bizType,
-            'can_edit' => $bizType->can('stduentBookRent.edit'),
-            'can_show' => $bizType->can('stduentBookRent.view'),
-            'can_delete' => $bizType->can('stduentBookRent.delete'),
-            'can_approve' => $bizType->can('stduentBookRent.edit'),
-            'continue' => $bizType->can('stduentBookRent.continue'),
-            'rentStatus' => $bizType->can('stduentBookRent.rentStatus'),
+            'can_edit' => $bizType->can('stduentBookPreRent.edit'),
+            'can_show' => $bizType->can('stduentBookPreRent.view'),
+            'can_delete' => $bizType->can('stduentBookPreRent.delete'),
+            'can_approve' => $bizType->can('stduentBookPreRent.edit'),
+            'continue' => $bizType->can('stduentBookPreRent.continue'),
+            'rentStatus' => $bizType->can('stduentBookPreRent.rentStatus'),
         ]);
     }
 }

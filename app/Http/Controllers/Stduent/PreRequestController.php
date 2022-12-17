@@ -32,10 +32,8 @@ class PreRequestController extends Controller
         $this->PreQuestRepository = $PreQuestRepository;
         $this->BookRentRepository = $BookRentRepository;
     }
-
     public function index()
     {
-
         $datas = PreRequest::with('book', 'stduent')->orderBy('id', 'ASC')->get();
         if (request()->ajax()) {
             $user = auth()->user();

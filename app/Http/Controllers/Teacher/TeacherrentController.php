@@ -3,15 +3,11 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Helpers\BookRentHelper;
+use App\Helpers\StaffRentHelper;
 use App\Http\Controllers\Controller;
 use App\Imports\AuthorListImport;
 use App\Models\Books;
 use App\Models\Setting;
-use App\Models\Stduent\Bookrent;
-
-;
-
-use App\Models\Stduent\Stduent;
 use App\Models\Teacher\Teacher;
 use App\Models\Teacher\Teacherrent;
 use App\Notifications\SendEmail;
@@ -23,14 +19,14 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class TeacherrentController extends Controller
 {
-    use BookRentHelper;
+    use StaffRentHelper;
     private StaffRentRepository $StaffRentRepository;
 
     public function __construct(StaffRentRepository $StaffRentRepository)
     {
-        $this->middleware('permission:event.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:event.edit', ['only' => ['edit']]);
-        $this->middleware('permission:event.view', ['only' => ['index']]);
+        $this->middleware('permission:staffBookRent.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:staffBookRent.edit', ['only' => ['edit']]);
+        $this->middleware('permission:staffBookRent.view', ['only' => ['index']]);
         $this->StaffRentRepository = $StaffRentRepository;
     }
     public function index()
@@ -38,7 +34,7 @@ class TeacherrentController extends Controller
         if (request()->ajax()) {
             $user = auth()->user();
             $datas = Teacherrent::with('book', 'teacher')->orderBy('id', 'ASC')->get();
-            return $this->BookRent_datatable($datas, $user);
+            return $this->StaffRent_datatable($datas, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
         return view('staff.bookrent.index');
