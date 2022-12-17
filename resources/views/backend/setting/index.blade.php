@@ -15,7 +15,6 @@
             </ol>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-6">
             <div class="card">
@@ -37,6 +36,32 @@
                     <div id="the-basics">
                         <input class="typeahead form-control" type="number" name="staff_book_rent_duration"
                             placeholder="Enter Member Expiration date" value="{{ $settings['staff_book_rent_duration'] }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Total Number of Book Available for Stduent</h4>
+                    <h6 class="card-subtitle">The Number of total book Available for Stduent.</h6>
+                    <div id="the-basics">
+                        <input class="typeahead form-control" type="number" name="stduent_total_number_of_book"
+                            placeholder="Enter Member Expiration date" value="{{ $settings['stduent_total_number_of_book'] }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Total Number of Book Available for Staff</h4>
+                    <h6 class="card-subtitle">The Number of total book Available for Staff. </h6>
+                    <div id="the-basics">
+                        <input class="typeahead form-control" type="number" name="staff_total_number_of_book"
+                            placeholder="Enter Member Expiration date" value="{{ $settings['staff_total_number_of_book'] }}">
                     </div>
                 </div>
             </div>

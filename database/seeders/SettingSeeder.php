@@ -71,6 +71,16 @@ class SettingSeeder extends Seeder
                     'value' => '7',
                     'type' => 'integer',
                 ],
+                [
+                    'key' => 'stduent_total_number_of_book',
+                    'value' => '2',
+                    'type' => 'integer',
+                ],
+                [
+                    'key' => 'staff_total_number_of_book',
+                    'value' => '5',
+                    'type' => 'integer',
+                ],
 
 
                 // [

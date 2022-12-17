@@ -34,6 +34,8 @@ class BookRentController extends Controller
 
     public function index()
     {
+
+        $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
         // $bookid= Books::pluck('id');
 
         // $datas = Bookrent::with('book', 'stduent')->orderBy('id', 'ASC')->get();
