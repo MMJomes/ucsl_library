@@ -60,7 +60,7 @@ class EventCategoryController extends Controller
      */
     public function store(EventCategoryRequest $request)
     {
-$this->eventCategoryRepository->create($request->validated());
+        $this->eventCategoryRepository->create($request->validated());
         return redirect()
             ->route('backend.category.index')
             ->with(['success' => 'Successfully Added']);
@@ -155,16 +155,23 @@ $this->eventCategoryRepository->create($request->validated());
     }
     public function importData(Request $request)
     {
-        $request->validate([
-            'import_file' => 'required'
-        ]);
-        try {
-            Excel::import(new CategoryListImport, $request->import_file);
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-            $failures = $e->failures();
-            return redirect()->back()->withErrors($failures);
+        $dat = strtolower($request->import_file->getClientOriginalExtension());
+        if ($dat != 'xlsx') {
+            Session::put('importError', 'Invaild  Excel Import Format. Please Correct Excel Format!.');
+            return redirect()->back();
+        } else {
+            $request->validate([
+                'import_file' => 'required'
+            ]);
+            try {
+                Excel::import(new CategoryListImport, $request->import_file);
+            } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+                $failures = $e->failures();
+                Session::put('importError', 'Invaild Data, Please Check Your Excel Data');
+                return redirect()->back();
+            }
+            return redirect()->route('backend.category.index')->with(['success' => 'Successfully Upload!']);
         }
-        return redirect()->route('backend.category.index')->with(['success' => 'Successfully Upload!']);
     }
 
     public function excelexport()

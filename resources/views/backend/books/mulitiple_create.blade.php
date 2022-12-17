@@ -47,7 +47,8 @@
                                     <div class="col-md-7">
                                         <div class="form-group">
                                             <label for="import_file" class="form-label">{{__('message.chooseexcelfile')}}</label>
-                                            <input type="file" name="import_file" class="" id="import_file">
+                                            <input type="file" name="import_file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values, text/csv, application/csv" ID="fileSelect" runat="server">
+
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-flat"><i
                                                 class="fa fa-upload"></i> {{__('message.upload')}}</button>
