@@ -24,9 +24,9 @@ class StduentController extends Controller
 
     public function __construct(StudentRepository $studentRepository)
     {
-        $this->middleware('permission:event.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:event.edit', ['only' => ['edit']]);
-        $this->middleware('permission:event.view', ['only' => ['index']]);
+        $this->middleware('permission:stduent.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:stduent.edit', ['only' => ['edit']]);
+        $this->middleware('permission:stduent.view', ['only' => ['index']]);
         $this->studentRepository = $studentRepository;
     }
 

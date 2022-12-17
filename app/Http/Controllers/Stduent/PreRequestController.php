@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Stduent;
 
+use App\Helpers\BookPreRentHelper;
 use App\Helpers\BookRentHelper;
 use App\Http\Controllers\Controller;
 use App\Imports\AuthorListImport;
@@ -19,15 +20,15 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class PreRequestController extends Controller
 {
-    use BookRentHelper;
+    use BookPreRentHelper;
     private PreQuestRepository $PreQuestRepository;
     private BookRentRepository $BookRentRepository;
 
     public function __construct(PreQuestRepository $PreQuestRepository, BookRentRepository $BookRentRepository)
     {
-        $this->middleware('permission:event.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:event.edit', ['only' => ['edit']]);
-        $this->middleware('permission:event.view', ['only' => ['index']]);
+        $this->middleware('permission:stduentBookPreRent.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:stduentBookPreRent.edit', ['only' => ['edit']]);
+        $this->middleware('permission:stduentBookPreRent.view', ['only' => ['index']]);
         $this->PreQuestRepository = $PreQuestRepository;
         $this->BookRentRepository = $BookRentRepository;
     }
@@ -39,7 +40,7 @@ class PreRequestController extends Controller
         if (request()->ajax()) {
             $user = auth()->user();
             $datas = PreRequest::with('book', 'stduent')->orderBy('id', 'ASC')->get();
-            return $this->BookRent_datatable($datas, $user);
+            return $this->BookPReRent_datatable($datas, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
         return view('stduent.prequestbook.index');

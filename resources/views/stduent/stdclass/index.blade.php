@@ -36,7 +36,7 @@
                                     </th>
                                     <th>{{__('message.no')}}</th>
                                     <th>Class Name</th>
-                                    @canany(['eventcategory.edit', 'eventcategory.delete'])
+                                    @canany(['stduentCalss.edit', 'stduentCalss.delete'])
                                         <th>{{__('message.actions')}}</th>
                                     @endcanany
                                 </tr>
@@ -59,10 +59,10 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            @can('eventcategory.mass_destroy')
+            @can('stduentCalss.mass_destroy')
                 window.route_mass_crud_entries_destroy = "{{ route('stduent.stdclass.mass.destroy') }}";
             @endcan
-            @can('eventcategory.show')
+            @can('stduentCalss.show')
                 window.route_mass_crud_entries_show = "{{ route('stduent.stdclass.mass.destroy') }}";
             @endcan
             $.ajax({
@@ -74,7 +74,7 @@
                     data: response["data"],
                     dom: 'Bfrtip',
                     buttons: [
-                        @can('eventcategory.create')
+                        @can('stduentCalss.create')
                             {
                                 text: '{{__('message.createnew')}}',
                                 className: "btn btn-primary",
@@ -111,7 +111,7 @@
                         {
                             data: 'stduentclass'
                         },
-                        @canany(['eventcategory.edit', 'eventcategory.delete','eventcategory.show'])
+                        @canany(['stduentCalss.edit', 'stduentCalss.delete','stduentCalss.show'])
                             {
                                 orderable:false,
                                 "render": function(data, type, full, meta) {

@@ -3,9 +3,9 @@
 namespace App\Helpers;
 
 
-trait BookRentHelper
+trait BookPreRentHelper
 {
-    public function BookRent_datatable($data, $bizType)
+    public function BookPReRent_datatable($data, $bizType)
     {
         return json_encode([
             'data' => $data,

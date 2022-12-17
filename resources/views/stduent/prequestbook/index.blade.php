@@ -42,7 +42,7 @@
 
                                     <th>{{ 'Status' }}</th>
 
-                                    @canany(['author.edit', 'author.delete'])
+                                    @canany(['stduentBookPreRent.edit', 'stduentBookPreRent.delete'])
                                         <th>{{ __('message.action') }}</th>
                                     @endcanany
 
@@ -67,13 +67,13 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            @can('author.mass_destroy')
+            @can('stduentBookPreRent.mass_destroy')
                 window.route_mass_crud_entries_destroy = "{{ route('stduent.preRequestBooks.mass.destroy') }}";
             @endcan
-            @can('author.show')
+            @can('stduentBookPreRent.show')
                 window.route_mass_crud_entries_show = "{{ route('stduent.preRequestBooks.mass.destroy') }}";
             @endcan
-            @can('member.mass_approve')
+            @can('stduentBookPreRent.mass_approve')
                 window.route_mass_crud_entries_approve = "{{ route('stduent.preRequestBooks.mass.approve') }}";
             @endcan
             $.ajax({
@@ -86,7 +86,7 @@
                     dom: 'Bfrtip',
                     buttons: [
 
-                        @can('author.create')
+                        @can('stduentBookPreRent.create')
                             {
                                 text: '{{ __('message.createnew') }}',
                                 className: "btn btn-primary",
@@ -141,7 +141,7 @@
                             },
                         },
 
-                        @canany(['member.approve', 'member.mass_approve'])
+                        @canany(['stduentBookPreRent.approve', 'stduentBookPreRent.mass_approve'])
                             {
                                 orderable: false,
                                 "render": function(data, type, full, meta) {
@@ -173,7 +173,7 @@
 
                             },
                         @endcanany
-                        @canany(['author.edit', 'author.delete', 'author.show'])
+                        @canany(['stduentBookPreRent.edit', 'stduentBookPreRent.delete', 'stduentBookPreRent.show'])
                             {
                                 orderable: false,
                                 "render": function(data, type, full, meta) {

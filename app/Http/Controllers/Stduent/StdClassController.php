@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Stduent;
 
 use App\Helpers\EventHelper;
 use App\Helpers\AuthorHelper;
+use App\Helpers\StduentClsassHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Stduent\StdClass;
@@ -14,17 +15,16 @@ use App\Repositories\Backend\Interf\StdClassessRepository;
 
 class StdClassController extends Controller
 {
-    use EventHelper;
-    use AuthorHelper;
+    use StduentClsassHelper;
     private StdClassessRepository $stdClassessRepository;
     private EventCategoryRepository $eventCategoryRepository;
     private EventRepository $eventRepository;
 
     public function __construct(StdClassessRepository $stdClassessRepository)
     {
-        $this->middleware('permission:event.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:event.edit', ['only' => ['edit']]);
-        $this->middleware('permission:event.view', ['only' => ['index']]);
+        $this->middleware('permission:stduentCalss.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:stduentCalss.edit', ['only' => ['edit']]);
+        $this->middleware('permission:stduentCalss.view', ['only' => ['index']]);
         $this->stdClassessRepository = $stdClassessRepository;
     }
 
@@ -33,7 +33,7 @@ class StdClassController extends Controller
         if (request()->ajax()) {
             $user = auth()->user();
             $data = StdClass::get();
-            return $this->Author_datatable($data, $user);
+            return $this->StduentClass_datatable($data, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
         return view('stduent.stdclass.index');

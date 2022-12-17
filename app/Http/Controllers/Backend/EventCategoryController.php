@@ -30,7 +30,6 @@ class EventCategoryController extends Controller
 
     public function index()
     {
-
         if (request()->ajax()) {
             $user = auth()->user();
             $data = $this->eventCategoryRepository->all();

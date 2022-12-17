@@ -69,13 +69,13 @@
     <script>
         $(document).ready(function() {
             $('[data-toggle="tooltip"]').tooltip();
-            @can('member.mass_destroy')
+            @can('book.mass_destroy')
                 window.route_mass_crud_entries_destroy = "{{ route('backend.book.mass.destroy') }}";
             @endcan
-            @can('member.show')
+            @can('book.show')
                 window.route_mass_crud_entries_show = "{{ route('backend.book.mass.destroy') }}";
             @endcan
-            @can('member.mass_approve')
+            @can('book.mass_approve')
                 window.route_mass_crud_entries_approve = "{{ route('backend.book.mass.approve') }}";
             @endcan
             $.ajax({
@@ -200,11 +200,11 @@
 
                                     if (response["can_edit"]) {
                                         editButton = '<a href="' + editURL +
-                                            '" class="btn btn-info btn-sm mx-2"  data-toggle="tooltip" title="Update Member Information"><i class="fa fa-edit"></i></a>';
+                                            '" class="btn btn-info btn-sm mx-2"  data-toggle="tooltip" title="Update Book Information"><i class="fa fa-edit"></i></a>';
                                     }
                                     if (response["can_show"]) {
                                         showButton = '<a href="' + showURL +
-                                            '" class="btn btn-primary btn-sm mx-2"  data-toggle="tooltip" title="Member Detail"><i class="fa fa-info-circle"></i></a>';
+                                            '" class="btn btn-primary btn-sm mx-2"  data-toggle="tooltip" title="Book Detail"><i class="fa fa-info-circle"></i></a>';
                                     }
                                     if (response["can_delete"]) {
                                         deleteButton =

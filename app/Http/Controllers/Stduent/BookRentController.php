@@ -25,9 +25,9 @@ class BookRentController extends Controller
 
     public function __construct(BookRentRepository $BookRentRepository, BookListRepository $BookListRepository)
     {
-        $this->middleware('permission:event.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:event.edit', ['only' => ['edit']]);
-        $this->middleware('permission:event.view', ['only' => ['index']]);
+        $this->middleware('permission:stduentBookRent.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:stduentBookRent.edit', ['only' => ['edit']]);
+        $this->middleware('permission:stduentBookRent.view', ['only' => ['index']]);
         $this->BookRentRepository = $BookRentRepository;
         $this->BookListRepository = $BookListRepository;
     }

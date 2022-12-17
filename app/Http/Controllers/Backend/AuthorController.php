@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Helpers\EventHelper;
 use App\Helpers\AuthorHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthorsRequest;
@@ -19,7 +18,6 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class AuthorController extends Controller
 {
-    use EventHelper;
     use AuthorHelper;
     private AuthorRepository $AuthorRepository;
     private EventCategoryRepository $eventCategoryRepository;
@@ -27,9 +25,9 @@ class AuthorController extends Controller
 
     public function __construct(EventCategoryRepository   $eventCategoryRepository, EventRepository $eventRepository, AuthorRepository $AuthorRepository)
     {
-        $this->middleware('permission:event.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:event.edit', ['only' => ['edit']]);
-        $this->middleware('permission:event.view', ['only' => ['index']]);
+        $this->middleware('permission:author.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:author.edit', ['only' => ['edit']]);
+        $this->middleware('permission:author.view', ['only' => ['index']]);
         $this->eventCategoryRepository = $eventCategoryRepository;
         $this->eventRepository = $eventRepository;
         $this->AuthorRepository = $AuthorRepository;

@@ -40,10 +40,10 @@
                                     <th>{{ 'Roll Number' }}</th>
                                     <th>{{ 'Total Rent Books' }}</th>
                                     <th>{{ 'Total Return Books' }}</th>
-                                    @canany(['member.approve', 'member.mass_approve'])
+                                    @canany(['stduent.approve', 'stduent.mass_approve'])
                                         <th>Status</th>
                                     @endcanany
-                                    @canany(['author.edit', 'author.delete'])
+                                    @canany(['stduent.edit', 'stduent.delete'])
                                         <th>{{ __('message.action') }}</th>
                                     @endcanany
                                 </tr>
@@ -67,14 +67,14 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            @can('author.mass_destroy')
+            @can('stduent.mass_destroy')
                 window.route_mass_crud_entries_destroy = "{{ route('stduent.stduents.mass.destroy') }}";
             @endcan
-            @can('author.show')
+            @can('stduent.show')
                 window.route_mass_crud_entries_show = "{{ route('stduent.stduents.mass.destroy') }}";
             @endcan
 
-            @can('member.mass_approve')
+            @can('stduent.mass_approve')
                 window.route_mass_crud_entries_approve = "{{ route('stduent.stduents.mass.approve') }}";
             @endcan
             $.ajax({
@@ -87,7 +87,7 @@
                     data: response["data"],
                     dom: 'Bfrtip',
                     buttons: [
-                        @can('author.create')
+                        @can('stduent.create')
                             {
                                 text: '{{ __('message.createnew') }}',
                                 className: "btn btn-primary",
@@ -97,7 +97,7 @@
                                 }
                             },
                         @endcan
-                        @can('author.create')
+                        @can('stduent.create')
                             {
                                 text: 'Excel Export',
                                 className: "btn btn-primary",
@@ -114,6 +114,7 @@
                                 deleteSelected();
                             }
                         },
+
                         {
                             text: 'Approve Selected',
                             className: "btn btn-primary",
@@ -166,7 +167,7 @@
                             defaultContent: "-"
                         },
 
-                        @canany(['member.approve', 'member.mass_approve'])
+                        @canany(['stduent.approve', 'stduent.mass_approve'])
                             {
                                 orderable: false,
                                 "render": function(data, type, full, meta) {
@@ -198,7 +199,7 @@
 
                             },
                         @endcanany
-                        @canany(['author.edit', 'author.delete', 'author.show'])
+                        @canany(['stduent.edit', 'stduent.delete', 'stduent.show'])
                             {
                                 orderable: false,
                                 "render": function(data, type, full, meta) {

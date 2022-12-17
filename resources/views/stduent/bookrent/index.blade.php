@@ -40,9 +40,14 @@
                                     <th>{{ 'Start Date' }}</th>
                                     <th>{{ 'Retrun Date' }}</th>
                                     <th>{{ 'Status' }}</th>
+
+                                    @canany(['stduentBookRent.continue'])
                                     <th>{{ 'Continue' }}</th>
+                                    @endcanany
+                                    @canany(['stduentBookRent.rentStatus'])
                                     <th>{{ 'Rent Status' }}</th>
-                                    @canany(['author.edit', 'author.delete'])
+                                    @endcanany
+                                    @canany(['stduentBookRent.edit', 'stduentBookRent.delete'])
                                         <th>{{ __('message.action') }}</th>
                                     @endcanany
                                 </tr>
@@ -66,10 +71,10 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            @can('author.mass_destroy')
+            @can('stduentBookRent.mass_destroy')
                 window.route_mass_crud_entries_destroy = "{{ route('stduent.bookRent.mass.destroy') }}";
             @endcan
-            @can('author.show')
+            @can('stduentBookRent.show')
                 window.route_mass_crud_entries_show = "{{ route('stduent.bookRent.mass.destroy') }}";
             @endcan
 
@@ -82,7 +87,7 @@
                     data: response["data"],
                     dom: 'Bfrtip',
                     buttons: [
-                        @can('author.create')
+                        @can('stduentBookRent.create')
                             {
                                 text: '{{ __('message.createnew') }}',
                                 className: "btn btn-primary",
@@ -185,7 +190,7 @@
 
                         },
 
-                        @canany(['member.approve', 'member.mass_approve'])
+                        @canany(['stduentBookRent.continue'])
                             {
                                 orderable: false,
                                 "render": function(data, type, full, meta) {
@@ -234,7 +239,7 @@
                             },
                         @endcanany
 
-                        @canany(['member.approve', 'member.mass_approve'])
+                        @canany(['stduentBookRent.rentStatus'])
                             {
                                 orderable: false,
                                 "render": function(data, type, full, meta) {
@@ -266,7 +271,7 @@
 
                             },
                         @endcanany
-                        @canany(['author.edit', 'author.delete', 'author.show'])
+                        @canany(['stduentBookRent.edit', 'stduentBookRent.delete', 'stduentBookRent.show'])
                             {
                                 orderable: false,
                                 "render": function(data, type, full, meta) {
