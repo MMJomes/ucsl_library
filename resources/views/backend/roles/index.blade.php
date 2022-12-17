@@ -19,6 +19,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    @canany(['role.create'])
+                    <a href="{{ route('backend.roles.create') }}" class="btn btn-info btn-sm mx-2"><i class="fa fa-plus"></i>Add New Role</a>
+                @endcanany
                     {{$dataTable->table(['class' => 'display nowrap table table-hover table-striped table-bordered'])}}
                 </div>
             </div>

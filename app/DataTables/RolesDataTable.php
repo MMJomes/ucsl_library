@@ -86,14 +86,7 @@ class RolesDataTable extends DataTable
             ->dom('Bfrtip')
             ->orderBy(1)
             ->buttons(
-                Button::make('create')->action("window.location = '" . route('backend.roles.create') . "';"),
-                Button::make('export'),
-                Button::make('print'),
-                Button::make('reset'),
-                Button::make('reload'),
-                // [
-                //     'deleteSelected',
-                // ],
+                Button::make('create'),
             );
     }
 
@@ -105,7 +98,7 @@ class RolesDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            ['name' => 'DT_RowIndex', 'title' => 'No', 'data' => "DT_RowIndex"],
+            ['name' => 'name', 'title' => 'No', 'data' => "DT_RowIndex"],
             'name',
             'permissions',
             'action'
