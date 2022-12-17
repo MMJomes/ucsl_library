@@ -7,13 +7,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1">
     <link href="{{ asset('assets/dist/user/user.css') }}" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <link href="{{ asset('assets/dist/user/font-awesome.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/dist/user/jquery.dataTables.min.css') }}" rel="stylesheet" />
+    <script src="{{ asset('assets/dist/user/jquery-1.9.1.js') }}"></script>
+    <script src="{{ asset('assets/dist/user/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('assets/dist/user/jquery.dataTables.min.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body {
             font-family: "Lato", sans-serif
