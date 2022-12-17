@@ -219,7 +219,12 @@ class StduentController extends Controller
             if ($sned_email_to_user_account->value = ON) {
                 $curListdata = $this->studentRepository->where('slug', $request->slug)->first();
                 if ($curListdata) {
-                    $curListdata->notify(new SendEmail($curListdata->name,'Notification!'," Your Request Been' $curListdata->status 'By Admin"));
+                    if($curListdata->status == 'ON'){
+                        $mystatus= 'Approved';
+                    }else{
+                        $mystatus= 'Rejected';
+                    }
+                    $curListdata->notify(new SendEmail($curListdata->name,'Notification!'," Your Request Been' $mystatus 'By Admin"));
                 }
             }
             return redirect()->route('stduent.stduents.index')->with(['success' => 'Successfully Updated!']);
