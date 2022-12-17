@@ -23,6 +23,22 @@
                 </div>
             </div>
             <div class="card">
+                <div class="card-header">
+                    @if (\Session::get('stdtotalBookApproved'))
+                        <div class="alert alert-success">
+                            <ul>
+                                <li>{!! \Session::get('stdtotalBookApproved') !!}</li>
+                            </ul>
+                        </div>
+                    @endif
+                    @if (\Session::get('stdtotalBook'))
+                        <div class="alert alert-danger">
+                            <ul>
+                                <li>{!! \Session::get('stdtotalBook') !!}</li>
+                            </ul>
+                        </div>
+                    @endif
+                </div>
                 <div class="card-body">
                     <h4 class="card-title">{{ __('message.dataexport') }}</h4>
                     <h6 class="card-subtitle">Export data to Copy, CSV</h6>
@@ -66,6 +82,8 @@
 @endsection
 @push('scripts')
     <script>
+        {{ Session::forget('stdtotalBookApproved') }}
+        {{ Session::forget('stdtotalBook') }}
         $(document).ready(function() {
             @can('stduentBookPreRent.mass_destroy')
                 window.route_mass_crud_entries_destroy = "{{ route('stduent.preRequestBooks.mass.destroy') }}";
@@ -96,7 +114,7 @@
                                 }
                             },
                         @endcan
-                        'copy', 'csv',{
+                        'copy', 'csv', {
                             text: 'Delete Selected',
                             className: "btn btn-primary",
                             action: function(e, dt, node, config) {
@@ -187,7 +205,7 @@
                                             '" class="btn btn-primary btn-sm mx-2"><i class="fa fa-info-circle"></i></a>';
                                     }
 
-                                    return  showButton ;
+                                    return showButton;
                                 }
                             },
                         @endcanany

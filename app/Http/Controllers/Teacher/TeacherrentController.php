@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Carbon\Carbon;
 use App\Repositories\Backend\Interf\StaffRentRepository;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TeacherrentController extends Controller
@@ -54,6 +55,12 @@ class TeacherrentController extends Controller
     }
     public function store(Request $request)
     {
+
+        $booktotalBookRented = Teacherrent::where('rentstatus', OFF)->where('stduents_id', $request->teachers_id)->get();
+        $stduent_total_number_of_book = Setting::where('key', 'staff_total_number_of_book')->first()->value;
+        $booktotalBookRentedcount = count($booktotalBookRented);
+        $stduent_total_number_of_book_count= (int)$stduent_total_number_of_book;
+        if ($booktotalBookRentedcount <= $stduent_total_number_of_book_count) {
         $book_rent_duration = Setting::where('key', 'staff_book_rent_duration')->first()->value;
         $book_return_date = Carbon::parse($request->startdate);
         $enddate = $book_return_date->addDays($book_rent_duration);
@@ -82,6 +89,10 @@ class TeacherrentController extends Controller
         return redirect()
             ->route('staff.rentbyStaff.index')
             ->with(['success' => 'Successfully Added']);
+        }else{
+            Session::put('stafftotalBook','The Number Books Availabel for Staff is Limited!.');
+            return redirect()->back();
+        }
     }
 
     /**

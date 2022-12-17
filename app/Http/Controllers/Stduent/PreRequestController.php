@@ -9,6 +9,7 @@ use App\Imports\AuthorListImport;
 use App\Models\Books;
 use App\Models\EventCategory;
 use App\Models\Setting;
+use App\Models\Stduent\Bookrent;
 use App\Models\Stduent\PreRequest;
 use App\Models\Stduent\Stduent;
 use App\Repositories\Backend\Interf\BookRentRepository;
@@ -16,6 +17,7 @@ use App\Repositories\Backend\Interf\PreQuestRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PreRequestController extends Controller
@@ -191,7 +193,12 @@ class PreRequestController extends Controller
     public function approve(Request $request, $id)
     {
         $contactListdata = $this->PreQuestRepository->where('id', $id)->first();
-        if ($contactListdata) {
+        if($contactListdata) {
+        $booktotalBookRented = Bookrent::where('rentstatus', OFF)->where('stduents_id', $contactListdata->stduents_id)->get();
+        $stduent_total_number_of_book = Setting::where('key', 'stduent_total_number_of_book')->first()->value;
+        $booktotalBookRentedcount = count($booktotalBookRented);
+        $stduent_total_number_of_book_count= (int)$stduent_total_number_of_book;
+        if ($booktotalBookRentedcount <= $stduent_total_number_of_book_count) {
             if ($contactListdata->status = OFF) {
                 $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
                 $current_date = Carbon::now();
@@ -223,8 +230,13 @@ class PreRequestController extends Controller
                 $contactListdata->status  = 'on';
                 $contactListdata->save();
             }
+            Session::put('stdtotalBookApproved','Stduent PreRequest Book Order is Approved Successfully.');
             return redirect()->route('stduent.preRequestBooks.index')->with(['success' => 'Successfully Updated!']);
-        } else {
+        }else{
+            Session::put('stdtotalBook','The Number Books Availabel for Stduent is Limited!.You can\'t Approved at this time!.');
+            return redirect()->back();
+        }
+    } else {
             return view('errorpage.404');
         }
     }

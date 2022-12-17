@@ -15,6 +15,15 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                <div class="card-header">
+                    @if (\Session::get('stafftotalBook'))
+                    <div class="alert alert-danger">
+                        <ul>
+                            <li>{!! \Session::get('stafftotalBook') !!}</li>
+                        </ul>
+                    </div>
+                @endif
+                </div>
                 <div class="card-body">
                     <form action={{ route('staff.rentbyStaff.store') }} method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                         @csrf
@@ -107,6 +116,7 @@
 <script src="{{ asset('assets/dist/select2/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/dist/select2/bootstrap.bundle.min.js') }}"></script>
 <script type="text/javascript">
+{{ Session::forget('stafftotalBook') }}
     $(document).ready(function() {
         $('.stdclasses').select2({
             closeOnSelect: true

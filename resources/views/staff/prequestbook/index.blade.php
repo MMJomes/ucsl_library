@@ -23,6 +23,22 @@
                 </div>
             </div>
             <div class="card">
+                <div class="card-header">
+                    @if (\Session::get('stafftotalBookApproved'))
+                        <div class="alert alert-success">
+                            <ul>
+                                <li>{!! \Session::get('stdtotalBookApproved') !!}</li>
+                            </ul>
+                        </div>
+                    @endif
+                    @if (\Session::get('stafftotalBook'))
+                        <div class="alert alert-danger">
+                            <ul>
+                                <li>{!! \Session::get('stafftotalBook') !!}</li>
+                            </ul>
+                        </div>
+                    @endif
+                </div>
                 <div class="card-body">
                     <h4 class="card-title">{{ __('message.dataexport') }}</h4>
                     <h6 class="card-subtitle">Export data to Copy, CSV</h6>
@@ -67,6 +83,9 @@
 @endsection
 @push('scripts')
     <script>
+
+        {{ Session::forget('stafftotalBookApproved') }}
+        {{ Session::forget('stafftotalBook') }}
         $(document).ready(function() {
             @can('staffBookPreRent.mass_destroy')
                 window.route_mass_crud_entries_destroy = "{{ route('staff.requestbyStaffs.mass.destroy') }}";
