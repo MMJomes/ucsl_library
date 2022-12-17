@@ -10,6 +10,7 @@ use App\Models\Admin;
 use App\Repositories\Backend\Interf\AdminRepository;
 use App\Repositories\Backend\Interf\RoleRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AdminsController extends Controller
@@ -49,18 +50,18 @@ class AdminsController extends Controller
 
     public function store(AdminRequest $request)
     {
-        $this->repository->create($request->all());
-
+        $admin = Admin::create($request->validated());
+        $roles = $request->input('roles') ? $request->input('roles') : [];
+        $admin->assignRole($roles);
+        $admin->assignRole($request->input('roles'));
         return redirect()
             ->route('backend.admins.index')
             ->with(['success' => 'Successfully Added']);
     }
 
-    public function edit($slug)
+    public function edit($id)
     {
-
-        $admin = $this->repository->where('slug', $slug)->first();
-
+        $admin = $this->repository->where('id', $id)->first();
         $roles = $this->roleRepository->roles();
         $adminroles = $admin->roles->pluck('name')->first();
         return view('backend.admins.edit', compact('admin', 'roles', 'adminroles'));
@@ -92,7 +93,13 @@ class AdminsController extends Controller
                 $password = Hash::make($request->password);
             }
             $request->merge(['image' => $path, 'password' => $password]);
-            $this->repository->updateById($admin->id, $request->all());
+           $data= $this->repository->updateById($admin->id, $request->all());
+           if($data){
+            DB::table('model_has_roles')->where('model_id', $data->id)->delete();
+            $roles = $request->input('roles') ? $request->input('roles') : [];
+            $admin->assignRole($roles);
+            $admin->assignRole($request->input('roles'));
+           }
             return redirect()->route('backend.admins.index')->with(['success' => 'Successfully Updated!']);
         } else {
             return view('errorpage.404');
