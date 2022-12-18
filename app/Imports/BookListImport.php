@@ -73,12 +73,12 @@ class BookListImport implements ToModel, WithHeadingRow, WithValidation
             if ($sned_email_to_new_book->value == ON) {
                 Stduent::where('status', ON)->get()->each(function ($stdeunt) {
                     if ($stdeunt->email != null) {
-                        $stdeunt->notify(new SendEmail($stdeunt->name, 'Announcement', '"DIGITAL LIBRARY MANAGENMENT SYSTEM" of USCL Have been Added New Books!'));
+                        $stdeunt->notify(new SendEmail($stdeunt->name, 'Announcement', '"DIGITAL LIBRARY MANAGENMENT SYSTEM FOR (UCSL)" of USCL Have been Added New Books!'));
                     }
                 });
                 Teacher::where('status', ON)->get()->each(function ($stf) {
                     if ($stf->email != null) {
-                        $stf->notify(new SendEmail($stf->name, 'Announcement', '"DIGITAL LIBRARY MANAGENMENT SYSTEM" of USCL Have been Added New Books!'));
+                        $stf->notify(new SendEmail($stf->name, 'Announcement', '"DIGITAL LIBRARY MANAGENMENT SYSTEM FOR (UCSL)" of USCL Have been Added New Books!'));
                     }
                 });
             }

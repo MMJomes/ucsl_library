@@ -26,16 +26,17 @@
                                 </div>
                             </div>
                             {{ Session::get('success') }}
+
                             <h3 style="font-family:'Times New Roman', Times, serif, sans-serif">DIGITAL LIBRARY MANAGENMENT
                                 SYSTEM</h3>
                             <h3 style="font-family: 'Times New Roman', Times, serif;color: blue;">Profile</h3>
                             <hr>
                             <div class="float-center" style="text-align: center">
 
-                                <img id="frame" src="" style="border-radius: 50%;" class="img-fluid" />
+                                <img id="frame" src="" style="border-radius: 50%;" class="img-fluid"  />
                                 <br />
                                 <br />
-                                <img id="oldimage" src="{{ url($stdemail->image ?? '/assets/images/default-user.png') }}"
+                                <img id="oldimage" src="{{ url($staffemail->image ?? '/assets/images/default-user.png') }}"
                                     width="200" height="200" style="border-radius: 50%;">
                                 <br><br>
                                 <input type="file" name='logos' style="margin-left: 30px" id="formFile"
@@ -53,37 +54,19 @@
                                             <label for="name">{{ __('message.name') }}</label>
                                             <input type="text" class="form-control" name="name" id="name"
                                                 placeholder="{{ __('message.name') }}"
-                                                value="{{ old('name', $stdemail->name) }}">
+                                                value="{{ old('name', $staffemail->name) }}">
                                         </div>
                                     </div>
-                                    <input type="hidden" value="{{ $stdemail->image }}" name="oldimg">
-                                    <div class="col-lg-6 col-md-12">
-                                        <h6>{{ 'Select Class' }} </h6>
-                                        <select class="form-control " data-style="btn-secondary" name="std_classes_id"
-                                            required="true">
-                                            @foreach ($stduentCls as $event)
-                                                <option value="{{ $event->id }}" style="font-weight: bold ">
-                                                    {{ $event->stduentclass }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-lg-6 col-md-12">
-                                        <div class="form-group">
-                                            <label for="rollno"> Roll No.(Eg: 1)</label>
-                                            <input type="tel" class="form-control" name="rollno" id="rollno"
-                                                placeholder="Enter Roll No." value="{{ old('rollno', $stdemail->rollno) }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-12">
+
+                                    <input type="hidden" value="{{ $staffemail->image }}" name="oldimg">
+                                    <div class="col-lg-6 col-md-12" style="margin-top: 12px">
                                         <div class="form-group">
                                             <label for="email">Email</label>
                                             <input type="email" class="form-control" name="email" id="email"
-                                                placeholder="Enter Your Email" value="{{ old('email', $stdemail->email) }}">
+                                                placeholder="Enter Your Email" value="{{ old('email', $staffemail->email) }}">
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="row clearfix">
                                     <div class="col-lg-6 col-md-12">
@@ -91,7 +74,7 @@
                                             <label for="rollint"> Phone Number</label>
                                             <input type="tel" class="form-control" name="phoneNo" id="phoneNo"
                                                 placeholder="Enter Phone Number"
-                                                value="{{ old('phoneNo', $stdemail->phoneNo) }}">
+                                                value="{{ old('phoneNo', $staffemail->phoneNo) }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12">
@@ -99,8 +82,24 @@
                                             <label for="address">Address</label>
                                             <input type="Address" class="form-control" name="Address" id="Address"
                                                 placeholder="Enter Your Address"
-                                                value="{{ old('Address', $stdemail->Address) }}">
+                                                value="{{ old('Address', $staffemail->Address) }}">
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-lg-12 col-md-12">
+                                        <h6>{{ 'Select Department' }} </h6>
+                                        <select class="form-control " data-style="btn-secondary" name="departements_id"
+                                            required="true">
+                                            @foreach ($stduentCls as $des)
+                                            <option value="{{ $des->id }}"
+                                                {{ $des->id == $staffemail->departements_id ? 'selected' : '' }}
+                                                style="font-weight: bold ">
+                                                {{ $des->stfdepartment }}
+
+                                            </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="mt-5">
@@ -126,7 +125,6 @@
         frame.src = URL.createObjectURL(event.target.files[0]);
         $('#oldimage').hide();
     }
-
     function clearImage() {
         document.getElementById('formFile').value = null;
         frame.src = "";
@@ -142,9 +140,3 @@
         });
     });
 </script>
-
-
-
-
-
-

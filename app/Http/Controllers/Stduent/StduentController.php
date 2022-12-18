@@ -232,7 +232,7 @@ class StduentController extends Controller
             } else {
                 $contactListdata->update(['status' => ON]);
             }
-            if ($sned_email_to_user_account->value = ON) {
+            if ($sned_email_to_user_account->value == ON) {
                 $curListdata = $this->studentRepository->where('slug', $request->slug)->first();
                 if ($curListdata) {
                     if($curListdata->status == 'ON'){

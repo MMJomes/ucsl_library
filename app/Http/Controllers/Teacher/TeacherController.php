@@ -219,7 +219,7 @@ class TeacherController extends Controller
             } else {
                 $contactListdata->update(['status' => ON]);
             }
-            if ($sned_email_to_user_account->value = ON) {
+            if ($sned_email_to_user_account->value == ON) {
                 $curListdata = $this->StaffRepository->where('slug', $request->slug)->first();
                 if ($curListdata) {
                     if($curListdata->status == 'ON'){
@@ -240,7 +240,7 @@ class TeacherController extends Controller
     {
         $this->StaffRepository->massUpdate($request->ids, ['status' => ON]);
         $sned_email_to_user_account = Setting::where('key', 'sned_email_to_user_account')->first();
-        if ($sned_email_to_user_account->value = ON) {
+        if ($sned_email_to_user_account->value == ON) {
             $curListdata = $this->StaffRepository->where('slug', $request->slug)->first();
             if ($curListdata) {
                 if($curListdata->status == 'ON'){

@@ -53,7 +53,7 @@ class MemberAuthController extends Controller
     public function login()
     {
         $site_maintenance = Setting::where('key', 'site_maintenance')->first();
-        if ($site_maintenance->value == 'on') {
+        if ($site_maintenance->value == ON) {
             return view('frontend.auth.coming_soon');
         } else {
             $already_registered = auth()->guard('members')->user();
@@ -69,7 +69,7 @@ class MemberAuthController extends Controller
     public function register()
     {
         $site_maintenance = Setting::where('key', 'site_maintenance')->first();
-        if ($site_maintenance->value == 'on') {
+        if ($site_maintenance->value == ON) {
             return view('frontend.auth.coming_soon');
         } else {
             $already_registered = auth()->guard('members')->user();
@@ -82,13 +82,63 @@ class MemberAuthController extends Controller
             return view('frontend.auth.register', compact('categories', 'dcategories'));
         }
     }
+    // public function loginAction(Request $request)
+    // {
+    //     dd($request->all());
+    //     if ($request->usertype == 'staff') {
+    //         $email = $request->email;
+    //         $emailValid = substr($email, -17);
+    //         if ($emailValid == "@ucsloikaw.edu.mm") {
+    //             $staffemail = Teacher::where('email', $request->email)->first();
+    //             if ($staffemail) {
+    //                 if ($staffemail->status == ON) {
+    //                     Session::put('email', $request->email);
+    //                     return redirect()->route('users.totalbook');
+    //                 } else {
+    //                     Session::put('error', 'Your account is not activited yet by the admin. Please contact admin for more detail.');
+    //                     return redirect()->back();
+    //                 }
+    //             } else {
+    //                 Session::put('error', 'You Look Don\'t have an Account!.Please Register First.');
+    //                 return redirect()->back();
+    //             }
+    //         } else {
+    //             Session::put('error', 'Invail Email Address,Please Prodie Vaild Email Address.');
+    //             return redirect()->back();
+    //         }
+    //     } elseif ($request->usertype == 'stduent') {
+    //         $email = $request->email;
+    //         $emailValid = substr($email, -17);
+    //         if ($emailValid == "@ucsloikaw.edu.mm") {
+    //             $std = Stduent::where('email', $request->email)->first();
+    //             if ($std) {
+    //                 if ($std->status == ON) {
+    //                     Session::put('email', $request->email);
+    //                     return redirect()->route('users.totalbook');
+    //                 } else {
+    //                     Session::put('error', 'Your account is not activited yet by the admin. Please contact admin for more detail.');
+    //                     return redirect()->back();
+    //                     dd("OK");
+    //                 }
+    //             } else {
+    //                 Session::put('error', 'You Look Don\'t have an Account!.Please Register First.');
+    //                 return redirect()->back();
+    //             }
+    //         } else {
+    //             Session::put('error', 'Invail Email Address,Please Prodie Vaild Email Address.');
+    //             return redirect()->back();
+    //         }
+    //     }
+    //     return redirect()->back();
+    // }
+
     public function loginAction(Request $request)
     {
-        if ($request->usertype == 'staff') {
-            $email = $request->email;
-            $emailValid = substr($email, -17);
-            if ($emailValid == "@ucsloikaw.edu.mm") {
-                $staffemail = Teacher::where('email', $request->email)->first();
+        $email = $request->email;
+        $emailValid = substr($email, -17);
+        if ($emailValid == "@ucsloikaw.edu.mm") {
+            $staffemail = Teacher::where('email', $request->email)->first();
+            if ($staffemail) {
                 if ($staffemail) {
                     if ($staffemail->status == ON) {
                         Session::put('email', $request->email);
@@ -102,13 +152,6 @@ class MemberAuthController extends Controller
                     return redirect()->back();
                 }
             } else {
-                Session::put('error', 'Invail Email Address,Please Prodie Vaild Email Address.');
-                return redirect()->back();
-            }
-        } elseif ($request->usertype == 'stduent') {
-            $email = $request->email;
-            $emailValid = substr($email, -17);
-            if ($emailValid == "@ucsloikaw.edu.mm") {
                 $std = Stduent::where('email', $request->email)->first();
                 if ($std) {
                     if ($std->status == ON) {
@@ -117,17 +160,17 @@ class MemberAuthController extends Controller
                     } else {
                         Session::put('error', 'Your account is not activited yet by the admin. Please contact admin for more detail.');
                         return redirect()->back();
-                        dd("OK");
                     }
                 } else {
                     Session::put('error', 'You Look Don\'t have an Account!.Please Register First.');
                     return redirect()->back();
                 }
-            } else {
-                Session::put('error', 'Invail Email Address,Please Prodie Vaild Email Address.');
-                return redirect()->back();
             }
+        } else {
+            Session::put('error', 'Invail Email Address,Please Prodie Vaild Email Address.');
+            return redirect()->back();
         }
+
         return redirect()->back();
     }
     public function regAction(Request $request)
@@ -200,18 +243,13 @@ class MemberAuthController extends Controller
         $staffemail = Teacher::where('email', $useremail)->first();
         $stdemail = Stduent::where('email', $useremail)->first();
         if ($staffemail != null || $stdemail != null) {
-            if ($staffemail->status == ON || $stdemail->status == ON) {
-                if ($request->ajax()) {
-                    $data = Books::with('author', 'category')->get();
-                    return DataTables::of($data)
-                        ->addIndexColumn()
-                        ->make(true);
-                }
-                return view('frontend.userpage.totalbook');
-            } else {
-                Session::put('error', 'Your Account is DeActived By Admin,Please Contact Admin for More Details!');
-                return redirect()->route('member.index');
+            if ($request->ajax()) {
+                $data = Books::with('author', 'category')->get();
+                return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->make(true);
             }
+            return view('frontend.userpage.totalbook');
         } else {
             return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
         }
@@ -223,77 +261,72 @@ class MemberAuthController extends Controller
         $staffemail = Teacher::where('email', $useremail)->first();
         $stdemail = Stduent::where('email', $useremail)->first();
         if ($stdemail != null || $staffemail != null) {
-            if ($staffemail->status == ON || $stdemail->status == ON) {
-                $boookiddata = Books::with('author', 'category')->where('id', $id)->first();
-                if ($boookiddata) {
-                    if ($staffemail) {
-                        // if ($boookiddata->availablebook >= 1) {
-                        //     $useremailid = $staffemail->id;
-                        //     $booksid = $boookiddata->id;
-                        //     $startdated = Carbon::now();
-                        //     $request->merge(['books_id' => $booksid, 'teachers_id' => $useremailid, 'startdate' => $startdated, 'remark', "Order By User!"]);
-                        //     $data = $this->StaffRentRepository->create($request->all());
-                        //     if ($data)
-                        //         return response()->json([
-                        //             'message' => 'Your BOOK ORDER Created Successfully',
-                        //         ]);
-                        // } else {
-                        //     $useremailid = $staffemail->id;
-                        //     $booksid = $boookiddata->id;
-                        //     $request->merge(['books_id' => $booksid, 'stduents_id' => $useremailid,  'remark', " PreOrder By User!"]);
-                        //     $data = $this->StaffPreQuestRepository->create($request->all());
-                        //     if ($data)
-                        //         return response()->json([
-                        //             'message' => 'Your BOOK PREORDER Created Successfully',
-                        //         ]);
-                        // }
-                        $useremailid = $staffemail->id;
-                        $booksid = $boookiddata->id;
-                        $request->merge(['books_id' => $booksid, 'stduents_id' => $useremailid,  'remark', " PreOrder By User!"]);
-                        $data = $this->StaffPreQuestRepository->create($request->all());
-                        if ($data)
-                            return response()->json([
-                                'message' => ' Book Order Created Successfully',
-                            ]);
-                    }
-                    if ($stdemail) {
-                        // if ($boookiddata->availablebook >= 1) {
-                        //     $useremailid = $stdemail->id;
-                        //     $booksid = $boookiddata->id;
-                        //     $startdated = Carbon::now();
-                        //     $request->merge(['books_id' => $booksid, 'stduents_id' => $useremailid, 'startdate' => $startdated, 'remark' => "Order By User!"]);
-                        //     $data = $this->BookRentRepository->create($request->all());
-                        //     if ($data)
-                        //         return response()->json([
-                        //             'message' => 'Your BOOK ORDER Created Successfully',
-                        //         ]);
-                        // } else {
-                        //     $useremailid = $stdemail->id;
-                        //     $booksid = $boookiddata->id;
-                        //     $request->merge(['books_id' => $booksid, 'stduents_id' => $useremailid,  'remark' => " PreOrder By User!"]);
-                        //     $data = $this->PreQuestRepository->create($request->all());
-                        //     if ($data)
-                        //         return response()->json([
-                        //             'message' => 'Your BOOK PREORDER Created Successfully',
-                        //         ]);
-                        // }
-                        $useremailid = $stdemail->id;
-                        $booksid = $boookiddata->id;
-                        $request->merge(['books_id' => $booksid, 'stduents_id' => $useremailid,  'remark' => " PreOrder By User!"]);
-                        $data = $this->PreQuestRepository->create($request->all());
-                        if ($data)
-                            return response()->json([
-                                'message' => 'Your Book Order Created Successfully',
-                            ]);
-                    }
-                } else {
-                    return response()->json([
-                        'error' => 'There is No Book',
-                    ]);
+            $boookiddata = Books::with('author', 'category')->where('id', $id)->first();
+            if ($boookiddata) {
+                if ($staffemail) {
+                    // if ($boookiddata->availablebook >= 1) {
+                    //     $useremailid = $staffemail->id;
+                    //     $booksid = $boookiddata->id;
+                    //     $startdated = Carbon::now();
+                    //     $request->merge(['books_id' => $booksid, 'teachers_id' => $useremailid, 'startdate' => $startdated, 'remark', "Order By User!"]);
+                    //     $data = $this->StaffRentRepository->create($request->all());
+                    //     if ($data)
+                    //         return response()->json([
+                    //             'message' => 'Your BOOK ORDER Created Successfully',
+                    //         ]);
+                    // } else {
+                    //     $useremailid = $staffemail->id;
+                    //     $booksid = $boookiddata->id;
+                    //     $request->merge(['books_id' => $booksid, 'stduents_id' => $useremailid,  'remark', " PreOrder By User!"]);
+                    //     $data = $this->StaffPreQuestRepository->create($request->all());
+                    //     if ($data)
+                    //         return response()->json([
+                    //             'message' => 'Your BOOK PREORDER Created Successfully',
+                    //         ]);
+                    // }
+                    $useremailid = $staffemail->id;
+                    $booksid = $boookiddata->id;
+                    $request->merge(['books_id' => $booksid, 'stduents_id' => $useremailid,  'remark', " PreOrder By User!"]);
+                    $data = $this->StaffPreQuestRepository->create($request->all());
+                    if ($data)
+                        return response()->json([
+                            'message' => ' Book Order Created Successfully',
+                        ]);
+                }
+                if ($stdemail) {
+                    // if ($boookiddata->availablebook >= 1) {
+                    //     $useremailid = $stdemail->id;
+                    //     $booksid = $boookiddata->id;
+                    //     $startdated = Carbon::now();
+                    //     $request->merge(['books_id' => $booksid, 'stduents_id' => $useremailid, 'startdate' => $startdated, 'remark' => "Order By User!"]);
+                    //     $data = $this->BookRentRepository->create($request->all());
+                    //     if ($data)
+                    //         return response()->json([
+                    //             'message' => 'Your BOOK ORDER Created Successfully',
+                    //         ]);
+                    // } else {
+                    //     $useremailid = $stdemail->id;
+                    //     $booksid = $boookiddata->id;
+                    //     $request->merge(['books_id' => $booksid, 'stduents_id' => $useremailid,  'remark' => " PreOrder By User!"]);
+                    //     $data = $this->PreQuestRepository->create($request->all());
+                    //     if ($data)
+                    //         return response()->json([
+                    //             'message' => 'Your BOOK PREORDER Created Successfully',
+                    //         ]);
+                    // }
+                    $useremailid = $stdemail->id;
+                    $booksid = $boookiddata->id;
+                    $request->merge(['books_id' => $booksid, 'stduents_id' => $useremailid,  'remark' => " PreOrder By User!"]);
+                    $data = $this->PreQuestRepository->create($request->all());
+                    if ($data)
+                        return response()->json([
+                            'message' => 'Your Book Order Created Successfully',
+                        ]);
                 }
             } else {
-                Session::put('error', 'Your Account is DeActived By Admin,Please Contact Admin for More Details!');
-                return redirect()->route('member.index');
+                return response()->json([
+                    'error' => 'There is No Book',
+                ]);
             }
         } else {
             return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
@@ -304,41 +337,38 @@ class MemberAuthController extends Controller
         $useremail  = Session::get('email');
         $staffemail = Teacher::where('email', $useremail)->first();
         $stdemail = Stduent::where('email', $useremail)->first();
+        if ($stdemail) {
+        }
         if ($staffemail != null || $stdemail != null) {
-            if ($staffemail->status == ON || $stdemail->status == ON) {
-                if ($stdemail) {
-                    if ($request->ajax()) {
-                        $data = Bookrent::with('book', 'stduent')->where('stduents_id', $stdemail->id)->orderBy('created_at', 'DESC')->get();
-                        return DataTables::of($data)
-                            ->addIndexColumn()
-                            ->addColumn('action', function ($row) {
-                                $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+            if ($stdemail) {
+                if ($request->ajax()) {
+                    $data = Bookrent::with('book', 'stduent')->where('stduents_id', $stdemail->id)->orderBy('created_at', 'DESC')->get();
+                    return DataTables::of($data)
+                        ->addIndexColumn()
+                        ->addColumn('action', function ($row) {
+                            $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
 
-                                return $btn;
-                            })
-                            ->rawColumns(['action'])
-                            ->make(true);
-                    }
-                    return view('frontend.userpage.totalrent');
+                            return $btn;
+                        })
+                        ->rawColumns(['action'])
+                        ->make(true);
                 }
-                if ($staffemail) {
-                    if ($request->ajax()) {
-                        $data = Teacherrent::with('book', 'teacher')->where('teachers_id', $stdemail->id)->orderBy('created_at', 'DESC')->get();
-                        return DataTables::of($data)
-                            ->addIndexColumn()
-                            ->addColumn('action', function ($row) {
-                                $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+                return view('frontend.userpage.totalrent');
+            }
+            if ($staffemail) {
+                if ($request->ajax()) {
+                    $data = Teacherrent::with('book', 'teacher')->where('teachers_id', $staffemail->id)->orderBy('created_at', 'DESC')->get();
+                    return DataTables::of($data)
+                        ->addIndexColumn()
+                        ->addColumn('action', function ($row) {
+                            $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
 
-                                return $btn;
-                            })
-                            ->rawColumns(['action'])
-                            ->make(true);
-                    }
-                    return view('frontend.userpage.totalrent');
+                            return $btn;
+                        })
+                        ->rawColumns(['action'])
+                        ->make(true);
                 }
-            } else {
-                Session::put('error', 'Your Account is DeActived By Admin,Please Contact Admin for More Details!');
-                return redirect()->route('member.index');
+                return view('frontend.userpage.totalrent');
             }
         } else {
             return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
@@ -350,39 +380,33 @@ class MemberAuthController extends Controller
         $staffemail = Teacher::where('email', $useremail)->first();
         $stdemail = Stduent::where('email', $useremail)->first();
         if ($staffemail != null || $stdemail != null) {
-
-            if ($staffemail->status == ON || $stdemail->status == ON) {
-                if ($staffemail) {
-                    $data = Teacherrent::where('id', $id)->first();
-                    if ($data) {
-                        $data->requesttatus = 'on';
-                        $data->save();
-                        return response()->json([
-                            'message' => 'Book Continue Rent Is Create Successfully ',
-                        ]);
-                    } else {
-                        return response()->json([
-                            'error' => 'There is No Data!',
-                        ]);
-                    }
+            if ($staffemail) {
+                $data = Teacherrent::where('id', $id)->first();
+                if ($data) {
+                    $data->requesttatus = 'on';
+                    $data->save();
+                    return response()->json([
+                        'message' => 'Book Continue Rent Is Create Successfully ',
+                    ]);
+                } else {
+                    return response()->json([
+                        'error' => 'There is No Data!',
+                    ]);
                 }
-                if ($stdemail) {
-                    $data = Bookrent::where('id', $id)->first();
-                    if ($data) {
-                        $data->requesttatus = 'on';
-                        $data->save();
-                        return response()->json([
-                            'message' => 'Book  Continue Rent Is Create Successfully ',
-                        ]);
-                    } else {
-                        return response()->json([
-                            'error' => 'There is No Data!',
-                        ]);
-                    }
+            }
+            if ($stdemail) {
+                $data = Bookrent::where('id', $id)->first();
+                if ($data) {
+                    $data->requesttatus = 'on';
+                    $data->save();
+                    return response()->json([
+                        'message' => 'Book  Continue Rent Is Create Successfully ',
+                    ]);
+                } else {
+                    return response()->json([
+                        'error' => 'There is No Data!',
+                    ]);
                 }
-            } else {
-                Session::put('error', 'Your Account is DeActived By Admin,Please Contact Admin for More Details!');
-                return redirect()->route('member.index');
             }
         } else {
             return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
@@ -394,35 +418,29 @@ class MemberAuthController extends Controller
         $staffemail = Teacher::where('email', $useremail)->first();
         $stdemail = Stduent::where('email', $useremail)->first();
         if ($staffemail != null || $stdemail != null) {
-
-            if ($staffemail->status == ON || $stdemail->status == ON) {
-                if ($stdemail) {
-                    if ($request->ajax()) {
-                        $data = PreRequest::with('book', 'stduent')->where('stduents_id', $stdemail->id)->orderBy('created_at', 'DESC')->get();
-                        return DataTables::of($data)
-                            ->addIndexColumn()
-                            ->make(true);
-                    }
-                    return view('frontend.userpage.userprerequesttotalbook');
+            if ($stdemail) {
+                if ($request->ajax()) {
+                    $data = PreRequest::with('book', 'stduent')->where('stduents_id', $stdemail->id)->orderBy('created_at', 'DESC')->get();
+                    return DataTables::of($data)
+                        ->addIndexColumn()
+                        ->make(true);
                 }
-                if ($staffemail) {
-                    if ($request->ajax()) {
-                        $data = StaffPreRequest::with('book', 'teacher')->where('teachers_id', $staffemail->id)->orderBy('created_at', 'DESC')->get();
-                        return DataTables::of($data)
-                            ->addIndexColumn()
-                            ->addColumn('action', function ($row) {
-                                $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+                return view('frontend.userpage.userprerequesttotalbook');
+            }
+            if ($staffemail) {
+                if ($request->ajax()) {
+                    $data = StaffPreRequest::with('book', 'teacher')->where('teachers_id', $staffemail->id)->orderBy('created_at', 'DESC')->get();
+                    return DataTables::of($data)
+                        ->addIndexColumn()
+                        ->addColumn('action', function ($row) {
+                            $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
 
-                                return $btn;
-                            })
-                            ->rawColumns(['action'])
-                            ->make(true);
-                    }
-                    return view('frontend.userpage.userprerequesttotalbook');
+                            return $btn;
+                        })
+                        ->rawColumns(['action'])
+                        ->make(true);
                 }
-            } else {
-                Session::put('error', 'Your Account is DeActived By Admin,Please Contact Admin for More Details!');
-                return redirect()->route('member.index');
+                return view('frontend.userpage.userprerequesttotalbook');
             }
         } else {
             return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
@@ -434,22 +452,17 @@ class MemberAuthController extends Controller
         $staffemail = Teacher::where('email', $useremail)->first();
         $stdemail = Stduent::where('email', $useremail)->first();
         if ($staffemail != null || $stdemail != null) {
-            if ($staffemail->status == ON || $stdemail->status == ON) {
-                if ($stdemail) {
-                    PreRequest::where('id', $id)->delete();
-                    return response()->json([
-                        'message' => 'You Have Been Cancel PreRequst Book!',
-                    ]);
-                }
-                if ($staffemail) {
-                    StaffPreRequest::where('id', $id)->delete();
-                    return response()->json([
-                        'message' => 'You Have Been Cancel PreRequst Book!',
-                    ]);
-                }
-            } else {
-                Session::put('error', 'Your Account is DeActived By Admin,Please Contact Admin for More Details!');
-                return redirect()->route('member.index');
+            if ($stdemail) {
+                PreRequest::where('id', $id)->delete();
+                return response()->json([
+                    'message' => 'You Have Been Cancel PreRequst Book!',
+                ]);
+            }
+            if ($staffemail) {
+                StaffPreRequest::where('id', $id)->delete();
+                return response()->json([
+                    'message' => 'You Have Been Cancel PreRequst Book!',
+                ]);
             }
         } else {
             return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
@@ -462,22 +475,15 @@ class MemberAuthController extends Controller
         $staffemail = Teacher::where('email', $useremail)->first();
         $stdemail = Stduent::where('email', $useremail)->first();
         if ($staffemail != null || $stdemail != null) {
-            if ($staffemail->status == ON || $stdemail->status == ON) {
-                if ($stdemail) {
-
-                    $stduentCls = StdClass::all();
-
-                    view()->share(['form' => true, 'select' => true]);
-                    return view('frontend.userpage.userprofile', compact('stdemail', 'stduentCls',));
-                }
-                if ($staffemail) {
-                    view()->share(['form' => true, 'select' => true]);
-                    $stduentCls = StdClass::all();
-                    return view('frontend.userpage.userprofile', compact('stdemail', 'stduentCls',));
-                }
-            } else {
-                Session::put('error', 'Your Account is DeActived By Admin,Please Contact Admin for More Details!');
-                return redirect()->route('member.index');
+            if ($stdemail) {
+                $stduentCls = StdClass::all();
+                view()->share(['form' => true, 'select' => true]);
+                return view('frontend.userpage.userprofile', compact('stdemail', 'stduentCls',));
+            }
+            if ($staffemail) {
+                view()->share(['form' => true, 'select' => true]);
+                $stduentCls = Departement::all();
+                return view('frontend.userpage.staffuserprofile', compact('staffemail', 'stduentCls',));
             }
         } else {
             return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
@@ -490,65 +496,60 @@ class MemberAuthController extends Controller
         $staffemail = Teacher::where('email', $useremail)->first();
         $stdemail = Stduent::where('email', $useremail)->first();
         if ($staffemail != null || $stdemail != null) {
-            if ($staffemail->status == ON || $stdemail->status == ON) {
-                if ($stdemail) {
-                    $email = $request->email;
-                    $emailValid = substr($email, -17);
-                    if ($emailValid == "@ucsloikaw.edu.mm") {
-                        if ($request->hasfile('logos')) {
-                            $img = $request->file('logos');
-                            $upload_path = public_path() . '/upload/stduent/';
-                            $file = $img->getClientOriginalName();
-                            $name = $stdemail->id . $file;
-                            $img->move($upload_path, $name);
-                            $path = '/upload/stduent/' . $name;
-                        } else {
-                            $path = $request->oldimg;
-                        }
-                        $request->merge([
-                            'logo' => $path,
-                        ]);
-                        $request->merge(['image' => $path]);
-                        $datas = $this->studentRepository->updateById($stdemail->id, $request->all());
-                        if ($datas) {
-                            Session::put('email', $request->email);
-                        }
-                        return redirect()->route('member.profile')->with(['success' => 'Successfully Updated!']);
+            if ($stdemail) {
+                $email = $request->email;
+                $emailValid = substr($email, -17);
+                if ($emailValid == "@ucsloikaw.edu.mm") {
+                    if ($request->hasfile('logos')) {
+                        $img = $request->file('logos');
+                        $upload_path = public_path() . '/upload/stduent/';
+                        $file = $img->getClientOriginalName();
+                        $name = $stdemail->id . $file;
+                        $img->move($upload_path, $name);
+                        $path = '/upload/stduent/' . $name;
                     } else {
-                        redirect()->back()->with('success', 'Invail Email Address!');
+                        $path = $request->oldimg;
                     }
-                    $stduentCls = StdClass::all();
-                    return view('frontend.userpage.userprofile', compact('stdemail', 'stduentCls',));
+                    $request->merge([
+                        'logo' => $path,
+                    ]);
+                    $request->merge(['image' => $path]);
+                    $datas = $this->studentRepository->updateById($stdemail->id, $request->all());
+                    if ($datas) {
+                        Session::put('email', $request->email);
+                    }
+                    return redirect()->route('member.profile')->with(['success' => 'Successfully Updated!']);
+                } else {
+                    redirect()->back()->with('success', 'Invail Email Address!');
                 }
-                if ($staffemail) {
-                    $email = $request->email;
-                    $emailValid = substr($email, -17);
-                    if ($emailValid == "@ucsloikaw.edu.mm") {
-                        if ($request->hasfile('logos')) {
-                            $img = $request->file('logos');
-                            $upload_path = public_path() . '/upload/stduent/';
-                            $file = $img->getClientOriginalName();
-                            $name = $staffemail->id . $file;
-                            $img->move($upload_path, $name);
-                            $path = '/upload/stduent/' . $name;
-                        } else {
-                            $path = $request->oldimg;
-                        }
-                        $request->merge([
-                            'logo' => $path,
-                        ]);
-                        $request->merge(['image' => $path]);
-                        $this->StaffRepository->updateById($staffemail->id, $request->all());
-                        return redirect()->route('member.profile')->with(['success' => 'Successfully Updated!']);
+                $stduentCls = StdClass::all();
+                return view('frontend.userpage.userprofile', compact('stdemail', 'stduentCls',));
+            }
+            if ($staffemail) {
+                $email = $request->email;
+                $emailValid = substr($email, -17);
+                if ($emailValid == "@ucsloikaw.edu.mm") {
+                    if ($request->hasfile('logos')) {
+                        $img = $request->file('logos');
+                        $upload_path = public_path() . '/upload/staff/';
+                        $file = $img->getClientOriginalName();
+                        $name = $staffemail->id . $file;
+                        $img->move($upload_path, $name);
+                        $path = '/upload/staff/' . $name;
                     } else {
-                        return redirect()
-                            ->route('member.profile')
-                            ->with('success', 'Invail Email Address!');
+                        $path = $request->oldimg;
                     }
+                    $request->merge([
+                        'logo' => $path,
+                    ]);
+                    $request->merge(['image' => $path]);
+                    $this->StaffRepository->updateById($staffemail->id, $request->all());
+                    return redirect()->route('member.profile')->with(['success' => 'Successfully Updated!']);
+                } else {
+                    return redirect()
+                        ->route('member.profile')
+                        ->with('success', 'Invail Email Address!');
                 }
-            } else {
-                Session::put('error', 'Your Account is DeActived By Admin,Please Contact Admin for More Details!');
-                return redirect()->route('member.index');
             }
         } else {
             return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
@@ -556,19 +557,13 @@ class MemberAuthController extends Controller
     }
     public function LogOut(Request $request)
     {
+        //dd("OK");
         $useremail  = Session::get('email');
         $staffemail = Teacher::where('email', $useremail)->first();
         $stdemail = Stduent::where('email', $useremail)->first();
         if ($staffemail != null || $stdemail != null) {
-
-            if ($staffemail->status == ON || $stdemail->status == ON) {
-                Session::forget('email');
-                Session::put('success', 'Your Account Logout Successful!,Please Login Again to view Your Books Deatils!');
-                return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
-            } else {
-                Session::put('error', 'Your Account is DeActived By Admin,Please Contact Admin for More Details!');
-                return redirect()->route('member.index');
-            }
+            Session::forget('email');
+            return redirect()->route('member.index')->withErrors(['message' => 'Please Login First!']);
         }
     }
 }
