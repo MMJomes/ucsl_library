@@ -62,7 +62,8 @@
                                         <select class="form-control " data-style="btn-secondary" name="std_classes_id"
                                             required="true">
                                             @foreach ($stduentCls as $event)
-                                                <option value="{{ $event->id }}" style="font-weight: bold ">
+                                                    <option value="{{ $event->id }}"
+                                                        {{ $event->id == $stdemail->std_classes_id ? 'selected' : '' }}>
                                                     {{ $event->stduentclass }}
                                                 </option>
                                             @endforeach

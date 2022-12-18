@@ -167,7 +167,7 @@
                                         <option selected value="0" class="text-black-50" disabled>--- Select Class---
                                         </option>
                                         @foreach ($depart as $des)
-                                            <option value="{{ $des->id }}" {{ $des->id == $stduent->departements_id ? 'selected' : '' }} style="font-weight: bold ">
+                                            <option value="{{ $des->id }}" {{ $des->id == $staffemail->departements_id ? 'selected' : '' }} style="font-weight: bold ">
                                                 {{ $des->stfdepartment }}
 
                                             </option>

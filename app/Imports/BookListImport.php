@@ -46,14 +46,14 @@ class BookListImport implements ToModel, WithHeadingRow, WithValidation
         } else {
             $categoryName = null;
         }
-        $image = $row['image_path'];
-        if ($image) {
-            $image = $row['image_path'];
-        } else {
-            $image = null;
-        }
+        // $image = $row['image_path'];
+        // if ($image) {
+        //     $image = $row['image_path'];
+        // } else {
+        //     $image = null;
+        // }
         Books::create([
-            'image' => $image,
+            'image' => '/default-book.png',
             'totalbook' => $totalBook,
             'availablebook'=>$totalBook,
             'categories_id' => $categoryName,
