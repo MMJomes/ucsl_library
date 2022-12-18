@@ -106,16 +106,7 @@
                     dom: 'Bfrtip',
                     buttons: [
 
-                        @can('staffBookPreRent.create')
-                            {
-                                text: '{{ __('message.createnew') }}',
-                                className: "btn btn-primary",
-                                action: function(e, dt, node, config) {
-                                    window.location.href =
-                                        '{{ route('staff.requestbyStaffs.create') }}';
-                                }
-                            },
-                        @endcan
+                       
                         'copy', 'csv', {
                             text: 'Delete Selected',
                             className: "btn btn-primary",

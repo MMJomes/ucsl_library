@@ -103,17 +103,6 @@
                     data: response["data"],
                     dom: 'Bfrtip',
                     buttons: [
-
-                        @can('stduentBookPreRent.create')
-                            {
-                                text: '{{ __('message.createnew') }}',
-                                className: "btn btn-primary",
-                                action: function(e, dt, node, config) {
-                                    window.location.href =
-                                        '{{ route('stduent.preRequestBooks.create') }}';
-                                }
-                            },
-                        @endcan
                         'copy', 'csv', {
                             text: 'Delete Selected',
                             className: "btn btn-primary",
