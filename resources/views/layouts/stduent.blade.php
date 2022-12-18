@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     @include('layouts.partials.back-head')
-    <title>DIGITAL LIBRARY MANAGENMENT SYSTEM FOR (UCSL)</title>
+    <title>DIGITAL LIBRARY MANAGENMENT SYSTEM FOR UCSL</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1">
     <link href="{{ asset('assets/dist/user/user.css') }}" rel="stylesheet" />

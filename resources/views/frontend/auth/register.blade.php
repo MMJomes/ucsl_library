@@ -11,8 +11,7 @@
                 <div class="card" style="background-color: hsl(200, 53%, 96%)">
                     <center><img src="{{ url('assets/images/logo.png') }}"
                             style="width: 5%;height: 10%;margin-right: 12px" class="card-img-top" alt="logo"> <samp
-                            style="font-size: 22px;font-family: 'Times New Roman', Times, serif;font-weight: bold;color: blue">DIGITAL
-                            LIBRARY MANAGENMENT SYSTEM</samp>
+                            style="font-size: 22px;font-family: 'Times New Roman', Times, serif;font-weight: bold;color: blue">DIGITAL LIBRARY MANAGENMENT SYSTEM FOR UCSL</samp>
                     </center>
                     <div class="card-title">
                         <div class="card-body">

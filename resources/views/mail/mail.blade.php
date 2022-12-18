@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>UCSL DIGITAL LIBRARY MANAGENMENT SYSTEM FOR (UCSL)</title>
+    <title>UCSL DIGITAL LIBRARY MANAGENMENT SYSTEM FOR UCSL</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -117,7 +117,7 @@
             <div class="card-body">
                 <table role="presentation"
                     style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
-                    <caption style="font-size: 16px">DIGITAL LIBRARY MANAGENMENT SYSTEM FOR (UCSL) </caption>
+                    <caption style="font-size: 16px">DIGITAL LIBRARY MANAGENMENT SYSTEM FOR UCSL </caption>
                     <tbody>
                         <tr>
                             <td colspan="4">

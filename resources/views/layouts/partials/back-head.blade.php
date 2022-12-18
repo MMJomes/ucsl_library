@@ -5,7 +5,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <!-- Favicon icon -->
-<title>DIGITAL LIBRARY MANAGENMENT SYSTEM FOR (UCSL)</title>
+<title>DIGITAL LIBRARY MANAGENMENT SYSTEM FOR UCSL</title>
 <link rel="icon" href="{{ url('assets/images/logo.png') }}" type="image/x-icon">
 <!-- Custom CSS -->
 <link href="{{ asset('assets/dist/css/style.min.css') }}" rel="stylesheet">

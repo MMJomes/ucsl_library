@@ -215,7 +215,7 @@
             </div>
         </div>
         <div class="container">
-            <h2 style="font-family:Verdana, sans-serif">DIGITAL LIBRARY MANAGENMENT SYSTEM FOR (UCSL)</h2>
+            <h2 style="font-family:Verdana, sans-serif">DIGITAL LIBRARY MANAGENMENT SYSTEM FOR UCSL</h2>
             <hr style="font-weight:bold ">
             <h6 style="font-family:Verdana, sans-serif">Total Number Books & There're Information!</h6>
             <table class="table table-bordered data-table " id="existingRulesDataTable">
@@ -491,7 +491,7 @@
 <html lang="en">
 <head>
     @include('layouts.partials.back-head')
-    <title>DIGITAL LIBRARY MANAGENMENT SYSTEM FOR (UCSL)</title>
+    <title>DIGITAL LIBRARY MANAGENMENT SYSTEM FOR UCSL</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1">
     <link href="{{ asset('assets/dist/user/user.css') }}" rel="stylesheet" />

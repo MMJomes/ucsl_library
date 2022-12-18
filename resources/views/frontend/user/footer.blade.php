@@ -3,6 +3,6 @@
     <a href="#"><i class="fa fa-globe w3-hover-opacity"></i></a>
     <a href="#"><i class="fa fa-linkedin w3-hover-opacity"></i></a>
 
-    <p class="w3-medium">© Copyright 2022 UCSL DIGITAL LIBRARY MANAGENMENT SYSTEM FOR (UCSL)
+    <p class="w3-medium">© Copyright 2022 UCSL DIGITAL LIBRARY MANAGENMENT SYSTEM FOR UCSL
     </p>
 </footer>

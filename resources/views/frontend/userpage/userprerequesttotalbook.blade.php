@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="container">
-            <h2 style="font-family:Verdana, sans-serif">DIGITAL LIBRARY MANAGENMENT SYSTEM FOR (UCSL)</h2>
+            <h2 style="font-family:Verdana, sans-serif">DIGITAL LIBRARY MANAGENMENT SYSTEM FOR UCSL</h2>
             <hr style="font-weight:bold ">
             <h6 style="font-family:Verdana, sans-serif">Total Number Of PreQuest Books</h6>
             <table class="table table-bordered data-table " id="existingRulesDataTable">

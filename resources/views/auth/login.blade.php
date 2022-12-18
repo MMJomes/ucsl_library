@@ -278,10 +278,16 @@
                 </div>
                 <div class="card card2">
                     <div class="my-auto mx-md-5 px-md-5 right">
-                        <h3 class="text-white">We are more than just a company</h3>
-                        <small class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</small>
+                        <h3 class="text-white" style="font-family: 'Times New Roman', Times, serif"> BENEFITS DIGITAL LIBRARY MANAGENMENT SYSTEM
+                        </h3>
+                        <br>
+                        <p class="text-white justify-content-center">
+                           <blockquote> Among all the people in the university who help to run it successfully on a daily basis, the most
+                            important among them are the librarians. Their work helps in keeping book well as other
+                            educational materials nicely organized that makes it simple for teachers and students to find
+                            the correct content at the right time and boost their education matter whether it is literature,
+                            new media content or video you are looking for, the good librarian will help you to find it.
+                        </p>
                     </div>
                 </div>
             </div>

@@ -27,7 +27,7 @@
                 <li class="d-none d-md-block d-lg-block">
                     <a href="javascript:void(0)" class="p-l-15">
                         <!--This is logo text-->
-                        <span style="font-size: 20px; color: white; font-family: sans-serif;font-weight: bold;">DIGITAL LIBRARY MANAGENMENT SYSTEM FOR (UCSL)</span>
+                        <span style="font-size: 20px; color: white; font-family: sans-serif;font-weight: bold;">DIGITAL LIBRARY MANAGENMENT SYSTEM FOR UCSL</span>
 
                     </a>
                 </li>
