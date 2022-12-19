@@ -37,7 +37,7 @@ class BooksController extends Controller
     {
         if (request()->ajax()) {
             $user = auth()->user();
-            $data = Books::with('author', 'category')->get();
+            $data = Books::with('author', 'category')->orderBy('id','DESC')->get();
             return $this->booking_datatable($data, $user);
         }
         Session::put('admininfo', 'Your Excel Import Format must be same with Book Excel Import Format.If Not,Please Download First!.');

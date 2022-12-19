@@ -23,8 +23,12 @@ class DashboardController extends BaseController
 
     public function index()
     {
+
+        //dd($totalbooks);
         $statics = $this->repository->getStatics();
-        $totalbook=Books::all()->count();
+        //$totalbook=Books::all()->count();
+        $totalbookskind=Books::sum('totalbook');
+        $totalbook=(int)$totalbookskind;
 
         $staff=Teacher::all();
         $staffTotal =$staff->count();
@@ -36,12 +40,12 @@ class DashboardController extends BaseController
 
          $TotalstdRents= PreRequest::where('status',ON)->get();
          $TotalstdRent= count($TotalstdRents);
-        
+
 
         $std=Stduent::all();
         $stdTotal = $std->count();
-        $stdActiveTotal=$staff->where('status',ON)->count();
-        $stdInActiveTotal=$staff->where('status',OFF)->count();
+        $stdActiveTotal=$std->where('status',ON)->count();
+        $stdInActiveTotal=$std->where('status',OFF)->count();
 
         return view('backend.dashboard.index',compact('TotalstdRent','TotalstaffRent','totalbook','staffTotal','staffActiveTotal','staffInActiveTotal','stdTotal','stdActiveTotal','stdInActiveTotal'));
     }
