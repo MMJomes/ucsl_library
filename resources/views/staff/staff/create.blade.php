@@ -103,7 +103,7 @@
                                     <div class="form-group">
                                         <label for="rollint"> Phone Number</label>
                                         <input type="tel" required class="form-control" name="phoneNo" id="phoneNo"
-                                            placeholder="Enter Phone Number" value="{{ old('phoneNo') }}">
+                                            placeholder="Enter Phone Number" onkeypress="return isNumber(event);" maxlength="12" min="99999999" max="99999999999" value="{{ old('phoneNo') }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">

@@ -48,8 +48,9 @@
                     <h4 class="card-title">Total Number of Book Available for Stduent</h4>
                     <h6 class="card-subtitle">The Number of total book Available for Stduent.</h6>
                     <div id="the-basics">
-                        <input class="typeahead form-control" type="number" name="stduent_total_number_of_book"
-                            placeholder="Enter Member Expiration date" value="{{ $settings['stduent_total_number_of_book'] }}">
+                        <input class="typeahead form-control" type="number" min="1" max="50"  name="stduent_total_number_of_book"
+                            placeholder="Enter Member Expiration date"
+                            value="{{ $settings['stduent_total_number_of_book'] }}">
                     </div>
                 </div>
             </div>
@@ -60,8 +61,9 @@
                     <h4 class="card-title">Total Number of Book Available for Staff</h4>
                     <h6 class="card-subtitle">The Number of total book Available for Staff. </h6>
                     <div id="the-basics">
-                        <input class="typeahead form-control" type="number" name="staff_total_number_of_book"
-                            placeholder="Enter Member Expiration date" value="{{ $settings['staff_total_number_of_book'] }}">
+                        <input class="typeahead form-control" type="number" min="1" max="50" name="staff_total_number_of_book"
+                            placeholder="Enter Member Expiration date"
+                            value="{{ $settings['staff_total_number_of_book'] }}">
                     </div>
                 </div>
             </div>
@@ -74,8 +76,9 @@
                     <h4 class="card-title">Notify To User About Books To Return!</h4>
                     <h6 class="card-subtitle">Notify to User To Retrun Book to Current Date (Hour Format:)</h6>
                     <div id="the-basics">
-                        <input class="typeahead form-control" type="number" name="send_mail_to_user_for_return"
-                            placeholder="Enter Member Expiration date" value="{{ $settings['send_mail_to_user_for_return'] }}">
+                        <input class="typeahead form-control" type="number" min="1" max="50" name="send_mail_to_user_for_return"
+                            placeholder="Enter Member Expiration date"
+                            value="{{ $settings['send_mail_to_user_for_return'] }}">
                     </div>
                 </div>
             </div>
@@ -100,7 +103,8 @@
                     <h4 class="card-title">Mail To New Book Available To Library</h4>
                     <h6 class="card-subtitle">Notify both Stdunt And Staff About New Book Available! </h6>
                     <div id="the-basics">
-                        <input type="checkbox" name="sned_email_to_new_book" {{ $settings['sned_email_to_new_book'] == ON ? 'checked' : '' }}
+                        <input type="checkbox" name="sned_email_to_new_book"
+                            {{ $settings['sned_email_to_new_book'] == ON ? 'checked' : '' }}
                             style="width: 40px;height: 40px;text-align: right;float: right;">
                     </div>
                 </div>
@@ -112,7 +116,8 @@
                     <h4 class="card-title">Mail To About User Account</h4>
                     <h6 class="card-subtitle">Mail both Stduent And Staff Accounts Have Been Upated Status </h6>
                     <div id="the-basics">
-                        <input type="checkbox" name="sned_email_to_user_account" {{ $settings['sned_email_to_user_account'] == ON ? 'checked' : '' }}
+                        <input type="checkbox" name="sned_email_to_user_account"
+                            {{ $settings['sned_email_to_user_account'] == ON ? 'checked' : '' }}
                             style="width: 40px;height: 40px;text-align: right;float: right;">
                     </div>
                 </div>
@@ -127,7 +132,8 @@
                     <h4 class="card-title">Mail To About User Rent Overred Time!</h4>
                     <h6 class="card-subtitle">Mail to User About Book Rent Time Is Overred Return Duration</h6>
                     <div id="the-basics">
-                        <input type="checkbox" name="sned_email_to_user_overred_time" {{ $settings['sned_email_to_user_overred_time'] == ON ? 'checked' : '' }}
+                        <input type="checkbox" name="sned_email_to_user_overred_time"
+                            {{ $settings['sned_email_to_user_overred_time'] == ON ? 'checked' : '' }}
                             style="width: 40px;height: 40px;text-align: right;float: right;">
                     </div>
                 </div>
@@ -139,7 +145,8 @@
                     <h4 class="card-title">Make Site Under Construction! </h4>
                     <h6 class="card-subtitle">Stop Service to For All Ussrs!(Site Maintenance).</h6>
                     <div id="default-suggestions">
-                        <input type="checkbox" name="site_maintenance" {{ $settings['site_maintenance'] == ON ? 'checked' : '' }}
+                        <input type="checkbox" name="site_maintenance"
+                            {{ $settings['site_maintenance'] == ON ? 'checked' : '' }}
                             style="width: 40px;height: 40px;text-align: right;float: right;">
                         <span>&nbsp;</span>
                     </div>
@@ -150,6 +157,7 @@
 @endsection
 
 @push('scripts')
+
     <script>
         var setting_update_url = "{{ route('backend.settings.update') }}";
         $('input').not('input[type=file]').change(function() {
