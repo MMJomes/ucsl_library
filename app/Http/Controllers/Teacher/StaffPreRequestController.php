@@ -158,7 +158,7 @@ class StaffPreRequestController extends Controller
                     $prerequestbook = StaffPreRequest::with('book', 'teacher')->where('id', $contactListdata->id)->first();
                     $totalBook = Books::where('id', $prerequestbook->books_id)->first();
                     if ($totalBook) {
-                        if ($totalBook->availablebook >= 1) {
+                        if ($totalBook->availablebook > 1) {
                             $current_book = $totalBook->availablebook - 1;
                             $totalBook->availablebook = $current_book;
                             $totalBook->save();

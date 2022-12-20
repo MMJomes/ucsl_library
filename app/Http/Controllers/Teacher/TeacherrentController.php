@@ -60,34 +60,41 @@ class TeacherrentController extends Controller
         $booktotalBookRentedcount = count($booktotalBookRented);
         $stduent_total_number_of_book_count = (int)$stduent_total_number_of_book;
         if ($booktotalBookRentedcount < $stduent_total_number_of_book_count) {
-            $book_rent_duration = Setting::where('key', 'staff_book_rent_duration')->first()->value;
-            $book_return_date = Carbon::parse($request->startdate);
-            $enddate = $book_return_date->addDays($book_rent_duration);
-            $request->merge(['enddate' => $enddate]);
-            $data = $this->StaffRentRepository->create($request->all());
-            $book = Books::where('id', $data->books_id)->first();
-            if ($book) {
-                $totalbooks = $book->totalbook;
-                if ($totalbooks > 0) {
-                    $bookrentstatus = Teacherrent::where('id', $data->id)->where('books_id', $data->books_id)->first();
-                    if ($bookrentstatus) {
-                        if ($bookrentstatus->rentstatus == OFF) {
-                            $currentavailablebook  = $book->availablebook - 1;
-                            $book->availablebook = $currentavailablebook;
-                            $book->save();
+
+            $totlabok = Books::where('id', $request->books_id)->first();
+            if ($totlabok->availablebook > 1) {
+                $book_rent_duration = Setting::where('key', 'staff_book_rent_duration')->first()->value;
+                $book_return_date = Carbon::parse($request->startdate);
+                $enddate = $book_return_date->addDays($book_rent_duration);
+                $request->merge(['enddate' => $enddate]);
+                $data = $this->StaffRentRepository->create($request->all());
+                $book = Books::where('id', $data->books_id)->first();
+                if ($book) {
+                    $totalbooks = $book->totalbook;
+                    if ($totalbooks > 0) {
+                        $bookrentstatus = Teacherrent::where('id', $data->id)->where('books_id', $data->books_id)->first();
+                        if ($bookrentstatus) {
+                            if ($bookrentstatus->rentstatus == OFF) {
+                                $currentavailablebook  = $book->availablebook - 1;
+                                $book->availablebook = $currentavailablebook;
+                                $book->save();
+                            }
                         }
                     }
                 }
+                $stdeunt = Teacher::where('id', $data->teachers_id)->first();
+                if ($stdeunt) {
+                    $totalbok = $stdeunt->totalNoOfBooks + 1;
+                    $stdeunt->totalNoOfBooks = $totalbok;
+                    $stdeunt->save();
+                }
+                return redirect()
+                    ->route('staff.rentbyStaff.index')
+                    ->with(['success' => 'Successfully Added']);
+            } else {
+                Session::put('stafftotalBook', 'The Number Total Available Books Count is Zero(0)!.');
+                return redirect()->back();
             }
-            $stdeunt = Teacher::where('id', $data->teachers_id)->first();
-            if ($stdeunt) {
-                $totalbok = $stdeunt->totalNoOfBooks + 1;
-                $stdeunt->totalNoOfBooks = $totalbok;
-                $stdeunt->save();
-            }
-            return redirect()
-                ->route('staff.rentbyStaff.index')
-                ->with(['success' => 'Successfully Added']);
         } else {
             Session::put('stafftotalBook', 'The Number Books Availabel for Staff is Limited!.');
             return redirect()->back();

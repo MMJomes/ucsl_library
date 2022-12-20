@@ -62,38 +62,44 @@ class BookRentController extends Controller
         $booktotalBookRented = Bookrent::where('rentstatus', OFF)->where('stduents_id', $request->stduents_id)->get();
         $stduent_total_number_of_book = Setting::where('key', 'stduent_total_number_of_book')->first()->value;
         $booktotalBookRentedcount = count($booktotalBookRented);
-        $stduent_total_number_of_book_count= (int)$stduent_total_number_of_book;
+        $stduent_total_number_of_book_count = (int)$stduent_total_number_of_book;
         if ($booktotalBookRentedcount < $stduent_total_number_of_book_count) {
-            $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
-            $book_return_date = Carbon::parse($request->startdate);
-            $enddate = $book_return_date->addDays($book_rent_duration);
-            $request->merge(['enddate' => $enddate]);
-            $data = $this->BookRentRepository->create($request->all());
-            $book = Books::where('id', $data->books_id)->first();
-            if ($book) {
-                $totalbooks = $book->totalbook;
-                if ($totalbooks > 0) {
-                    $bookrentstatus = Bookrent::where('id', $data->id)->where('books_id', $data->books_id)->first();
-                    if ($bookrentstatus) {
-                        if ($bookrentstatus->rentstatus == OFF) {
-                            $currentavailablebook  = $book->availablebook - 1;
-                            $book->availablebook = $currentavailablebook;
-                            $book->save();
+            $totlabok = Books::where('id', $request->books_id)->first();
+            if ($totlabok->availablebook > 1) {
+                $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
+                $book_return_date = Carbon::parse($request->startdate);
+                $enddate = $book_return_date->addDays($book_rent_duration);
+                $request->merge(['enddate' => $enddate]);
+                $data = $this->BookRentRepository->create($request->all());
+                $book = Books::where('id', $data->books_id)->first();
+                if ($book) {
+                    $totalbooks = $book->totalbook;
+                    if ($totalbooks > 0) {
+                        $bookrentstatus = Bookrent::where('id', $data->id)->where('books_id', $data->books_id)->first();
+                        if ($bookrentstatus) {
+                            if ($bookrentstatus->rentstatus == OFF) {
+                                $currentavailablebook  = $book->availablebook - 1;
+                                $book->availablebook = $currentavailablebook;
+                                $book->save();
+                            }
                         }
                     }
                 }
+                $stdeunt = Stduent::where('id', $data->stduents_id)->first();
+                if ($stdeunt) {
+                    $totalbok = $stdeunt->totalNoOfBooks + 1;
+                    $stdeunt->totalNoOfBooks = $totalbok;
+                    $stdeunt->save();
+                }
+                return redirect()
+                    ->route('stduent.bookRent.index')
+                    ->with(['success' => 'Successfully Added']);
+            } else {
+                Session::put('stdtotalBook', 'The Number Total Available Books Count is Zero(0)!.');
+                return redirect()->back();
             }
-            $stdeunt = Stduent::where('id', $data->stduents_id)->first();
-            if ($stdeunt) {
-                $totalbok = $stdeunt->totalNoOfBooks + 1;
-                $stdeunt->totalNoOfBooks = $totalbok;
-                $stdeunt->save();
-            }
-            return redirect()
-                ->route('stduent.bookRent.index')
-                ->with(['success' => 'Successfully Added']);
         } else {
-            Session::put('stdtotalBook','The Number Books Availabel for Stduent is Limited!.');
+            Session::put('stdtotalBook', 'The Number Books Availabel for Stduent is Limited!.');
             return redirect()->back();
         }
     }
