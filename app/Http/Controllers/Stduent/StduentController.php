@@ -67,11 +67,11 @@ class StduentController extends Controller
         $userrollno = $request->rollno;
         $emailValid = substr($email, -17);
         if ($emailValid == "@ucsloikaw.edu.mm") {
-            $isExit = Stduent::with('stdclass')->where('email', $email)->where('rollno', $userrollno)->whereHas('stdclass', function ($query) use ($userclass) {
-                $query->where('id', $userclass);
-            })->first();
+            // $isExit = Stduent::with('stdclass')->where('email', $email)->where('rollno', $userrollno)->whereHas('stdclass', function ($query) use ($userclass) {
+            //     $query->where('id', $userclass);
+            $isExit = Stduent::where('email', $email)->first();
             if($isExit){
-                Session::put('adminerror', 'Email Address And Roll Number is Already Exit!');
+                Session::put('adminerror', 'Email Address Is Already Exit!');
                 return redirect()->back();
             }
             $data1 = DB::table('stduents')->latest('id')->first();
@@ -143,7 +143,6 @@ class StduentController extends Controller
     {
         $stduent = $this->studentRepository->where('slug', $slug)->first();
         if ($stduent) {
-
             $email = $request->email;
             $emailValid = substr($email, -17);
             if ($emailValid == "@ucsloikaw.edu.mm") {

@@ -50,40 +50,44 @@ class TeacherController extends Controller
     }
     public function store(Request $request)
     {
-
         $email = $request->email;
         $emailValid = substr($email, -17);
         if ($emailValid == "@ucsloikaw.edu.mm") {
-            $data1 = DB::table('teachers')->latest('id')->first();
-            if ($data1 == null) {
-                $last_id = 1;
+            $isExit = Teacher::where('email', $email)->first();
+            if ($isExit) {
+            Session::put('adminerror', ' Email Address Is Already Exit!.');
+            return redirect()->back();
             } else {
-                $id = Teacher::latest()->first()->id;
-                $last_id = $id + 1;
+                $data1 = DB::table('teachers')->latest('id')->first();
+                if ($data1 == null) {
+                    $last_id = 1;
+                } else {
+                    $id = Teacher::latest()->first()->id;
+                    $last_id = $id + 1;
+                }
+                if ($request->hasfile('logos')) {
+                    $img = $request->file('logos');
+                    $upload_path = public_path() . '/upload/staff/';
+                    $file = $img->getClientOriginalName();
+                    $name = $last_id . $file;
+                    $img->move($upload_path, $name);
+                    $path = '/upload/staff/' . $name;
+                } else {
+                    $path = "/default-user.png";
+                }
+                $request->merge([
+                    'image' => $path,
+                    'status' => 'on',
+                ]);
+                $this->StaffRepository->create($request->all());
+                // Session::put('adminsuccess', 'Successfully Added!');
+                return redirect()
+                    ->route('staff.staffs.index')
+                    ->with(['success' => 'Successfully Added']);
             }
-            if ($request->hasfile('logos')) {
-                $img = $request->file('logos');
-                $upload_path = public_path() . '/upload/staff/';
-                $file = $img->getClientOriginalName();
-                $name = $last_id . $file;
-                $img->move($upload_path, $name);
-                $path = '/upload/staff/' . $name;
-            } else {
-                $path = "/default-user.png";
-            }
-            $request->merge([
-                'image' => $path,
-                'status' => 'on',
-            ]);
-            $this->StaffRepository->create($request->all());
-           // Session::put('adminsuccess', 'Successfully Added!');
-            return redirect()
-                ->route('staff.staffs.index')
-                ->with(['success' => 'Successfully Added']);
         } else {
             Session::put('adminerror', 'Invail Email Address,Please Prodie Vaild Email Address.');
             return redirect()->back();
-
         }
     }
 
@@ -136,27 +140,27 @@ class TeacherController extends Controller
             $email = $request->email;
             $emailValid = substr($email, -17);
             if ($emailValid == "@ucsloikaw.edu.mm") {
-            if ($request->hasfile('logos')) {
-                $img = $request->file('logos');
-                $upload_path = public_path() . '/upload/stduent/';
-                $file = $img->getClientOriginalName();
-                $name = $stduent->id . $file;
-                $img->move($upload_path, $name);
-                $path = '/upload/stduent/' . $name;
+                if ($request->hasfile('logos')) {
+                    $img = $request->file('logos');
+                    $upload_path = public_path() . '/upload/stduent/';
+                    $file = $img->getClientOriginalName();
+                    $name = $stduent->id . $file;
+                    $img->move($upload_path, $name);
+                    $path = '/upload/stduent/' . $name;
+                } else {
+                    $path = $request->oldimg;
+                }
+                $request->merge([
+                    'logo' => $path,
+                ]);
+                $request->merge(['image' => $path]);
+                $this->StaffRepository->updateById($stduent->id, $request->all());
+                //Session::put('adminsuccess', 'Successfully Updated!');
+                return redirect()->route('staff.staffs.index')->with(['success' => 'Successfully Updated!']);
             } else {
-                $path = $request->oldimg;
+                Session::put('adminerror', 'Invail Email Address,Please Prodie Vaild Email Address.');
+                return redirect()->back();
             }
-            $request->merge([
-                'logo' => $path,
-            ]);
-            $request->merge(['image' => $path]);
-            $this->StaffRepository->updateById($stduent->id, $request->all());
-            //Session::put('adminsuccess', 'Successfully Updated!');
-            return redirect()->route('staff.staffs.index')->with(['success' => 'Successfully Updated!']);
-        }else{
-            Session::put('adminerror', 'Invail Email Address,Please Prodie Vaild Email Address.');
-            return redirect()->back();
-        }
         } else {
             return view('errorpage.404');
         }
@@ -222,12 +226,12 @@ class TeacherController extends Controller
             if ($sned_email_to_user_account->value == ON) {
                 $curListdata = $this->StaffRepository->where('slug', $request->slug)->first();
                 if ($curListdata) {
-                    if($curListdata->status == 'ON'){
-                        $mystatus= 'Approved';
-                    }else{
-                        $mystatus= 'Rejected';
+                    if ($curListdata->status == 'ON') {
+                        $mystatus = 'Approved';
+                    } else {
+                        $mystatus = 'Rejected';
                     }
-                    $curListdata->notify(new SendEmail($curListdata->name ,"Notification!" , "Your Request Been'  $mystatus  'By Admin"));
+                    $curListdata->notify(new SendEmail($curListdata->name, "Notification!", "Your Request Been'  $mystatus  'By Admin"));
                 }
             }
             return redirect()->route('staff.staffs.index')->with(['success' => 'Successfully Updated!']);
@@ -243,12 +247,12 @@ class TeacherController extends Controller
         if ($sned_email_to_user_account->value == ON) {
             $curListdata = $this->StaffRepository->where('slug', $request->slug)->first();
             if ($curListdata) {
-                if($curListdata->status == 'ON'){
-                    $mystatus= 'Approved';
-                }else{
-                    $mystatus= 'Rejected';
+                if ($curListdata->status == 'ON') {
+                    $mystatus = 'Approved';
+                } else {
+                    $mystatus = 'Rejected';
                 }
-                StaffAccountMailServiceJob::dispatch($curListdata->name,"Notification!" , "Your Request Been' {{ $mystatus }} 'Admin");
+                StaffAccountMailServiceJob::dispatch($curListdata->name, "Notification!", "Your Request Been' {{ $mystatus }} 'Admin");
             }
         }
         return redirect()->route('staff.staffs.index')->with('success', 'Stduents Approved successfully');
