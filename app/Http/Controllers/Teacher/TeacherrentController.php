@@ -60,7 +60,7 @@ class TeacherrentController extends Controller
         $stduent_total_number_of_book = Setting::where('key', 'staff_total_number_of_book')->first()->value;
         $booktotalBookRentedcount = count($booktotalBookRented);
         $stduent_total_number_of_book_count= (int)$stduent_total_number_of_book;
-        if ($booktotalBookRentedcount <= $stduent_total_number_of_book_count) {
+        if ($booktotalBookRentedcount < $stduent_total_number_of_book_count) {
         $book_rent_duration = Setting::where('key', 'staff_book_rent_duration')->first()->value;
         $book_return_date = Carbon::parse($request->startdate);
         $enddate = $book_return_date->addDays($book_rent_duration);

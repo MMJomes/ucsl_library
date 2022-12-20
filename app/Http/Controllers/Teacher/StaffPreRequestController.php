@@ -145,7 +145,7 @@ class StaffPreRequestController extends Controller
             $stduent_total_number_of_book = Setting::where('key', 'staff_total_number_of_book')->first()->value;
             $booktotalBookRentedcount = count($booktotalBookRented);
             $stduent_total_number_of_book_count = (int)$stduent_total_number_of_book;
-            if ($booktotalBookRentedcount <= $stduent_total_number_of_book_count) {
+            if ($booktotalBookRentedcount < $stduent_total_number_of_book_count) {
                 if ($contactListdata->status = OFF) {
                     $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
                     $current_date = Carbon::now();
