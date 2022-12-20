@@ -128,7 +128,7 @@
                                                 <label for="rollno"> Roll No.(Eg: 1)</label>
                                                 <input type="tel" min="9" maxlength="11" class="form-control"
                                                     name="rollno" id="rollno"
-                                                    onkeypress="return isNumber(event);" placeholder="Enter Roll No."
+                                                    onkeypress="return isNumber(event);"  placeholder="Enter Roll No."
                                                     value="{{ old('rollno') }}">
                                             </div>
                                         </div>
@@ -209,13 +209,11 @@
             if ($(this).val() == 'stduent') {
                 $('button[type="submit"]').prop("disabled", false);
                 $('#stdid').show();
-                $('#staffid').show();
                 $('#staffid').hide();
             }
             if ($(this).val() == 'staff') {
                 $('button[type="submit"]').prop("disabled", false);
                 $('#staffid').show();
-                $('#stdid').show();
                 $('#stdid').hide();
             }
             if ($(this).val() == null) {

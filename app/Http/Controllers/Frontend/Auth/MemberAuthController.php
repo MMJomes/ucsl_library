@@ -189,23 +189,28 @@ class MemberAuthController extends Controller
                 $request->merge(['status' => OFF]);
             }
             if ($request->usertype == "stduent") {
-                $isExit = Stduent::with('stdclass')->where('email', $useremail)->where('rollno', $userrollno)->whereHas('stdclass', function ($query) use ($userclass) {
-                    $query->where('id', $userclass);
-                })->first();
-                if ($isExit) {
-                    Session::put('error', 'Email Address And Roll Number is Already Exit!');
-                    return redirect()->back();
-                } else {
-                    Session::put('email', $request->email);
-                    $data = $this->studentRepository->create($request->all());
-                    $myStatus = $data->status;
-                    if ($myStatus == OFF) {
-                        Session::put('success', 'Your Account is Crated Successful!,And Your Account Is Review,Please Wait For Admin Approve!');
+                if ($request->rollno != null || $request->rollno != '') {
+                    $isExit = Stduent::with('stdclass')->where('email', $useremail)->where('rollno', $userrollno)->whereHas('stdclass', function ($query) use ($userclass) {
+                        $query->where('id', $userclass);
+                    })->first();
+                    if ($isExit) {
+                        Session::put('error', 'Email Address And Roll Number is Already Exit!');
                         return redirect()->back();
                     } else {
                         Session::put('email', $request->email);
-                        return redirect()->route('users.totalbook');
+                        $data = $this->studentRepository->create($request->all());
+                        $myStatus = $data->status;
+                        if ($myStatus == OFF) {
+                            Session::put('success', 'Your Account is Crated Successful!,And Your Account Is Review,Please Wait For Admin Approve!');
+                            return redirect()->back();
+                        } else {
+                            Session::put('email', $request->email);
+                            return redirect()->route('users.totalbook');
+                        }
                     }
+                } else {
+                    Session::put('error', 'Stdeunt Roll Number is Required!');
+                    return redirect()->back();
                 }
             }
             if ($request->usertype == "staff") {
