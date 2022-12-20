@@ -36,10 +36,9 @@ class PreRequestController extends Controller
     }
     public function index()
     {
-        $datas = PreRequest::with('book', 'stduent')->orderBy('id', 'ASC')->get();
         if (request()->ajax()) {
             $user = auth()->user();
-            $datas = PreRequest::with('book', 'stduent')->orderBy('id', 'ASC')->get();
+            $datas = PreRequest::with('book', 'stduent')->orderBy('id', 'DESC')->get();
             return $this->BookPReRent_datatable($datas, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
@@ -198,7 +197,7 @@ class PreRequestController extends Controller
         $stduent_total_number_of_book = Setting::where('key', 'stduent_total_number_of_book')->first()->value;
         $booktotalBookRentedcount = count($booktotalBookRented);
         $stduent_total_number_of_book_count= (int)$stduent_total_number_of_book;
-        if ($booktotalBookRentedcount <= $stduent_total_number_of_book_count) {
+        if ($booktotalBookRentedcount < $stduent_total_number_of_book_count ) {
             if ($contactListdata->status = OFF) {
                 $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
                 $current_date = Carbon::now();

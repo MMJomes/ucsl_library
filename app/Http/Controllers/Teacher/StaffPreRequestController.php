@@ -37,7 +37,7 @@ class StaffPreRequestController extends Controller
     {
         if (request()->ajax()) {
             $user = auth()->user();
-            $datas = StaffPreRequest::with('book', 'teacher')->orderBy('id', 'ASC')->get();
+            $datas = StaffPreRequest::with('book', 'teacher')->orderBy('id', 'DESC')->get();
             return $this->StaffBookPReRent_datatable($datas, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);

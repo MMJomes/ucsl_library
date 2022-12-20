@@ -34,7 +34,7 @@ class TeacherrentController extends Controller
     {
         if (request()->ajax()) {
             $user = auth()->user();
-            $datas = Teacherrent::with('book', 'teacher')->orderBy('id', 'ASC')->get();
+            $datas = Teacherrent::with('book', 'teacher')->orderBy('id', 'DESC')->get();
             return $this->StaffRent_datatable($datas, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
