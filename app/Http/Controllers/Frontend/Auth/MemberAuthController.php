@@ -188,7 +188,7 @@ class MemberAuthController extends Controller
             } else {
                 $request->merge(['status' => OFF]);
             }
-            if ($request->usertype = "stduent") {
+            if ($request->usertype == "stduent") {
                 $isExit = Stduent::with('stdclass')->where('email', $useremail)->where('rollno', $userrollno)->whereHas('stdclass', function ($query) use ($userclass) {
                     $query->where('id', $userclass);
                 })->first();
@@ -196,13 +196,24 @@ class MemberAuthController extends Controller
                     Session::put('error', 'Email Address And Roll Number is Already Exit!');
                     return redirect()->back();
                 } else {
-                    $isExit = Teacher::with('stdclass')->where('email', $useremail)->first();
-                    if ($isExit) {
-                        Session::put('error', 'Email Address And Roll Number is Already Exit!');
+                    Session::put('email', $request->email);
+                    $data = $this->studentRepository->create($request->all());
+                    $myStatus = $data->status;
+                    if ($myStatus == OFF) {
+                        Session::put('success', 'Your Account is Crated Successful!,And Your Account Is Review,Please Wait For Admin Approve!');
                         return redirect()->back();
                     } else {
                         Session::put('email', $request->email);
-                        $data = $this->studentRepository->create($request->all());
+                        return redirect()->route('users.totalbook');
+                    }
+                }
+            }
+            if ($request->usertype == "staff") {
+                $isExit = Teacher::where('email', $useremail)->first();
+                if (!$isExit) {
+                    Session::put('email', $request->email);
+                    $data = $this->StaffRepository->create($request->all());
+                    if ($data) {
                         $myStatus = $data->status;
                         if ($myStatus == OFF) {
                             Session::put('success', 'Your Account is Crated Successful!,And Your Account Is Review,Please Wait For Admin Approve!');
@@ -212,19 +223,9 @@ class MemberAuthController extends Controller
                             return redirect()->route('users.totalbook');
                         }
                     }
-                }
-            } else {
-                Session::put('email', $request->email);
-                $data = $this->StaffRepository->create($request->all());
-                if ($data) {
-                    $myStatus = $data->status;
-                    if ($myStatus == OFF) {
-                        Session::put('success', 'Your Account is Crated Successful!,And Your Account Is Review,Please Wait For Admin Approve!');
-                        return redirect()->back();
-                    } else {
-                        Session::put('email', $request->email);
-                        return redirect()->route('users.totalbook');
-                    }
+                } else {
+                    Session::put('error', 'Email Address is Already Exit!');
+                    return redirect()->back();
                 }
             }
         } else {

@@ -60,7 +60,7 @@ class EventCategoryController extends Controller
      */
     public function store(EventCategoryRequest $request)
     {
-        $this->eventCategoryRepository->create($request->validated());
+        $this->eventCategoryRepository->create($request->all());
         return redirect()
             ->route('backend.category.index')
             ->with(['success' => 'Successfully Added']);
