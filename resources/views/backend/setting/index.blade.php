@@ -22,7 +22,8 @@
                     <h4 class="card-title">Student Books Rent Duration</h4>
                     <h6 class="card-subtitle">Student Books Rent Duration fo Library System.</h6>
                     <div id="the-basics">
-                        <input class="typeahead form-control" type="number" name="book_rent_duration"
+                        <input class="typeahead form-control" type="number" id="intLimitTextBox" required="true"
+                            maxlength="2" required min="1" max="100" name="book_rent_duration"
                             placeholder="Enter Member Expiration date" value="{{ $settings['book_rent_duration'] }}">
                     </div>
                 </div>
@@ -34,8 +35,9 @@
                     <h4 class="card-title">Staff Books Rent Duration</h4>
                     <h6 class="card-subtitle">Staff Books Rent Duration from it's Originzation.</h6>
                     <div id="the-basics">
-                        <input class="typeahead form-control" type="number" name="staff_book_rent_duration"
-                            placeholder="Enter Member Expiration date" value="{{ $settings['staff_book_rent_duration'] }}">
+                        <input class="typeahead form-control" type="number" id="intLimitTextBox1" min="1"
+                            max="99" name="staff_book_rent_duration" placeholder="Enter Member Expiration date"
+                            value="{{ $settings['staff_book_rent_duration'] }}">
                     </div>
                 </div>
             </div>
@@ -48,7 +50,8 @@
                     <h4 class="card-title">Total Number of Book Available for Stduent</h4>
                     <h6 class="card-subtitle">The Number of total book Available for Stduent.</h6>
                     <div id="the-basics">
-                        <input class="typeahead form-control" type="number" min="1" max="50"  name="stduent_total_number_of_book"
+                        <input class="typeahead form-control" type="number" id="intLimitTextBox2" maxlength="2" required
+                            min="1" max="50" name="stduent_total_number_of_book"
                             placeholder="Enter Member Expiration date"
                             value="{{ $settings['stduent_total_number_of_book'] }}">
                     </div>
@@ -61,7 +64,8 @@
                     <h4 class="card-title">Total Number of Book Available for Staff</h4>
                     <h6 class="card-subtitle">The Number of total book Available for Staff. </h6>
                     <div id="the-basics">
-                        <input class="typeahead form-control" type="number" min="1" max="50" name="staff_total_number_of_book"
+                        <input class="typeahead form-control" type="number" id="intLimitTextBox3" maxlength="5"
+                            min="1" max="50" name="staff_total_number_of_book"
                             placeholder="Enter Member Expiration date"
                             value="{{ $settings['staff_total_number_of_book'] }}">
                     </div>
@@ -76,7 +80,8 @@
                     <h4 class="card-title">Notify To User About Books To Return!</h4>
                     <h6 class="card-subtitle">Notify to User To Retrun Book to Current Date (Hour Format:)</h6>
                     <div id="the-basics">
-                        <input class="typeahead form-control" type="number" min="1" max="50" name="send_mail_to_user_for_return"
+                        <input class="typeahead form-control" type="number" maxlength="5" id="intLimitTextBox4" required
+                            min="1" max="50" name="send_mail_to_user_for_return"
                             placeholder="Enter Member Expiration date"
                             value="{{ $settings['send_mail_to_user_for_return'] }}">
                     </div>
@@ -157,7 +162,53 @@
 @endsection
 
 @push('scripts')
+    <script>
+        function setInputFilter(textbox, inputFilter, errMsg) {
+            ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop", "focusout"].forEach(
+                function(event) {
+                    textbox.addEventListener(event, function(e) {
+                        if (inputFilter(this.value)) {
+                            // Accepted value
+                            if (["keydown", "mousedown", "focusout"].indexOf(e.type) >= 0) {
+                                this.classList.remove("input-error");
+                                this.setCustomValidity("");
+                            }
+                            this.oldValue = this.value;
+                            this.oldSelectionStart = this.selectionStart;
+                            this.oldSelectionEnd = this.selectionEnd;
+                        } else if (this.hasOwnProperty("oldValue")) {
+                            // Rejected value - restore the previous one
+                            this.classList.add("input-error");
+                            this.setCustomValidity(errMsg);
+                            this.reportValidity();
+                            this.value = this.oldValue;
+                            this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                        } else {
+                            // Rejected value - nothing to restore
+                            this.value = "";
+                        }
+                    });
+                });
+        }
+        setInputFilter(document.getElementById("intLimitTextBox"), function(value) {
+            return /^\d*$/.test(value) && (value === "" || parseInt(value) <= 100);
+        }, "Must be between 0 and 100");
 
+        setInputFilter(document.getElementById("intLimitTextBox1"), function(value) {
+            return /^\d*$/.test(value) && (value === "" || parseInt(value) <= 100);
+        }, "Must be between 0 and 100");
+
+        setInputFilter(document.getElementById("intLimitTextBox2"), function(value) {
+            return /^\d*$/.test(value) && (value === "" || parseInt(value) <= 100);
+        }, "Must be between 0 and 100");
+
+        setInputFilter(document.getElementById("intLimitTextBox3"), function(value) {
+            return /^\d*$/.test(value) && (value === "" || parseInt(value) <= 100);
+        }, "Must be between 0 and 100");
+        setInputFilter(document.getElementById("intLimitTextBox4"), function(value) {
+            return /^\d*$/.test(value) && (value === "" || parseInt(value) <= 1000);
+        }, "Must be between 0 and 1000");
+    </script>
     <script>
         var setting_update_url = "{{ route('backend.settings.update') }}";
         $('input').not('input[type=file]').change(function() {
