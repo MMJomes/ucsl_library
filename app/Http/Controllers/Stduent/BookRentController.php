@@ -63,7 +63,7 @@ class BookRentController extends Controller
         $stduent_total_number_of_book = Setting::where('key', 'stduent_total_number_of_book')->first()->value;
         $booktotalBookRentedcount = count($booktotalBookRented);
         $stduent_total_number_of_book_count= (int)$stduent_total_number_of_book;
-        if ($booktotalBookRentedcount <= $stduent_total_number_of_book_count) {
+        if ($booktotalBookRentedcount < $stduent_total_number_of_book_count) {
             $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
             $book_return_date = Carbon::parse($request->startdate);
             $enddate = $book_return_date->addDays($book_rent_duration);
@@ -208,6 +208,7 @@ class BookRentController extends Controller
     }
     public function destroy($id)
     {
+        dd($id);
         $eventcategory = $this->BookRentRepository->where('id', $id)->first();
         if ($eventcategory) {
             $this->BookRentRepository->deleteById($eventcategory->id);

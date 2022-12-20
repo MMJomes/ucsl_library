@@ -12,7 +12,7 @@
 
                     <li><a href="{{ route('backend.category.index') }}"><i class="icons-A-Z"></i> {{ __('message.category') }}</a></li>
                     <li><a href="{{ route('backend.author.index') }}"><i class="icons-User"></i> {{ __('message.author') }}</a></li>
-                    <li><a href="{{ route('backend.book.index') }}"> <i class="icons-Book"></i>{{ __('message.books') }}</a></li>
+                    <li><a href="{{ route('backend.book.index') }}"> <i class="icons-Book"></i> {{ __('message.books') }}</a></li>
                     {{-- <li><a href="{{ route('backend.mainbusiness.index') }}"> Main Business </a></li>
                     <li><a href="{{ route('backend.sidebusiness.index') }}"> Side Business </a></li>
                   --}}

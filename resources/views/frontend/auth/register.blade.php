@@ -8,7 +8,7 @@
     <div class="container" style="opacity: 0.9">
         <div class="row">
             <div class="col-12">
-                <div class="card" style="background-color: hsl(200, 53%, 96%)">
+                <div class="card" style="background-color: hsl(200, 53%, 96%);">
                     <center><img src="{{ url('assets/images/logo.png') }}"
                             style="width: 5%;height: 10%;margin-right: 12px" class="card-img-top" alt="logo"> <samp
                             style="font-size: 22px;font-family: 'Times New Roman', Times, serif;font-weight: bold;color: blue">DIGITAL LIBRARY MANAGENMENT SYSTEM FOR UCSL</samp>
@@ -42,7 +42,7 @@
                                                 <div class="radio-toolbar">
                                                     <input type="radio" id="radioOrange" name="usertype"
                                                         value="stduent">
-                                                    <label for="radioOrange">Stduent</label>
+                                                    <label for="radioOrange">Stduents</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -51,7 +51,7 @@
                                                 <div class="radio-toolbar">
                                                     <input type="radio" id="radioApple" name="usertype"
                                                         value="staff">
-                                                    <label for="radioApple">Staff</label>
+                                                    <label for="radioApple" style="width: 89% important">Staff/Teachers</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -150,9 +150,9 @@
                                     <div class="mt-5">
                                         <button type="submit" id="mysubmit" class="btn btn-info"><i
                                                 class="fa fa-save"></i>
-                                            {{ __('Register') }}</button>
+                                            {{ __('Register') }}</button><samp style="margin: 5;font-family: 'Times New Roman', Times, serif">OR</samp>
                                         <a href="{{ url('/login') }}" class="btn btn-danger"><i
-                                                class="icon-logout"></i> {{ __('Login') }}</a>
+                                                class="icon-login"></i> {{ __('Login') }}</a>
                                     </div>
                                 </div>
                             </form>

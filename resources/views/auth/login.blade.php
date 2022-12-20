@@ -253,7 +253,7 @@
                                         style="width: 30%;height: 12%;">
                                 </div>
                                 <h4 class="mb-1 text-center heading" style="font-family: 'Times New Roman', Times, serif">DIGITAL
-                                    LIBRARY MANAGENMENT SYSTEM</h4>
+                                    LIBRARY MANAGENMENT SYSTEM FOR UCSL</h4>
                                 <hr>
                                 <h6 class="msg-info">Please login to your account</h6>
 
@@ -281,8 +281,8 @@
                         <h3 class="text-white" style="font-family: 'Times New Roman', Times, serif"> BENEFITS DIGITAL LIBRARY MANAGENMENT SYSTEM
                         </h3>
                         <br>
-                        <p class="text-white justify-content-center">
-                           <blockquote> Among all the people in the university who help to run it successfully on a daily basis, the most
+                        <blockquote> <p  class="text-white"  style="text-align: justify !important; align-self: auto !imortant;" >
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Among all the people in the university who help to run it successfully on a daily basis, the most
                             important among them are the librarians. Their work helps in keeping book well as other
                             educational materials nicely organized that makes it simple for teachers and students to find
                             the correct content at the right time and boost their education matter whether it is literature,

@@ -48,13 +48,13 @@
             <img src="{{ url('assets/images/logo.png')}} " id="user-photo"
             class="rounded-circle user-photo media-object" alt="User" width="140px">
         </div>
-        <div class="middle">
-            <h1>This Site Is Under Construction!</h1>
+        <div class="middle" style="color: red">
+            <h1 class="text-white" style="color: white" style="font-size:1in !important;">This Site Is Under Construction!</h1>
             <hr>
-            <p>35 days left</p>
         </div>
-        <div class="bottomleft">
-            <p>Some text</p>
+        <div class="bottomleft" style="color: white">
+            <p>For More Detail Contact Admin</p>
+            <p>Email :<span style="color: lightseagreen">library@ucsloikaw.edu.mm</span></p>
         </div>
     </div>
 

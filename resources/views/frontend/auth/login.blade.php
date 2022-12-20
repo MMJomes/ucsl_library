@@ -162,7 +162,7 @@
         }
     </style>
     <div class="container px-4 py-5 mx-auto">
-        <div class="card card0">
+        <div class="card card0" style="margin-bottom:0px !important;">
             <div class="d-flex flex-lg-row flex-column-reverse">
                 <div class="card card1">
 
@@ -200,22 +200,33 @@
                                 <div class="row justify-content-center my-3 px-3">
                                     <button class="btn-block btn-color">Login</button>
                                 </div>
+                                <center>OR</center>
+                                <a href="{{ route('member.register') }}">
+                                    <div class="row justify-content-center my-3 px-3">
+                                        <p class="btn-block btn-color" style="text-align: center">Register</p>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="card card2">
                     <div class="my-auto mx-md-5 px-md-5 right">
-                        <h3 class="text-white" style="font-family: 'Times New Roman', Times, serif"> BENEFITS DIGITAL LIBRARY MANAGENMENT SYSTEM
+                        <h3 class="text-white" style="font-family: 'Times New Roman', Times, serif"> BENEFITS DIGITAL
+                            LIBRARY MANAGENMENT SYSTEM
                         </h3>
                         <br>
-                        <p class="text-white justify-content-center">
-                           <blockquote> Among all the people in the university who help to run it successfully on a daily basis, the most
-                            important among them are the librarians. Their work helps in keeping book well as other
-                            educational materials nicely organized that makes it simple for teachers and students to find
-                            the correct content at the right time and boost their education matter whether it is literature,
-                            new media content or video you are looking for, the good librarian will help you to find it.
-                        </p>
+                        <blockquote>
+                            <p class="text-white" style="text-align: justify !important; align-self: auto !imortant;">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Among all the people in the university who help to run it
+                                successfully on a daily basis, the most
+                                important among them are the librarians. Their work helps in keeping book well as other
+                                educational materials nicely organized that makes it simple for teachers and students to
+                                find
+                                the correct content at the right time and boost their education matter whether it is
+                                literature,
+                                new media content or video you are looking for, the good librarian will help you to find it.
+                            </p>
                     </div>
                 </div>
             </div>
