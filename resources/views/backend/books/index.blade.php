@@ -178,9 +178,16 @@
                             defaultContent: "-"
                         },
                         {
+                            defaultContent: "0",
+                            orderable: false,
+                            "render": function(data, type, full, meta) {
+                                if (full.availablebook < 0) {
+                                    return '0';
+                                } else {
+                                    return full.availablebook;
+                                }
+                            }
 
-                            data: 'availablebook',
-                            defaultContent: "-"
                         },
                         @canany(['book.edit', 'book.delete', 'book.show'])
                             {

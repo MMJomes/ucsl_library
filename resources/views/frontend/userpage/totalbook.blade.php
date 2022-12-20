@@ -91,8 +91,14 @@
                     },
                     {
                         defaultContent: "0",
-                        name: 'availablebook',
-                        data: 'availablebook',
+                        orderable: false,
+                        "render": function(data, type, full, meta) {
+                            if (full.availablebook < 0) {
+                                return '0';
+                            } else {
+                                return full.availablebook;
+                            }
+                        }
 
                     },
                     {
