@@ -198,7 +198,7 @@ class BookRentController extends Controller
             $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
             $book_return_date = Carbon::parse($strtime);
             $enddate = $book_return_date->addDays($book_rent_duration);
-            $request->merge(['enddate' => $enddate, 'startdate' => $strtime,  'remark' => "Continuced", 'requesttatus' => 'off', 'approvetatus' => 'off', 'remark' => "User Request Has Been Reject By Admin"]);
+            $request->merge(['enddate' => $enddate, 'startdate' => $strtime,  'remark' => "Continuced", 'requesttatus' => 'off', 'approvetatus' => 'off', 'remark' => "Your Request Has Been Reject By Admin"]);
             $this->BookRentRepository->updateById($Author->id, $request->all());
             $Author->notify(new SendEmail($Author->name, "Sorry!", "Your Request Been Rejected By Admin"));
             return redirect()->route('stduent.bookRent.index')->with(['success' => 'Successfully Updated!']);

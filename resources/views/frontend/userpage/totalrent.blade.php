@@ -202,9 +202,15 @@
                                     confirmButtonText: "OK",
                                     closeOnConfirm: false
                                 },
+
                                 function(isConfirm) {
-                                    if (isConfirm) {}
-                                });
+                                    location.reload();
+                                    if (isConfirm) {
+                                        location.reload();
+                                    }
+                                }).then(function() {
+                                location.reload();
+                            });
                         }
                     },
                     error: function(data) {
@@ -216,6 +222,8 @@
                                 type: "error",
                                 text: response.message,
                                 confirmButtonClass: "btn-danger"
+                            }).then(function() {
+                                location.reload();
                             });
                         }
                     }

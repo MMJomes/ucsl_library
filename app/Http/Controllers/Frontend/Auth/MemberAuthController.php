@@ -296,7 +296,7 @@ class MemberAuthController extends Controller
                     $data = $this->StaffPreQuestRepository->create($request->all());
                     if ($data)
                         return response()->json([
-                            'message' => ' Book Order Created Successfully',
+                            'message' => 'Your Book Order Created Successfully',
                         ]);
                 }
                 if ($stdemail) {

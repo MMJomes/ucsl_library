@@ -155,7 +155,9 @@
                                 },
                                 function(isConfirm) {
                                     if (isConfirm) {}
-                                });
+                                }).then(function() {
+                                location.reload();
+                            });
                         }
                     },
                     error: function(data) {
@@ -167,6 +169,8 @@
                                 type: "error",
                                 text: response.message,
                                 confirmButtonClass: "btn-danger"
+                            }).then(function() {
+                                location.reload();
                             });
                         }
                     }
