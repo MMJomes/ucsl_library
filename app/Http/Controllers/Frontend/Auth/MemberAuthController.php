@@ -262,6 +262,7 @@ class MemberAuthController extends Controller
     }
     public function bookorder(Request $request, $id)
     {
+        //dd($request->all(),$id);
         $useremail  = Session::get('email');
         //dd($useremail);
         $staffemail = Teacher::where('email', $useremail)->first();
@@ -292,7 +293,7 @@ class MemberAuthController extends Controller
                     // }
                     $useremailid = $staffemail->id;
                     $booksid = $boookiddata->id;
-                    $request->merge(['books_id' => $booksid, 'stduents_id' => $useremailid,  'remark', " PreOrder By User!"]);
+                    $request->merge(['books_id' => $booksid, 'teachers_id' => $useremailid,  'remark', " PreOrder By User!"]);
                     $data = $this->StaffPreQuestRepository->create($request->all());
                     if ($data)
                         return response()->json([

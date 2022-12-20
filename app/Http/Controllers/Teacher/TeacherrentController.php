@@ -55,42 +55,41 @@ class TeacherrentController extends Controller
     }
     public function store(Request $request)
     {
-
         $booktotalBookRented = Teacherrent::where('rentstatus', OFF)->where('teachers_id', $request->teachers_id)->get();
         $stduent_total_number_of_book = Setting::where('key', 'staff_total_number_of_book')->first()->value;
         $booktotalBookRentedcount = count($booktotalBookRented);
-        $stduent_total_number_of_book_count= (int)$stduent_total_number_of_book;
+        $stduent_total_number_of_book_count = (int)$stduent_total_number_of_book;
         if ($booktotalBookRentedcount < $stduent_total_number_of_book_count) {
-        $book_rent_duration = Setting::where('key', 'staff_book_rent_duration')->first()->value;
-        $book_return_date = Carbon::parse($request->startdate);
-        $enddate = $book_return_date->addDays($book_rent_duration);
-        $request->merge(['enddate' => $enddate]);
-        $data = $this->StaffRentRepository->create($request->all());
-        $book = Books::where('id', $data->books_id)->first();
-        if ($book) {
-            $totalbooks = $book->totalbook;
-            if ($totalbooks > 0) {
-                $bookrentstatus = Teacherrent::where('id', $data->id)->where('books_id', $data->books_id)->first();
-                if ($bookrentstatus) {
-                    if ($bookrentstatus->rentstatus == OFF) {
-                        $currentavailablebook  = $book->availablebook - 1;
-                        $book->availablebook = $currentavailablebook;
-                        $book->save();
+            $book_rent_duration = Setting::where('key', 'staff_book_rent_duration')->first()->value;
+            $book_return_date = Carbon::parse($request->startdate);
+            $enddate = $book_return_date->addDays($book_rent_duration);
+            $request->merge(['enddate' => $enddate]);
+            $data = $this->StaffRentRepository->create($request->all());
+            $book = Books::where('id', $data->books_id)->first();
+            if ($book) {
+                $totalbooks = $book->totalbook;
+                if ($totalbooks > 0) {
+                    $bookrentstatus = Teacherrent::where('id', $data->id)->where('books_id', $data->books_id)->first();
+                    if ($bookrentstatus) {
+                        if ($bookrentstatus->rentstatus == OFF) {
+                            $currentavailablebook  = $book->availablebook - 1;
+                            $book->availablebook = $currentavailablebook;
+                            $book->save();
+                        }
                     }
                 }
             }
-        }
-        $stdeunt = Teacher::where('id', $data->teachers_id)->first();
-        if ($stdeunt) {
-            $totalbok = $stdeunt->totalNoOfBooks + 1;
-            $stdeunt->totalNoOfBooks = $totalbok;
-            $stdeunt->save();
-        }
-        return redirect()
-            ->route('staff.rentbyStaff.index')
-            ->with(['success' => 'Successfully Added']);
-        }else{
-            Session::put('stafftotalBook','The Number Books Availabel for Staff is Limited!.');
+            $stdeunt = Teacher::where('id', $data->teachers_id)->first();
+            if ($stdeunt) {
+                $totalbok = $stdeunt->totalNoOfBooks + 1;
+                $stdeunt->totalNoOfBooks = $totalbok;
+                $stdeunt->save();
+            }
+            return redirect()
+                ->route('staff.rentbyStaff.index')
+                ->with(['success' => 'Successfully Added']);
+        } else {
+            Session::put('stafftotalBook', 'The Number Books Availabel for Staff is Limited!.');
             return redirect()->back();
         }
     }
@@ -197,7 +196,7 @@ class TeacherrentController extends Controller
             $enddate = $book_return_date->addDays($book_rent_duration);
             $request->merge(['enddate' => $enddate, 'startdate' => $strtime,  'remark' => "Continuced", 'requesttatus' => 'off', 'approvetatus' => 'off', 'remark' => "Your Request Has Been Reject By Admin"]);
             $this->StaffRentRepository->updateById($Author->id, $request->all());
-            $Author->notify(new SendEmail($Author->name, "Sorry!"," Your Request Been Rejected By Admin"));
+            $Author->notify(new SendEmail($Author->name, "Sorry!", " Your Request Been Rejected By Admin"));
             return redirect()->route('staff.rentbyStaff.index')->with(['success' => 'Successfully Updated!']);
         } else {
             return view('errorpage.404');
