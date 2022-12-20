@@ -2,12 +2,7 @@
 @section('content')
 <div class="row page-titles">
     <div class="col-md-12">
-        <h4 class="text-white"><p></p></h4>
-    </div>
-    <div class="col-md-6">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}"></a>Dashboard</li>
-        </ol>
+        <h4 class="text-white"><p>HomePage</p></h4>
     </div>
 </div>
 <div class="row">

@@ -76,7 +76,7 @@ class TeacherController extends Controller
                 'status' => 'on',
             ]);
             $this->StaffRepository->create($request->all());
-            Session::put('adminsuccess', 'Successfully Added!');
+           // Session::put('adminsuccess', 'Successfully Added!');
             return redirect()
                 ->route('staff.staffs.index')
                 ->with(['success' => 'Successfully Added']);
@@ -151,7 +151,7 @@ class TeacherController extends Controller
             ]);
             $request->merge(['image' => $path]);
             $this->StaffRepository->updateById($stduent->id, $request->all());
-            Session::put('adminsuccess', 'Successfully Updated!');
+            //Session::put('adminsuccess', 'Successfully Updated!');
             return redirect()->route('staff.staffs.index')->with(['success' => 'Successfully Updated!']);
         }else{
             Session::put('adminerror', 'Invail Email Address,Please Prodie Vaild Email Address.');

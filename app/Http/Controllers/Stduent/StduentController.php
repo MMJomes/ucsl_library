@@ -96,7 +96,7 @@ class StduentController extends Controller
                 'status' => 'on',
             ]);
             $this->studentRepository->create($request->all());
-            Session::put('adminsuccess', 'Successfully Added');
+            //Session::put('adminsuccess', 'Successfully Added');
             return redirect()
                 ->route('stduent.stduents.index')
                 ->with('success', 'Successfully Added');
@@ -162,7 +162,7 @@ class StduentController extends Controller
                 ]);
                 $request->merge(['image' => $path]);
                 $this->studentRepository->updateById($stduent->id, $request->all());
-                Session::put('adminsuccess', 'Successfully Updated!');
+                //Session::put('adminsuccess', 'Successfully Updated!');
                 return redirect()->route('stduent.stduents.index')->with(['success' => 'Successfully Updated!']);
             } else {
                 Session::put('adminerror', 'Invail Email Address,Please Prodie Vaild Email Address.');
