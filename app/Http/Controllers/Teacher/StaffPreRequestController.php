@@ -141,20 +141,21 @@ class StaffPreRequestController extends Controller
     {
         $contactListdata = $this->StaffPreQuestRepository->where('id', $id)->first();
         if ($contactListdata) {
-            $booktotalBookRented = Teacherrent::where('rentstatus', OFF)->where('stduents_id', $request->teachers_id)->get();
+            $booktotalBookRented = Teacherrent::where('rentstatus', OFF)->where('teachers_id', $request->teachers_id)->get();
             $stduent_total_number_of_book = Setting::where('key', 'staff_total_number_of_book')->first()->value;
             $booktotalBookRentedcount = count($booktotalBookRented);
             $stduent_total_number_of_book_count = (int)$stduent_total_number_of_book;
             if ($booktotalBookRentedcount < $stduent_total_number_of_book_count) {
                 if ($contactListdata->status = OFF) {
+
                     $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
                     $current_date = Carbon::now();
                     $book_return_date = Carbon::parse($current_date);
                     $enddate = $book_return_date->addDays($book_rent_duration);
                     $studentid = $contactListdata->teachers_id;
                     $bookid = $contactListdata->books_id;
-                    $datas = $request->merge(['books_id' => $studentid, 'teachers_id' => $bookid, 'startdate' => $current_date, 'enddate' => $enddate, 'remark' => 'PreRequest Book.']);
-                    $this->StaffRentRepository->create($datas->all());
+                    $datas = $request->merge(['books_id' => $bookid, 'teachers_id' => $studentid, 'startdate' => $current_date, 'enddate' => $enddate, 'remark' => 'PreRequest Book.']);
+                    $datass= $this->StaffRentRepository->create($datas->all());
                     $prerequestbook = StaffPreRequest::with('book', 'teacher')->where('id', $contactListdata->id)->first();
                     $totalBook = Books::where('id', $prerequestbook->books_id)->first();
                     if ($totalBook && $totalBook->availablebook > 0) {

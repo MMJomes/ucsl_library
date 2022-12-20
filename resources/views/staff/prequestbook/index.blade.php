@@ -27,7 +27,7 @@
                     @if (\Session::get('stafftotalBookApproved'))
                         <div class="alert alert-success">
                             <ul>
-                                <li>{!! \Session::get('stdtotalBookApproved') !!}</li>
+                                <li>{!! \Session::get('stafftotalBookApproved') !!}</li>
                             </ul>
                         </div>
                     @endif
@@ -51,7 +51,7 @@
                                         <input type="checkbox" id="select-all" class="select-checkbox">
                                     </th>
                                     <th>{{ __('message.no') }}</th>
-                                    <th>{{ 'Stduent Name' }}</th>
+                                    <th>{{ 'Book Name' }}</th>
                                     <th>{{ 'Staff Name' }}</th>
                                     <th>{{ 'Edtion' }}</th>
                                     <th>{{ 'Request Date' }}</th>
@@ -106,7 +106,7 @@
                     dom: 'Bfrtip',
                     buttons: [
 
-                       
+
                         'copy', 'csv', {
                             text: 'Delete Selected',
                             className: "btn btn-primary",
@@ -133,7 +133,7 @@
                         },
                         {
                             defaultContent: "-",
-                            data: 'stduent.name',
+                            data: 'teacher.name',
                         },
                         {
                             defaultContent: "-",
@@ -151,9 +151,10 @@
                                 return createdDate.toLocaleString("en-US");
                             },
                         },
-                        @canany(['staffBookPreRent.approve'])
                             {
                                 orderable: false,
+
+                                defaultContent:'-',
                                 "render": function(data, type, full, meta) {
                                     var sle = full.status;
                                     var approveURL =
@@ -161,7 +162,6 @@
                                     approveURL = approveURL.replace(':id', full.id);
                                     var ApproveButton = '';
 
-                                    if (response["can_edit"]) {
                                         if (full.status == 'on') {
                                             ApproveButton =
                                                 '<div class="dropdown mx-1  disabled" data-href="' +
@@ -177,14 +177,11 @@
                                                 approveURL +
                                                 '" id="set_clock" data-status="off"><i class="icon-check"></i> &nbsp;Approve</a></div>';
                                         }
-                                    }
                                     return ApproveButton;
                                 }
 
                             },
-                        @endcanany
-                        @canany(['staffBookPreRent.edit', 'staffBookPreRent.delete', 'author.show'])
-                            {
+                          {
                                 orderable: false,
                                 "render": function(data, type, full, meta) {
                                     var showURL =
@@ -192,15 +189,13 @@
                                     showURL = showURL.replace(':id', full.id);
 
                                     var showButton = '';
-                                    if (response["can_show"]) {
                                         showButton = '<a href="' + showURL +
                                             '" class="btn btn-primary btn-sm mx-2"><i class="fa fa-info-circle"></i></a>';
-                                    }
+
 
                                     return showButton;
                                 }
                             },
-                        @endcanany
                     ],
                 });
                 $('.buttons-copy, .buttons-csv, .buttons-print, .buttons-pdf, .buttons-excel')
