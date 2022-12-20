@@ -1,20 +1,18 @@
 @extends('layouts.myapp')
 
 @section('content')
-    <div class="row page-titles">
-        <div class="col-md-12">
-            <h4 class="text-white">{{ __('message.authorlist') }}</h4>
-        </div>
-        <div class="col-md-6">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('stduent.bookRent.index') }}">
-                        {{ __('message.authorlist') }}</a>
-                </li>
-                <li class="breadcrumb-item active">{{ __('message.authorlist') }}</li>
-            </ol>
-        </div>
+<div class="row page-titles">
+    <div class="col-md-12">
+        <h4 class="text-white">{{ 'Stduent Book Rent List' }} </h4>
     </div>
+    <div class="col-md-6">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
+            <li class="breadcrumb-item active"><a
+                    href="{{ route('stduent.bookRent.index') }}">{{ 'Stduent Book Rent List' }}</a></li>
+        </ol>
+    </div>
+</div>
 
     <div class="row">
         <div class="col-12">

@@ -6,13 +6,12 @@
     <!-- ============================================================== -->
     <div class="row page-titles">
         <div class="col-md-12">
-            <h4 class="text-white">Roles Management</h4>
+            <h4 class="text-white">Roles List</h4>
         </div>
         <div class="col-md-6">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('backend.roles.index') }}">Roles</a></li>
-                <li class="breadcrumb-item active">Create Roles</li>
+                <li class="breadcrumb-item active">Roles List</li>
             </ol>
         </div>
     </div>

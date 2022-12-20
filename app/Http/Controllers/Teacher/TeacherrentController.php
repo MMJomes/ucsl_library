@@ -56,7 +56,7 @@ class TeacherrentController extends Controller
     public function store(Request $request)
     {
 
-        $booktotalBookRented = Teacherrent::where('rentstatus', OFF)->where('stduents_id', $request->teachers_id)->get();
+        $booktotalBookRented = Teacherrent::where('rentstatus', OFF)->where('teachers_id', $request->teachers_id)->get();
         $stduent_total_number_of_book = Setting::where('key', 'staff_total_number_of_book')->first()->value;
         $booktotalBookRentedcount = count($booktotalBookRented);
         $stduent_total_number_of_book_count= (int)$stduent_total_number_of_book;

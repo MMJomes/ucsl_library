@@ -1,18 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row page-titles">
-        <div class="col-md-12">
-            <h4 class="text-white">Roles Management</h4>
-        </div>
-        <div class="col-md-6">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('backend.roles.index') }}">Roles</a></li>
-                <li class="breadcrumb-item active">Edit Roles</li>
-            </ol>
-        </div>
+<div class="row page-titles">
+    <div class="col-md-12">
+        <h4 class="text-white">Admin List</h4>
     </div>
+    <div class="col-md-6">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('backend.admins.index') }}">Admin List</a></li>
+        </ol>
+    </div>
+</div>
     <div class="row">
         <div class="col-12">
             <div class="card">
