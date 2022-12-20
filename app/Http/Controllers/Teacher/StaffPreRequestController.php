@@ -147,7 +147,6 @@ class StaffPreRequestController extends Controller
             $stduent_total_number_of_book_count = (int)$stduent_total_number_of_book;
             if ($booktotalBookRentedcount < $stduent_total_number_of_book_count) {
                 if ($contactListdata->status = OFF) {
-
                     $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
                     $current_date = Carbon::now();
                     $book_return_date = Carbon::parse($current_date);
@@ -155,28 +154,37 @@ class StaffPreRequestController extends Controller
                     $studentid = $contactListdata->teachers_id;
                     $bookid = $contactListdata->books_id;
                     $datas = $request->merge(['books_id' => $bookid, 'teachers_id' => $studentid, 'startdate' => $current_date, 'enddate' => $enddate, 'remark' => 'PreRequest Book.']);
-                    $datass= $this->StaffRentRepository->create($datas->all());
+                    $datass = $this->StaffRentRepository->create($datas->all());
                     $prerequestbook = StaffPreRequest::with('book', 'teacher')->where('id', $contactListdata->id)->first();
                     $totalBook = Books::where('id', $prerequestbook->books_id)->first();
-                    if ($totalBook && $totalBook->availablebook > 0) {
-                        $current_book = $totalBook->availablebook - 1;
-                        $totalBook->availablebook = $current_book;
-                        $totalBook->save();
+                    if ($totalBook) {
+                        if ($totalBook->availablebook >= 1) {
+                            $current_book = $totalBook->availablebook - 1;
+                            $totalBook->availablebook = $current_book;
+                            $totalBook->save();
+                            $stdeunt = Teacher::where('id', $studentid)->first();
+                            if ($stdeunt) {
+                                $totalbok = $stdeunt->totalNoOfBooks + 1;
+                                $stdeunt->totalNoOfBooks = $totalbok;
+                                $stdeunt->save();
+                            }
+                            if ($contactListdata->status == ON) {
+                                $contactListdata->status  = 'off';
+                                $contactListdata->save();
+                                $contactListdata->update(['status' => OFF]);
+                            } else {
+                                $contactListdata->status  = 'on';
+                                $contactListdata->save();
+                            }
+                        } else {
+
+                        Session::put('stafftotalBook', 'You cant Approve this Book ,The Number Books Availabel Count is Zero(0)!.');
+                        return redirect()->back();
+                        }
+                    } else {
+                        Session::put('stafftotalBook', 'There is no Book!.');
+                        return redirect()->back();
                     }
-                    $stdeunt = Teacher::where('id', $studentid)->first();
-                    if ($stdeunt) {
-                        $totalbok = $stdeunt->totalNoOfBooks + 1;
-                        $stdeunt->totalNoOfBooks = $totalbok;
-                        $stdeunt->save();
-                    }
-                }
-                if ($contactListdata->status == ON) {
-                    $contactListdata->status  = 'off';
-                    $contactListdata->save();
-                    $contactListdata->update(['status' => OFF]);
-                } else {
-                    $contactListdata->status  = 'on';
-                    $contactListdata->save();
                 }
                 Session::put('stafftotalBookApproved', 'Staff PreRequest Book Order is Approved Successfully.');
                 return redirect()->route('staff.requestbyStaffs.index')->with(['success' => 'Successfully Updated!']);

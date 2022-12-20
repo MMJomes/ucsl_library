@@ -192,50 +192,58 @@ class PreRequestController extends Controller
     public function approve(Request $request, $id)
     {
         $contactListdata = $this->PreQuestRepository->where('id', $id)->first();
-        if($contactListdata) {
-        $booktotalBookRented = Bookrent::where('rentstatus', OFF)->where('stduents_id', $contactListdata->stduents_id)->get();
-        $stduent_total_number_of_book = Setting::where('key', 'stduent_total_number_of_book')->first()->value;
-        $booktotalBookRentedcount = count($booktotalBookRented);
-        $stduent_total_number_of_book_count= (int)$stduent_total_number_of_book;
-        if ($booktotalBookRentedcount < $stduent_total_number_of_book_count ) {
-            if ($contactListdata->status = OFF) {
-                $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
-                $current_date = Carbon::now();
-                $book_return_date = Carbon::parse($current_date);
-                $enddate = $book_return_date->addDays($book_rent_duration);
-                $studentid = $contactListdata->stduents_id;
-                $bookid = $contactListdata->books_id;
-                $datas = $request->merge(['books_id' => $bookid, 'stduents_id' => $studentid, 'startdate' => $current_date, 'enddate' => $enddate, 'remark' => 'PreRequest Book.']);
-                $this->BookRentRepository->create($datas->all());
-                $prerequestbook = PreRequest::with('book', 'stduent')->where('id', $contactListdata->id)->first();
-                $totalBook = Books::where('id', $prerequestbook->books_id)->first();
-                if ($totalBook && $totalBook->availablebook > 0) {
-                    $current_book = $totalBook->availablebook - 1;
-                    $totalBook->availablebook = $current_book;
-                    $totalBook->save();
+        if ($contactListdata) {
+            $booktotalBookRented = Bookrent::where('rentstatus', OFF)->where('stduents_id', $contactListdata->stduents_id)->get();
+            $stduent_total_number_of_book = Setting::where('key', 'stduent_total_number_of_book')->first()->value;
+            $booktotalBookRentedcount = count($booktotalBookRented);
+            $stduent_total_number_of_book_count = (int)$stduent_total_number_of_book;
+            if ($booktotalBookRentedcount < $stduent_total_number_of_book_count) {
+                if ($contactListdata->status = OFF) {
+                    $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
+                    $current_date = Carbon::now();
+                    $book_return_date = Carbon::parse($current_date);
+                    $enddate = $book_return_date->addDays($book_rent_duration);
+                    $studentid = $contactListdata->stduents_id;
+                    $bookid = $contactListdata->books_id;
+                    $datas = $request->merge(['books_id' => $bookid, 'stduents_id' => $studentid, 'startdate' => $current_date, 'enddate' => $enddate, 'remark' => 'PreRequest Book.']);
+                    $this->BookRentRepository->create($datas->all());
+                    $prerequestbook = PreRequest::with('book', 'stduent')->where('id', $contactListdata->id)->first();
+                    $totalBook = Books::where('id', $prerequestbook->books_id)->first();
+                    if ($totalBook) {
+                        if ($totalBook->availablebook >= 1) {
+                            $current_book = $totalBook->availablebook - 1;
+                            $totalBook->availablebook = $current_book;
+                            $totalBook->save();
+                            $stdeunt = Stduent::where('id', $studentid)->first();
+                            if ($stdeunt) {
+                                $totalbok = $stdeunt->totalNoOfBooks + 1;
+                                $stdeunt->totalNoOfBooks = $totalbok;
+                                $stdeunt->save();
+                            }
+                            if ($contactListdata->status == ON) {
+                                $contactListdata->status  = 'off';
+                                $contactListdata->save();
+                                //$contactListdata->update(['status' => OFF]);
+                            } else {
+                                $contactListdata->status  = 'on';
+                                $contactListdata->save();
+                            }
+                        } else {
+                            Session::put('stdtotalBook', 'You cant Approve this Book ,The Number Books Availabel Count is Zero(0)!.');
+                            return redirect()->back();
+                        }
+                    } else {
+                        Session::put('stdtotalBook', 'There is no Book!');
+                        return redirect()->back();
+                    }
                 }
-                $stdeunt = Stduent::where('id', $studentid)->first();
-                if ($stdeunt) {
-                    $totalbok = $stdeunt->totalNoOfBooks + 1;
-                    $stdeunt->totalNoOfBooks = $totalbok;
-                    $stdeunt->save();
-                }
-            }
-            if ($contactListdata->status == ON) {
-                $contactListdata->status  = 'off';
-                $contactListdata->save();
-                //$contactListdata->update(['status' => OFF]);
+                Session::put('stdtotalBookApproved', 'Stduent PreRequest Book Order is Approved Successfully.');
+                return redirect()->route('stduent.preRequestBooks.index')->with(['success' => 'Successfully Updated!']);
             } else {
-                $contactListdata->status  = 'on';
-                $contactListdata->save();
+                Session::put('stdtotalBook', 'The Number Books Availabel for Stduent is Limited!.You can\'t Approved at this time!.');
+                return redirect()->back();
             }
-            Session::put('stdtotalBookApproved','Stduent PreRequest Book Order is Approved Successfully.');
-            return redirect()->route('stduent.preRequestBooks.index')->with(['success' => 'Successfully Updated!']);
-        }else{
-            Session::put('stdtotalBook','The Number Books Availabel for Stduent is Limited!.You can\'t Approved at this time!.');
-            return redirect()->back();
-        }
-    } else {
+        } else {
             return view('errorpage.404');
         }
     }
