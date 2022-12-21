@@ -97,8 +97,8 @@
                                     <h5 style="margin-bottom: 10px">{{ 'Select Author Name' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary"
                                         name="authors_id" required>
-                                        <option selected value="0"  class="text-black-50" disabled>--- Select Author Name ---
-                                        </option>
+                                        {{-- <option selected value="0"  class="text-black-50" disabled>--- Select Author Name ---
+                                        </option> --}}
                                         @foreach ($authors as $event)
                                             <option value="{{ $event->id }}" style="font-weight: bold ">
                                                 {{ $event->name }}
@@ -154,9 +154,9 @@
                                 <div class="col-lg-6 col-md-12">
                                     <h5 style="margin-bottom: 10px">{{ 'Select Category Name' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary"
-                                        name="categories_id" required>
-                                        <option selected value="0" class="text-black-50" disabled>--- Select Category Name ---
-                                        </option>
+                                        name="categories_id" >
+                                        {{-- <option selected value="0"  class="text-black-50" disabled>--- Select Category Name ---
+                                        </option> --}}
                                         @foreach ($categories as $event)
                                             <option value="{{ $event->id }}" style="font-weight: bold ">
                                                 {{ $event->name }}

@@ -51,9 +51,9 @@
                                     <h5 style="margin-bottom: 10px">{{ 'Select Book Name' }} </h5>
                                     <select class="selectpicker form-control  " disabled data-style="btn-secondary"
                                         name="books_id" required="true">
-                                        <option selected value="0" class="text-black-50" disabled>--- Select Book Name
+                                        {{-- <option selected value="0" class="text-black-50" disabled>--- Select Book Name
                                             ---
-                                        </option>
+                                        </option> --}}
                                         @foreach ($books as $event)
                                             <option value="{{ $event->id }}"
                                                 {{ $event->id == $Author->books_id ? 'selected' : '' }}

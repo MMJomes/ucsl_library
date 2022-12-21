@@ -164,8 +164,8 @@
                                     <h5 style="margin-bottom: 10px">{{ 'Select Class' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary"
                                         name="departements_id" required="true">
-                                        <option selected value="0" class="text-black-50" disabled>--- Select Class---
-                                        </option>
+                                        {{-- <option selected value="0" class="text-black-50" disabled>--- Select Class---
+                                        </option> --}}
                                         @foreach ($depart as $des)
                                             <option value="{{ $des->id }}" {{ $des->id == $staffemail->departements_id ? 'selected' : '' }} style="font-weight: bold ">
                                                 {{ $des->stfdepartment }}

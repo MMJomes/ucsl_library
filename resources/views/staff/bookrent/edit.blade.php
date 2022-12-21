@@ -66,8 +66,8 @@
                                     <h5 style="margin-bottom: 10px">{{ 'Select Staff Name' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary"
                                         name="teachers_id" required>
-                                        <option selected value="0" class="text-black-50" disabled>--- Select Staff Name  ---
-                                        </option>
+                                        {{-- <option selected value="0" class="text-black-50" disabled>--- Select Staff Name  ---
+                                        </option> --}}
                                         @foreach ($teachers as $event)
                                             <option value="{{ $event->id }}" {{ $event->id == $author->teachers_id ? 'selected' : '' }} style="font-weight: bold ">
                                                 {{ $event->name }} ( Dep : {{$event->department->stfdepartment }}   )
@@ -79,8 +79,8 @@
                                     <h5 style="margin-bottom: 10px">{{ 'Select Book Name' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary"
                                         name="books_id" required>
-                                        <option selected value="0" class="text-black-50" disabled>--- Select Book Name  ---
-                                        </option>
+                                        {{-- <option selected value="0" class="text-black-50" disabled>--- Select Book Name  ---
+                                        </option> --}}
                                         @foreach ($books as $event)
                                             <option value="{{ $event->id }}"  {{ $event->id == $author->books_id ? 'selected' : '' }} style="font-weight: bold ">
                                                 {{ $event->bookname }} (Edtion : {{ $event->edtion }})

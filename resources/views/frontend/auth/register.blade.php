@@ -51,7 +51,7 @@
                                                 <div class="radio-toolbar">
                                                     <input type="radio" id="radioApple" name="usertype"
                                                         value="staff">
-                                                    <label for="radioApple" style="width: 89% important">Staff/Teachers</label>
+                                                    <label for="radioApple" style="width: 75% important">&nbsp;&nbsp;&nbsp;Staff&nbsp;&nbsp;&nbsp;</label>
                                                 </div>
                                             </div>
                                         </div>

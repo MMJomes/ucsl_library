@@ -250,7 +250,7 @@ class MemberAuthController extends Controller
         $stdemail = Stduent::where('email', $useremail)->first();
         if ($staffemail != null || $stdemail != null) {
             if ($request->ajax()) {
-                $data = Books::with('author', 'category')->get();
+                $data = Books::with('author', 'category')->orderBy('created_at', 'DESC')->get();
                 return DataTables::of($data)
                     ->addIndexColumn()
                     ->make(true);

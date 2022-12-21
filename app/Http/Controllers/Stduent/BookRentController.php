@@ -65,7 +65,7 @@ class BookRentController extends Controller
         $stduent_total_number_of_book_count = (int)$stduent_total_number_of_book;
         if ($booktotalBookRentedcount < $stduent_total_number_of_book_count) {
             $totlabok = Books::where('id', $request->books_id)->first();
-            if ($totlabok->availablebook > 1) {
+            if ($totlabok->availablebook >= 1) {
                 $book_rent_duration = Setting::where('key', 'book_rent_duration')->first()->value;
                 $book_return_date = Carbon::parse($request->startdate);
                 $enddate = $book_return_date->addDays($book_rent_duration);

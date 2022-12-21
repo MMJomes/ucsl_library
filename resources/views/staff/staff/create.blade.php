@@ -87,9 +87,9 @@
                                     <h5 style="margin-bottom: 10px">{{ 'Select Department' }} </h5>
                                     <select class="stdclasses form-select-lg " data-style="btn-secondary"
                                         name="departements_id" required>
-                                        <option selected value="0" class="text-black-50" disabled>--- Select
+                                        {{-- <option selected value="0" class="text-black-50" disabled>--- Select
                                             Department---
-                                        </option>
+                                        </option> --}}
                                         @foreach ($categories as $event)
                                             <option value="{{ $event->id }}" style="font-weight: bold ">
                                                 {{ $event->stfdepartment }}
