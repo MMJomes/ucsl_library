@@ -110,9 +110,9 @@
         <div class="card"><br><br>
             <div class="card-header" style="font-weight: bold;">
                 <center>
-                    <img src="{{ url('cu.jpg') }}" alt="" width="90%" style="height:auto;display:block;" />
+                    <img src="{{ $message->embed('https://raw.githubusercontent.com/MMJomes/uscl/main/cu.jpg') }}" alt="lOGO" width="90%" style="height:auto;display:block;" />
+                    {{-- <img src="{{ $message->embed(public_path() . '/cu.jpg') }}" alt="lOGO" width="90%" style="height:auto;display:block;" /> --}}
                 </center>
-
             </div>
             <div class="card-body">
                 <table role="presentation"
@@ -123,14 +123,14 @@
                             <td colspan="4">
                                 <br>
                                 <center>{{ $about }}:</center>
-                                <br/>
+                                <br />
                             </td>
                         </tr>
                         <tr>
                             <td colspan="4" style="float:inline-start;">
                                 <br>
                                 <center>Date: <span>{{ $date }} : {{ $time }}</span></center>
-                                <br/>
+                                <br />
                             </td>
                         </tr>
                     </tbody>
@@ -143,8 +143,12 @@
                 <p class="card-text">{{ $mymessage }}</p>
             </div>
             <div class="card-footer">
-                <h6 class="card-title mb-4">Powered By <span><a target="_blank"
-                            href="https://www.linkedin.com/in/maungmyint/" blank> Maung Myint</a></span></h6><br>
+
+                <h6 class="card-title mb-4">Welcome To Ditital Library Management of <span><a target="_blank"
+                            href="http://www.ucsloikaw.edu.mm/" blank> UCSL</a></span></h6>
+                {{-- <h6 class="card-title mb-4">Powered By <span><a target="_blank"
+                            href="https://www.linkedin.com/in/maungmyint/" blank> Maung Myint</a></span></h6> --}}
+                <br>
 
             </div>
         </div>

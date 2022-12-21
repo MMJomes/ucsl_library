@@ -35,7 +35,7 @@ class StduentController extends Controller
     {
         if (request()->ajax()) {
             $user = auth()->user();
-            $data = Stduent::with('stdclass')->orderBy('totalNoOfBooks', 'DESC')->get();
+            $data = Stduent::with('stdclass')->orderBy('id', 'DESC')->get();
             return $this->Stduent_datatable($data, $user);
         }
         view()->share(['datatable' => true, 'datatable_export' => true, 'toast' => false, 'sweet_alert' => true]);
@@ -235,11 +235,11 @@ class StduentController extends Controller
                 $curListdata = $this->studentRepository->where('slug', $request->slug)->first();
                 if ($curListdata) {
                     if($curListdata->status == 'ON'){
-                        $mystatus= 'Approved';
+                        $mystatus= 'enable';
                     }else{
-                        $mystatus= 'Rejected';
+                        $mystatus= 'disable';
                     }
-                    $curListdata->notify(new SendEmail($curListdata->name,'Notification!'," Your Request Been' $mystatus 'By Admin"));
+                    $curListdata->notify(new SendEmail($curListdata->name,'Notification!'," Your account has been  $mystatus  By Admin"));
                 }
             }
             return redirect()->route('stduent.stduents.index')->with(['success' => 'Successfully Updated!']);

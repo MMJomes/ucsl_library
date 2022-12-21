@@ -227,11 +227,11 @@ class TeacherController extends Controller
                 $curListdata = $this->StaffRepository->where('slug', $request->slug)->first();
                 if ($curListdata) {
                     if ($curListdata->status == 'ON') {
-                        $mystatus = 'Approved';
+                        $mystatus = 'enable';
                     } else {
-                        $mystatus = 'Rejected';
+                        $mystatus = 'disable';
                     }
-                    $curListdata->notify(new SendEmail($curListdata->name, "Notification!", "Your Request Been'  $mystatus  'By Admin"));
+                    $curListdata->notify(new SendEmail($curListdata->name, "Notification!", "Your account has been  $mystatus  By Admin"));
                 }
             }
             return redirect()->route('staff.staffs.index')->with(['success' => 'Successfully Updated!']);
@@ -252,7 +252,7 @@ class TeacherController extends Controller
                 } else {
                     $mystatus = 'Rejected';
                 }
-                StaffAccountMailServiceJob::dispatch($curListdata->name, "Notification!", "Your Request Been' {{ $mystatus }} 'Admin");
+                StaffAccountMailServiceJob::dispatch($curListdata->name, "Notification!", "Your Request Been' {{ $mystatus }} 'By Admin");
             }
         }
         return redirect()->route('staff.staffs.index')->with('success', 'Stduents Approved successfully');
