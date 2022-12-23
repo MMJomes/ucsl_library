@@ -235,9 +235,9 @@ class StduentController extends Controller
                 $curListdata = $this->studentRepository->where('slug', $request->slug)->first();
                 if ($curListdata) {
                     if($curListdata->status == 'ON'){
-                        $mystatus= 'enable';
+                        $mystatus= 'Enable';
                     }else{
-                        $mystatus= 'disable';
+                        $mystatus= 'Disable';
                     }
                     $curListdata->notify(new SendEmail($curListdata->name,'Notification!'," Your account has been  $mystatus  By Admin"));
                 }

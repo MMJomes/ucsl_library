@@ -247,10 +247,10 @@ class TeacherController extends Controller
         if ($sned_email_to_user_account->value == ON) {
             $curListdata = $this->StaffRepository->where('slug', $request->slug)->first();
             if ($curListdata) {
-                if ($curListdata->status == 'ON') {
-                    $mystatus = 'Approved';
-                } else {
-                    $mystatus = 'Rejected';
+                if($curListdata->status == 'ON'){
+                    $mystatus= 'Enable';
+                }else{
+                    $mystatus= 'Disable';
                 }
                 StaffAccountMailServiceJob::dispatch($curListdata->name, "Notification!", "Your Request Been' {{ $mystatus }} 'By Admin");
             }
