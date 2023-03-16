@@ -1,18 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row page-titles">
-        <div class="col-md-12">
-            <h4 class="text-white">Roles Management</h4>
-        </div>
-        <div class="col-md-6">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('backend.roles.index') }}">Roles</a></li>
-                <li class="breadcrumb-item active">Edit Roles</li>
-            </ol>
-        </div>
+<div class="row page-titles">
+    <div class="col-md-12">
+        <h4 class="text-white">Admin List</h4>
     </div>
+    <div class="col-md-6">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('backend.admins.index') }}">Admin List</a></li>
+        </ol>
+    </div>
+</div>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -20,8 +19,8 @@
                     <form action={{ route('backend.admins.update', $admin->id) }} method="POST"
                         enctype="multipart/form-data">
                         @csrf
+                        {{ csrf_field() }}
                         @method('PUT')
-
                         <h6>Profile Photo</h6>
                         <hr>
                         <div class="media photo">
@@ -35,12 +34,12 @@
                                 </p>
                                 <button type="button" class="btn btn-default-dark" id="btn-upload-photo">Upload
                                     Photo</button>
-                                <input type="file" name="image" id="filePhoto" class="sr-only" accept="image/*">
+                                <input type="file" name="logos" id="filePhoto" class="sr-only" accept="image/*">
                             </div>
                         </div>
 
                         <div class="body">
-                            <h6>Basic Information</h6>
+                            <h6>{{ __('message.basicinfo') }}</h6>
                             <hr>
                             <div class="row clearfix">
                                 <div class="col-lg-6 col-md-12">
@@ -99,7 +98,7 @@
                             <div class="mt-5">
                                 <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> Update</button>
                                 <a href="{{ route('backend.admins.index') }}" class="btn btn-danger"><i
-                                        class="icon-logout"></i> Back</a>
+                                        class="icon-logout"></i> {{__('message.back')}}</a>
                             </div>
                         </div>
                     </form>

@@ -6,7 +6,7 @@
         </div>
         <div class="col-md-6">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
                 <li class="breadcrumb-item active">Biz Category List</li>
             </ol>
         </div>
@@ -24,7 +24,7 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Data Export</h4>
+                    <h4 class="card-title">{{ __('message.dataexport') }}</h4>
                     <h6 class="card-subtitle">Export data to Copy, CSV, Excel, PDF & Print</h6>
                     <div class="table-responsive m-t-40">
                         <table id="dataTable" class="display nowrap table table-hover table-striped table-bordered"

@@ -23,12 +23,11 @@ class RolesDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addIndexColumn()
-            ->addColumn('permissions',function($query){
+            ->addColumn('permissions', function ($query) {
                 $html = '<div class="row mx-2">';
 
-                foreach($query->permissions as $value)
-                {
-                    $html .= '<span class="badge badge-info m-1">'.$value->name.'</span>';
+                foreach ($query->permissions as $value) {
+                    $html .= '<span class="badge badge-info m-1">' . $value->name . '</span>';
                 }
 
                 $html .= '</div>';
@@ -53,7 +52,7 @@ class RolesDataTable extends DataTable
                 $actionBtn .= '</div>';
                 return $actionBtn;
             })
-            ->rawColumns(['action','permissions']);
+            ->rawColumns(['action', 'permissions']);
     }
 
     /**
@@ -75,25 +74,20 @@ class RolesDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->parameters([
-                        'responsive' => true,
-                        'defaultContent' => '',
-                    ])
-                    ->setTableId('roles-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create')->action("window.location = '".route('backend.roles.create')."';"),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload'),
-                        // [
-                        //     'deleteSelected',
-                        // ],
-                    );
+            ->parameters([
+                'search' => ['return' => false],
+                'searchable' => ['return' => false],
+                'responsive' => true,
+                'defaultContent' => '-',
+            ])
+            ->setTableId('roles-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->dom('Bfrtip')
+            ->orderBy(1)
+            ->buttons(
+                Button::make('create'),
+            );
     }
 
     /**
@@ -104,7 +98,7 @@ class RolesDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            ['name'=>'DT_RowIndex','title'=>'No','data'=>"DT_RowIndex"],
+            ['name' => 'name', 'title' => 'No', 'data' => "DT_RowIndex"],
             'name',
             'permissions',
             'action'

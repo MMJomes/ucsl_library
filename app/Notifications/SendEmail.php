@@ -11,17 +11,19 @@ class SendEmail extends Notification
 {
     use Queueable;
     private $username;
-    private $password;
+    private $about;
+    private $mymessage;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($username, $userpassword)
+    public function __construct($username,$about,$mymessage)
     {
         $this->username = $username;
-        $this->userpassword = $userpassword;
+        $this->about = $about;
+        $this->mymessage = $mymessage;
     }
 
     /**
@@ -44,13 +46,15 @@ class SendEmail extends Notification
     public function toMail($notifiable)
     {
         $time = Carbon::now();
+        //dd($time,$this->username,$this->about,$this->mymessage);
         $datetime = $time->toDateTimeString();
         $DT = explode(' ', $datetime);
         return (new MailMessage)
         ->subject(config('mail.subject'))
         ->view('mail.mail', array(
             'username' => $this->username,
-            'userpassword' => $this->userpassword,
+            'about' => $this->about,
+            'mymessage' => $this->mymessage,
             'date' => $DT[0],
             'time' => $DT[1],
         ));

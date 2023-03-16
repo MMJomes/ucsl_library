@@ -2,12 +2,13 @@
 
 namespace App\Providers;
 
-use App\Repositories\Backend\Impls\AdminRepositoryImpl;
 use App\Repositories\Backend\Impls\RoleRepositoryImpl;
 use App\Repositories\Backend\Impls\DashboardRepositoryImpl;
+use App\Repositories\Backend\Impls\BookListRepositoryImpl;
 use App\Repositories\Backend\Impls\ContactListRepositoryImpl;
 
 use App\Repositories\Backend\Interf\AdminRepository;
+use App\Repositories\Backend\Interf\BookListRepository;
 use App\Repositories\Backend\Interf\RoleRepository;
 use App\Repositories\Backend\Interf\ContactListRepository;
 use App\Repositories\Backend\Interf\DashboardRepository;
@@ -21,8 +22,8 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(RoleRepository::class, RoleRepositoryImpl::class);
         $this->app->bind(DashboardRepository::class, DashboardRepositoryImpl::class);
-        $this->app->bind(AdminRepository::class, AdminRepositoryImpl::class);
         $this->app->bind(ContactListRepository::class, ContactListRepositoryImpl::class);
+        $this->app->bind(BookListRepository::class, BookListRepositoryImpl::class);
         $this->app->bind(MemberAuthRepository::class, MemberAuthRepositoryImpl::class);
 
 

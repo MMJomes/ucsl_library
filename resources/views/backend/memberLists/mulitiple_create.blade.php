@@ -7,7 +7,7 @@
         </div>
         <div class="col-md-6">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('backend.memberLists.index') }}"> Contact List</a></li>
                 <li class="breadcrumb-item active">Contact Lists</li>
             </ol>
@@ -32,20 +32,20 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="text-center">
-                                        <h3><a href="{{ url('admin/memberLists/template') }}">Download Excel Template</a></h3>
+                                        <h3><a href="{{ url('admin/memberLists/template') }}">{{__('message.exceldownload')}}</a></h3>
                                         </div>
                                     </div>
                                     <div class="col-md-1">
                                     </div>
                                     <div class="col-md-7">
                                         <div class="form-group">
-                                            <label for="import_file" class="form-label">Choose Excel File</label>
-                                            <input type="file" name="import_file" class="" id="import_file">
+                                            <label for="import_file" class="form-label">{{__('message.chooseexcelfile')}}</label>
+                                            <input type="file" readonly name="import_file" class="" id="import_file">
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-flat"><i
-                                                class="fa fa-upload"></i> Upload</button>
+                                                class="fa fa-upload"></i> {{__('message.upload')}}</button>
                                                 <a href="{{ route('backend.memberLists.index') }}" class="btn btn-danger"><i
-                                                    class="icon-logout"></i> Back</a>
+                                                    class="icon-logout"></i> {{__('message.back')}}</a>
 
                                     </div>
                                 </div>

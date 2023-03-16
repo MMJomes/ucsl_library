@@ -36,6 +36,52 @@ class SettingSeeder extends Seeder
                     'value' => '7',
                     'type' => 'integer',
                 ],
+                [
+                    'key' => 'book_rent_duration',
+                    'value' => '14',
+                    'type' => 'integer',
+                ],
+                [
+                    'key' => 'staff_book_rent_duration',
+                    'value' => '30',
+                    'type' => 'integer',
+                ],
+                [
+                    'key' => 'sned_email_to_new_book',
+                    'value' => OFF,
+                    'type' => 'chcekbox',
+                ],
+                [
+                    'key' => 'sned_email_to_user_account',
+                    'value' => OFF,
+                    'type' => 'chcekbox',
+                ],
+                [
+                    'key' => 'sned_email_to_user_overred_time',
+                    'value' => OFF,
+                    'type' => 'chcekbox',
+                ],
+                [
+                    'key' => 'site_maintenance',
+                    'value' => OFF,
+                    'type' => 'chcekbox',
+                ],
+                [
+                    'key' => 'send_mail_to_user_for_return',
+                    'value' => '7',
+                    'type' => 'integer',
+                ],
+                [
+                    'key' => 'stduent_total_number_of_book',
+                    'value' => '2',
+                    'type' => 'integer',
+                ],
+                [
+                    'key' => 'staff_total_number_of_book',
+                    'value' => '5',
+                    'type' => 'integer',
+                ],
+
 
                 // [
                 //     'title' => 'Register Approve',

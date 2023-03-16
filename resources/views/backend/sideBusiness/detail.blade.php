@@ -10,7 +10,7 @@
         </div>
         <div class="col-md-6">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('backend.sidebusiness.index') }}"> Side Business List</a></li>
                 <li class="breadcrumb-item active">Side Business Lists</li>
             </ol>
@@ -51,7 +51,7 @@
                             </div>
                         </div>
                         <div class="body mt-5">
-                            <h6>Basic Information</h6>
+                            <h6>{{ __('message.basicinfo') }}</h6>
                             <hr>
                             <div class="row clearfix">
                                 <div class="col-lg-6 col-md-12">
@@ -130,7 +130,7 @@
                             </div>
                             <div class="mt-5">
                                 <a href="{{ route('backend.sidebusiness.index') }}" class="btn btn-danger"><i
-                                        class="icon-logout"></i> Back</a>
+                                        class="icon-logout"></i> {{__('message.back')}}</a>
                             </div>
 
                         </div>

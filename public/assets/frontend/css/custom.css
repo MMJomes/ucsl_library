@@ -1,0 +1,13 @@
+form {
+    padding-top: 42px !important;
+    min-width: 100% !important;
+    transform: translateX(20px) !important;
+}
+.col-lg-6 {
+    flex: 0 0 50% !important;
+    max-width: 49% !important;
+}
+.form-group {
+    margin-bottom:25px !important;
+    margin-right:20px !important;
+}

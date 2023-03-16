@@ -3,6 +3,7 @@
 namespace App\Repositories\Backend\Impls;
 
 use App\DataTables\MemberDataTable;
+use App\Http\Requests\BookRequest;
 use App\Http\Requests\MemberRequest;
 use App\Models\Member;
 use App\Models\Setting;
@@ -17,7 +18,6 @@ class ContactListRepositoryImpl implements ContactListRepository
 
     public function create(MemberRequest $request): Member
     {
-
         $setting_approve =  Setting::where('key', 'reg_approve')->first();
         $setting_sned_email =  Setting::where('key', 'sned_email')->first();
         $name = $request->name;
@@ -47,9 +47,8 @@ class ContactListRepositoryImpl implements ContactListRepository
         $yueembcontact = Member::create($request->all());
         if ($setting_sned_email->value == ON && $yueembcontact->email) {
             //ContactMailServiceJob::dispatch($request->username, $pwd);
-            $yueembcontact->notify(new SendEmail($pwd, $userfullname));
+            //$yueembcontact->notify(new SendEmail($pwd, $userfullname));
         }
         return $yueembcontact;
     }
-
 }

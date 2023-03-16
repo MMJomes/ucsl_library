@@ -11,6 +11,7 @@
 <!--stickey kit -->
 <script src="{{ asset('assets/node_modules/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
 <script src="{{ asset('assets/node_modules/sparkline/jquery.sparkline.min.js') }}"></script>
+
 <!--Custom JavaScript -->
 <script src="{{ asset('assets/dist/js/custom.min.js') }}"></script>
 
@@ -18,11 +19,13 @@
 
 <script src="{{ asset('assets/dist/js/dataTable.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
-
 <script src="{{ asset('assets/dist/js/main.js') }}"></script>
+<script src="{{ asset('assets/dist/js/createform.js') }}"></script>
 
 @if ($select ?? false)
 <script src="{{ asset('assets/node_modules/bootstrap-select/bootstrap-select.min.js') }}"></script>
+<script src="{{ asset('assets/dist/select2/select2.min.js') }}"></script>
+<link href="{{ asset('assets/dist/select2/select2.min.css') }}" rel="stylesheet" />
 @endif
 
 @if ($rolesJS ?? false)
@@ -32,6 +35,11 @@
 @if ($toast ?? false)
     <script src="{{ asset('assets/node_modules/toast-master/js/jquery.toast.js') }}"></script>
     <script>
+        $(document).ready(function() {
+    $('.select2').select2({
+    closeOnSelect: false
+});
+});
         @if ($errors->any())
             let errors = @json($errors->all());
             errors.forEach(element => {
@@ -56,6 +64,13 @@
                 stack: 6
             });
         @endif
+    </script>
+    <script>
+        function isNumber(e) {
+            e = e || window.event;
+            var charCode = e.which ? e.which : e.keyCode;
+            return /\d/.test(String.fromCharCode(charCode));
+        }
     </script>
 @endif
 

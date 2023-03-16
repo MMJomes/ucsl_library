@@ -1,0 +1,40 @@
+.select2-hidden-accessible {
+    border: 0 !important;
+    clip: rect(0 0 0 0) !important;
+    height: 1px !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important;
+}
+.select2-container--default .select2-selection--single,
+.select2-selection .select2-selection--single {
+    border: 0px solid rgba(238, 236, 236, 0.949);
+    border-radius: 2 !important;
+    padding: 4px 12px;
+    height: 35px !important;
+    size: 20px !important;
+}
+.select2-container--default
+    .select2-selection--single
+    .select2-selection__arrow {
+    height: 26px;
+    position: absolute;
+    top: 4px !important;
+    right: 2px;
+}
+.select2 {
+    width: 100% !important;
+}
+
+.select2-container--default .select2-selection--single,
+.select2-selection .select2-selection--single {
+    height: 35px !important;
+}
+
+.input-group > .select2-container--bootstrap .select2-selection--single {
+    height: 100%;
+    line-height: inherit;
+    padding: 0.5rem 1rem;
+}

@@ -13,9 +13,10 @@ class CreateEventCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('event_categories', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
+            $table->string('code')->nullable();
             $table->string('slug');
             $table->dateTime('createdat')->nullable();
             $table->dateTime('updatedat')->nullable();
@@ -30,6 +31,6 @@ class CreateEventCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event_categories');
+        Schema::dropIfExists('categories');
     }
 }

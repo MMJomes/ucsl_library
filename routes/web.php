@@ -1,25 +1,8 @@
 <?php
 
-use App\Http\Controllers\Frontend\MemberAuthController;
-use App\Http\Controllers\Frontend\MemberDashboardController;
-use App\Http\Controllers\MemberController;
+use App\Http\Controllers\stduent\StdClassController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 
 Route::prefix('admin')->group(function () {
@@ -33,61 +16,76 @@ Route::middleware('globalSetting')->group(function () {
     Route::namespace('App\Http\Controllers\Backend')->middleware(['auth'])->prefix('admin')->as('backend.')->group(function () {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
         Route::resource('roles', RolesController::class);
-        Route::resource('admins', AdminsController::class);
-        Route::get('profile', 'AdminsController@show')->name('profile');
-        //memberList
-        Route::get('memberLists', 'MemberController@index')->name('memberLists.index');
-        Route::get('memberLists/create', 'MemberController@create')->name('memberLists.create');
-        Route::post('memberLists/store', 'MemberController@store')->name('memberLists.store');
-        Route::get('memberLists/edit/{slug}', 'MemberController@edit')->name('memberLists.edit');
-        Route::post('memberLists/update/{slug}', 'MemberController@update')->name('memberLists.update');
-        Route::get('memberLists/show/{slug}', 'MemberController@show')->name('memberLists.show');
-        Route::delete('memberLists/destroy/{slug}', 'MemberController@destroy')->name('memberLists.destroy');
-        Route::post('memberLists/mass/destroy', 'MemberController@mass_destroy')->name('memberLists.mass.destroy');
-        Route::get('memberLists/approve/{slug}', 'MemberController@approve')->name('memberLists.approve');
-        Route::post('memberLists/mass/approve', 'MemberController@mass_approve')->name('memberLists.mass.approve');
-        Route::get('memberLists/excel/export', 'MemberController@excelexport')->name('memberLists.excel.excelexport');
+        // Route::resource('admins', AdminsController::class);
+        Route::get('admin', 'AdminsController@index')->name('admins.index');
+        Route::get('admin/create', 'AdminsController@create')->name('admins.create');
+        Route::post('admin/store', 'AdminsController@store')->name('admins.store');
+        Route::get('admin/show/{slug}', 'AdminsController@show')->name('admins.show');
+        Route::get('admin/edit/{slug}', 'AdminsController@edit')->name('admins.edit');
+        Route::put('admin/update/{slug}', 'AdminsController@update')->name('admins.update');
+        Route::delete('admin/destroy/{slug}', 'AdminsController@destroy')->name('admins.destroy');
+        Route::post('admin/mass/destroy', 'AdminsController@mass_destroy')->name('admins.mass.destroy');
+        // Route::get('category/edit/{slug}', 'EventCategoryController@edit')->name('category.edit');
+
+        Route::get('profile', 'AdminsController@profile')->name('profile');
+
+
+        //Category Route
+        Route::get('category', 'EventCategoryController@index')->name('category.index');
+        Route::get('category/create', 'EventCategoryController@create')->name('category.create');
+        Route::post('category/store', 'EventCategoryController@store')->name('category.store');
+        Route::get('category/edit/{slug}', 'EventCategoryController@edit')->name('category.edit');
+        Route::post('category/update/{slug}', 'EventCategoryController@update')->name('category.update');
+        Route::get('category/show/{slug}', 'EventCategoryController@show')->name('category.show');
+        Route::delete('category/destroy/{slug}', 'EventCategoryController@destroy')->name('category.destroy');
+        Route::post('category/mass/destroy', 'EventCategoryController@mass_destroy')->name('category.mass.destroy');
+        Route::get('category/approve/{slug}', 'EventCategoryController@approve')->name('category.approve');
+        Route::post('category/mass/approve', 'EventCategoryController@mass_approve')->name('category.mass.approve');
+        Route::get('category/excel/export', 'EventCategoryController@excelexport')->name('category.excel.excelexport');
+
+        //Category excel
+        Route::get('category/categorymultilecreate', 'EventCategoryController@multilecreate')->name('category.categorymultilecreate');
+        Route::get('category/template', 'EventCategoryController@template')->name('category.template');
+        Route::post('category/upload', 'EventCategoryController@importData')->name('category.upload');
+
+
+        //Books Route
+        Route::get('book', 'BooksController@index')->name('book.index');
+        Route::get('book/create', 'BooksController@create')->name('book.create');
+        Route::post('book/store', 'BooksController@store')->name('book.store');
+        Route::get('book/edit/{slug}', 'BooksController@edit')->name('book.edit');
+        Route::put('book/update/{slug}', 'BooksController@update')->name('book.update');
+        Route::get('book/show/{slug}', 'BooksController@show')->name('book.show');
+        Route::delete('book/destroy/{slug}', 'BooksController@destroy')->name('book.destroy');
+        Route::post('book/mass/destroy', 'BooksController@mass_destroy')->name('book.mass.destroy');
+        Route::get('book/approve/{slug}', 'BooksController@approve')->name('book.approve');
+        Route::post('book/mass/approve', 'BooksController@mass_approve')->name('book.mass.approve');
+        Route::get('book/excel/export', 'BooksController@excelexport')->name('book.excel.excelexport');
+
+        //for Book excel
+        Route::get('book/bookmultilecreate', 'BooksController@multilecreate')->name('book.bookmultilecreate');
+        Route::get('book/template', 'BooksController@template')->name('book.template');
+        Route::post('book/upload', 'BooksController@importData')->name('book.upload');
 
 
 
+        //Author Route
+        Route::get('author', 'AuthorController@index')->name('author.index');
+        Route::get('author/create', 'AuthorController@create')->name('author.create');
+        Route::post('author/store', 'AuthorController@store')->name('author.store');
+        Route::get('author/edit/{slug}', 'AuthorController@edit')->name('author.edit');
+        Route::put('author/update/{slug}', 'AuthorController@update')->name('author.update');
+        Route::get('author/show/{slug}', 'AuthorController@show')->name('author.show');
+        Route::delete('author/destroy/{slug}', 'AuthorController@destroy')->name('author.destroy');
+        Route::post('author/mass/destroy', 'AuthorController@mass_destroy')->name('author.mass.destroy');
+        Route::get('author/approve/{slug}', 'AuthorController@approve')->name('author.approve');
+        Route::post('author/mass/approve', 'AuthorController@mass_approve')->name('author.mass.approve');
+        Route::get('author/excel/export', 'AuthorController@excelexport')->name('author.excel.excelexport');
 
-        //excel
-        Route::get('memberLists/multilecreate', 'MemberController@multilecreate')->name('memberLists.multilecreate');
-        Route::get('memberLists/template', 'MemberController@template')->name('memberLists.template');
-        Route::post('memberLists/upload', 'MemberController@importData')->name('memberLists.upload');
-
-        //bizcategory
-        Route::get('biztype', 'BizTypeController@index')->name('biztype.index');
-        Route::get('biztype/create', 'BizTypeController@create')->name('biztype.create');
-        Route::post('biztype/store', 'BizTypeController@store')->name('biztype.store');
-        Route::get('biztype/edit/{slug}', 'BizTypeController@edit')->name('biztype.edit');
-        Route::get('biztype/show/{slug}', 'BizTypeController@show')->name('biztype.show');
-        Route::put('biztype/update/{slug}', 'BizTypeController@update')->name('biztype.update');
-        Route::delete('biztype/destroy/{slug}', 'BizTypeController@destroy')->name('biztype.destroy');
-        Route::post('biztype/mass/destroy', 'BizTypeController@mass_destroy')->name('biztype.mass.destroy');
-
-
-        //MainBusiness
-        Route::get('mainbusiness', 'MainBusinessController@index')->name('mainbusiness.index');
-        Route::get('usermainbusiness/{slug}', 'MainBusinessController@mainbusinessById')->name('mainbusiness.mybusiness');
-        Route::get('mainbusiness/create/{slug}', 'MainBusinessController@create')->name('mainbusiness.create');
-        Route::post('mainbusiness/store', 'MainBusinessController@store')->name('mainbusiness.store');
-        Route::get('mainbusiness/edit/{slug}', 'MainBusinessController@edit')->name('mainbusiness.edit');
-        Route::get('mainbusiness/show/{slug}', 'MainBusinessController@show')->name('mainbusiness.show');
-        Route::put('mainbusiness/update/{slug}', 'MainBusinessController@update')->name('mainbusiness.update');
-        Route::delete('mainbusiness/destroy/{slug}', 'MainBusinessController@destroy')->name('mainbusiness.destroy');
-        Route::post('mainbusiness/mass/destroy/', 'MainBusinessController@mass_destroy')->name('mainbusiness.mass.destroy');
-
-        //SideBusiness
-        Route::get('sidebusiness', 'SideBusinessController@index')->name('sidebusiness.index');
-        Route::get('mysidebusiness/{slug}', 'SideBusinessController@mainbusinessById')->name('sidebusiness.mysidebusiness');
-        Route::get('sidebusiness/create/{slug}', 'SideBusinessController@create')->name('sidebusiness.create');
-        Route::post('sidebusiness/store', 'SideBusinessController@store')->name('sidebusiness.store');
-        Route::get('sidebusiness/edit/{slug}', 'SideBusinessController@edit')->name('sidebusiness.edit');
-        Route::get('sidebusiness/show/{slug}', 'SideBusinessController@show')->name('sidebusiness.show');
-        Route::put('sidebusiness/update/{slug}', 'SideBusinessController@update')->name('sidebusiness.update');
-        Route::delete('sidebusiness/destroy/{slug}', 'SideBusinessController@destroy')->name('sidebusiness.destroy');
-        Route::post('sidebusiness/mass/destroy/', 'SideBusinessController@mass_destroy')->name('sidebusiness.mass.destroy');
+        //Author excel
+        Route::get('author/authormultilecreate', 'AuthorController@multilecreate')->name('author.authormultilecreate');
+        Route::get('author/template', 'AuthorController@template')->name('author.template');
+        Route::post('author/upload', 'AuthorController@importData')->name('author.upload');
 
 
         //global settings
@@ -95,18 +93,6 @@ Route::middleware('globalSetting')->group(function () {
         Route::post('settings/update', 'SettingController@update')->name('settings.update');
 
 
-        //EventCategory
-        Route::resource('eventcategory', EventCategoryController::class);
-        Route::post('eventcategory/mass/destroy', 'EventCategoryController@mass_destroy')->name('eventcategory.mass.destroy');
-
-
-        //EventImage
-        Route::resource('eventimage', EventImageController::class);
-        Route::post('eventimage/mass/destroy', 'EventImageController@mass_destroy')->name('eventimage.mass.destroy');
-
-        //Event
-        Route::resource('event', EventController::class);
-        Route::post('event/mass/destroy', 'EventController@mass_destroy')->name('event.mass.destroy');
 
 
 
@@ -116,27 +102,148 @@ Route::middleware('globalSetting')->group(function () {
         Route::post("changeLanguage", 'DashboardController@changeLanguage')->name('language');
     });
 
+    Route::namespace('App\Http\Controllers\Stduent')->middleware(['auth'])->prefix('admin')->as('stduent.')->group(function () {
+        //stdclass
+        Route::get('stdclass', 'StdClassController@index')->name('stdclass.index');
+        Route::get('stdclass/create', 'StdClassController@create')->name('stdclass.create');
+        Route::post('stdclass/store', 'StdClassController@store')->name('stdclass.store');
+        Route::get('stdclass/edit/{id}', 'StdClassController@edit')->name('stdclass.edit');
+        Route::put('stdclass/update/{id}', 'StdClassController@update')->name('stdclass.update');
+        Route::get('stdclass/show/{id}', 'StdClassController@show')->name('stdclass.show');
+        Route::delete('stdclass/destroy/{id}', 'StdClassController@destroy')->name('stdclass.destroy');
+        Route::post('stdclass/mass/destroy', 'StdClassController@mass_destroy')->name('stdclass.mass.destroy');
 
-    // Route::middleware(['member'])->group(function () {
-    //     Route::get('/', '\App\Http\Controllers\Frontend\MemberDashboardController@index')->name('user');
-    //     Route::namespace('App\Http\Controllers\Frontend')->middleware(['member'])->prefix('')->group(function () {
-    // });
-    // });
+        //stduent
+        Route::get('stduent', 'StduentController@index')->name('stduents.index');
+        Route::get('stduent/create', 'StduentController@create')->name('stduents.create');
+        Route::post('stduent/store', 'StduentController@store')->name('stduents.store');
+        Route::get('stduent/edit/{id}', 'StduentController@edit')->name('stduents.edit');
+        Route::put('stduent/update/{id}', 'StduentController@update')->name('stduents.update');
+        Route::get('stduent/show/{id}', 'StduentController@show')->name('stduents.show');
+        Route::delete('stduent/destroy/{id}', 'StduentController@destroy')->name('stduents.destroy');
+        Route::post('stduent/mass/destroy', 'StduentController@mass_destroy')->name('stduents.mass.destroy');
+        Route::get('stduent/approve/{slug}', 'StduentController@approve')->name('stduents.approve');
+        Route::post('stduent/mass/approve', 'StduentController@mass_approve')->name('stduents.mass.approve');
+        Route::get('stduent/excel/export', 'StduentController@excelexport')->name('stduents.excel.excelexport');
+
+        //Book Rents
+        Route::get('bookrent', 'BookRentController@index')->name('bookRent.index');
+        Route::get('bookrent/create', 'BookRentController@create')->name('bookRent.create');
+        Route::post('bookrent/store', 'BookRentController@store')->name('bookRent.store');
+        Route::get('bookrent/edit/{id}', 'BookRentController@edit')->name('bookRent.edit');
+        Route::put('bookrent/update/{id}', 'BookRentController@update')->name('bookRent.update');
+        Route::get('bookrent/show/{id}', 'BookRentController@show')->name('bookRent.show');
+        Route::delete('bookrent/destroy/{id}', 'BookRentController@destroy')->name('bookRent.destroy');
+        Route::post('bookrent/mass/destroy', 'BookRentController@mass_destroy')->name('bookRent.mass.destroy');
+        Route::get('bookrent/approve/{slug}', 'BookRentController@approve')->name('bookRent.approve');
+        Route::get('continuce/approve/{slug}', 'BookRentController@continuce')->name('bookRent.continuce');
+        Route::get('requestStausapprove/approve/{slug}', 'BookRentController@requestStausApproved')->name('bookRent.requestStausapprove');
+        Route::get('requestStausreject/approve/{slug}', 'BookRentController@requestStausRejected')->name('bookRent.requestStausReject');
+
+
+        //PreBook Request Book
+        Route::get('preRequestBook', 'PreRequestController@index')->name('preRequestBooks.index');
+        Route::get('preRequestBook/create', 'PreRequestController@create')->name('preRequestBooks.create');
+        Route::post('preRequestBookstore', 'PreRequestController@store')->name('preRequestBooks.store');
+        Route::get('preRequestBookedit/{id}', 'PreRequestController@edit')->name('preRequestBooks.edit');
+        Route::put('preRequestBookupdate/{id}', 'PreRequestController@update')->name('preRequestBooks.update');
+        Route::get('preRequestBook/show/{id}', 'PreRequestController@show')->name('preRequestBooks.show');
+        Route::delete('preRequestBook/destroy/{id}', 'PreRequestController@destroy')->name('preRequestBooks.destroy');
+        Route::post('preRequestBook/mass/destroy', 'PreRequestController@mass_destroy')->name('preRequestBooks.mass.destroy');
+        Route::get('preRequestBook/approve/{slug}', 'PreRequestController@approve')->name('preRequestBooks.approve');
+        Route::post('preRequestBook/mass/approve', 'PreRequestController@mass_approve')->name('preRequestBooks.mass.approve');
+    });
+
+    Route::namespace('App\Http\Controllers\Teacher')->middleware(['auth'])->prefix('admin')->as('staff.')->group(function () {
+        //stdclass
+        Route::get('stfclass', 'DepartementController@index')->name('stfClass.index');
+        Route::get('stfclass/create', 'DepartementController@create')->name('stfClass.create');
+        Route::post('stfclass/store', 'DepartementController@store')->name('stfClass.store');
+        Route::get('stfclass/edit/{id}', 'DepartementController@edit')->name('stfClass.edit');
+        Route::put('stfclass/update/{id}', 'DepartementController@update')->name('stfClass.update');
+        Route::get('stfclass/show/{id}', 'DepartementController@show')->name('stfClass.show');
+        Route::delete('stfclass/destroy/{id}', 'DepartementController@destroy')->name('stfClass.destroy');
+        Route::post('stfclass/mass/destroy', 'DepartementController@mass_destroy')->name('stfClass.mass.destroy');
+
+        //Staff
+        Route::get('staff', 'TeacherController@index')->name('staffs.index');
+        Route::get('staff/create', 'TeacherController@create')->name('staffs.create');
+        Route::post('staff/store', 'TeacherController@store')->name('staffs.store');
+        Route::get('staff/edit/{id}', 'TeacherController@edit')->name('staffs.edit');
+        Route::put('staff/update/{id}', 'TeacherController@update')->name('staffs.update');
+        Route::get('staff/show/{id}', 'TeacherController@show')->name('staffs.show');
+        Route::delete('staff/destroy/{id}', 'TeacherController@destroy')->name('staffs.destroy');
+        Route::post('staff/mass/destroy', 'TeacherController@mass_destroy')->name('staffs.mass.destroy');
+        Route::get('staff/approve/{slug}', 'TeacherController@approve')->name('staffs.approve');
+        Route::post('staff/mass/approve', 'TeacherController@mass_approve')->name('staffs.mass.approve');
+        Route::get('staff/excel/export', 'TeacherController@excelexport')->name('staffs.excel.excelexport');
+
+
+        //Book Rents
+        Route::get('rentbystaff', 'TeacherrentController@index')->name('rentbyStaff.index');
+        Route::get('rentbystaff/create', 'TeacherrentController@create')->name('rentbyStaff.create');
+        Route::post('rentbystaff/store', 'TeacherrentController@store')->name('rentbyStaff.store');
+        Route::get('rentbystaff/edit/{id}', 'TeacherrentController@edit')->name('rentbyStaff.edit');
+        Route::put('rentbystaff/update/{id}', 'TeacherrentController@update')->name('rentbyStaff.update');
+        Route::get('rentbystaff/show/{id}', 'TeacherrentController@show')->name('rentbyStaff.show');
+        Route::delete('rentbystaff/destroy/{id}', 'TeacherrentController@destroy')->name('rentbyStaff.destroy');
+        Route::post('rentbystaff/mass/destroy', 'TeacherrentController@mass_destroy')->name('rentbyStaff.mass.destroy');
+        Route::get('rentbystaff/approve/{slug}', 'TeacherrentController@approve')->name('rentbyStaff.approve');
+        Route::get('stfrequestStausapprove/approve/{slug}', 'TeacherrentController@requestStausApproved')->name('rentbyStaff.requestStausapprove');
+        Route::get('stfrequestStausreject/approve/{slug}', 'TeacherrentController@requestStausRejected')->name('rentbyStaff.requestStausreject');
+        Route::get('stfcontinuce/approve/{slug}', 'TeacherrentController@continuce')->name('rentbyStaff.continuce');
+
+
+        //PreBook Request By Staff Book
+        Route::get('requestbyStaff', 'StaffPreRequestController@index')->name('requestbyStaffs.index');
+        Route::get('requestbyStaff/create', 'StaffPreRequestController@create')->name('requestbyStaffs.create');
+        Route::post('requestbyStaffstore', 'StaffPreRequestController@store')->name('requestbyStaffs.store');
+        Route::get('requestbyStaffedit/{id}', 'StaffPreRequestController@edit')->name('requestbyStaffs.edit');
+        Route::put('requestbyStaffupdate/{id}', 'StaffPreRequestController@update')->name('requestbyStaffs.update');
+        Route::get('requestbyStaff/show/{id}', 'StaffPreRequestController@show')->name('requestbyStaffs.show');
+        Route::delete('requestbyStaff/destroy/{id}', 'StaffPreRequestController@destroy')->name('requestbyStaffs.destroy');
+        Route::post('requestbyStaff/mass/destroy', 'StaffPreRequestController@mass_destroy')->name('requestbyStaffs.mass.destroy');
+        Route::get('requestbyStaff/approve/{slug}', 'StaffPreRequestController@approve')->name('requestbyStaffs.approve');
+        Route::post('requestbyStaff/mass/approve', 'StaffPreRequestController@mass_approve')->name('requestbyStaffs.mass.approve');
+    });
+
+
     Route::namespace('App\Http\Controllers\Frontend')->prefix('')->group(function () {
-        //Route::get('/', 'MemberDashboardController@index')->name('user');
-        Route::post('login', 'Auth\MemberAuthController@loginAction')->name('member.login');
+        Route::get('totalbooks/', 'Auth\MemberAuthController@totalbook')->name('users.totalbook');
+        Route::get('order/{id}', 'Auth\MemberAuthController@bookorder')->name('users.bookorders');
+
+        Route::get('totalrent', 'Auth\MemberAuthController@rent')->name('users.rents');
+        Route::get('totalrent/{id}', 'Auth\MemberAuthController@prenent')->name('users.rentbooks');
+
+        Route::get('totalreq', 'Auth\MemberAuthController@prerequest')->name('users.prerequest');
+        Route::get('prerequestAction/{id}', 'Auth\MemberAuthController@prerequestAction')->name('users.prerequestAction');
+
         Route::get('/', 'Auth\MemberAuthController@login')->name('member.index');
         Route::get('login', 'Auth\MemberAuthController@login')->name('member.index');
+        Route::post('login', 'Auth\MemberAuthController@loginAction')->name('member.login');
+
+        Route::post('reg', 'Auth\MemberAuthController@regAction')->name('member.reg');
+        Route::get('register', 'Auth\MemberAuthController@register')->name('member.register');
+        Route::get('profile', 'Auth\MemberAuthController@userProfile')->name('member.profile');
+        Route::post('profiled', 'Auth\MemberAuthController@userProfileAction')->name('member.profiled');
+        Route::get('logout', 'Auth\MemberAuthController@LogOut')->name('member.logout');
     });
 
 
-    Route::prefix('user')->as('user.')->namespace('App\Http\Controllers\Frontend')->group(function () {
-        Route::get('login', 'Auth\MemberAuthController@login')->name('member.index');
-        Route::get('/', 'MemberDashboardController@index')->name('user');
-        Route::middleware('member')->group(function () {
-            Route::get('/', 'MemberDashboardController@index')->name('user');
-            Route::get('login', 'Auth\MemberAuthController@login')->name('member.index');
-            Route::get('password/reset', 'Auth\MemberAuthController@passwordReset')->name('password.reset');
-        });
+    Route::namespace('App\Http\Controllers\stduent')->prefix('')->group(function () {
+        // Route::resource('stdclass', StdClassController::class);
+        // Route::post('stdclass/mass/destroy', 'StdClassController@mass_destroy')->name('stdclass.mass.destroy');
     });
+
+
+    // Route::prefix('user')->as('user.')->namespace('App\Http\Controllers\Frontend')->group(function () {
+
+    //     Route::get('login', 'Auth\MemberAuthController@login')->name('member.index');
+    //     Route::get('/', 'MemberDashboardController@index')->name('user');
+    //     Route::middleware('member')->group(function () {
+    //         Route::get('/', 'MemberDashboardController@index')->name('user');
+    //         Route::get('login', 'Auth\MemberAuthController@login')->name('member.index');
+    //         Route::get('password/reset', 'Auth\MemberAuthController@passwordReset')->name('password.reset');
+    //     });
+    // });
 });

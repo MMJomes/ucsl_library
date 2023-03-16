@@ -7,7 +7,7 @@
         </div>
         <div class="col-md-6">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('backend.dashboard.index') }}">{{ __('message.home') }}</a></li>
                 <li class="breadcrumb-item active">Contact List</li>
             </ol>
         </div>
@@ -25,7 +25,7 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Data Export</h4>
+                    <h4 class="card-title">{{ __('message.dataexport') }}</h4>
                     <h6 class="card-subtitle">Export data to Copy, CSV, Excel, PDF & Print</h6>
                     <div class="table-responsive m-t-40">
                         <table id="dataTable" class="display nowrap table table-hover table-striped table-bordered"
@@ -213,17 +213,10 @@
                                     mainbussiness = mainbussiness.replace(':slug', full
                                         .slug);
 
-                                    var sidebusiness =
-                                        "{{ route('backend.sidebusiness.mysidebusiness', ':slug') }}";
-                                    sidebusiness = sidebusiness.replace(':slug', full.slug);
 
                                     if (response["can_multi_create"]) {
                                         mainBussiness = '<a href="' + mainbussiness +
                                             '" class="btn btn-success btn-sm mx-2" tabindex="0" data-placement="top" data-toggle="tooltip" title="Add Main Business"><i class="fa fa-plus"></i></a>';
-                                    }
-                                    if (response["can_multi_create"]) {
-                                        sideBussiness = '<a href="' + sidebusiness +
-                                            '" class="btn btn-secondary btn-sm mx-2 d-inline-block"  tabindex="0" data-placement="top" data-toggle="tooltip" title="Add Side Business"><i class="fa fa-plus"></i></a>';
                                     }
 
                                     if (response["can_edit"]) {

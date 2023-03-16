@@ -24,18 +24,16 @@ class EventCategoryRequest extends FormRequest
     public function rules()
     {
             return [
-                'name' => 'required',
-                'createdat' =>'nullable',
-                'updatedat' =>'nullable',
+                //'name'=>'required',
+                'code'=> 'required',
             ];
 
     }
     public function messages()
     {
         return [
-            'name' => 'Name is required',
-            'createdat' => 'nullable',
-            'updatedat' => 'nullable',
+            //'name' => 'Name is required',
+            'code' => 'Category Code is Required',
         ];
     }
 }
