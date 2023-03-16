@@ -71,7 +71,7 @@
             <li><a href="{{ route('backend.roles.index') }}"><i class="icons-Global-Position"></i> Roles </a></li>
             <li><a href="{{ route('backend.admins.index') }}"><i class="icons-Administrator"></i> Admins</a></li>
             <li><a href="{{ route('backend.settings.index') }}"><i class="icons-Settings-Window"></i> {{ __('message.setting') }}</a></li>
-            {{-- <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><span
+            <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><span
                         class="hide-menu">{{ __('message.changelanguage') }}</span></a>
                 <ul aria-expanded="false" class="collapse">
                     <li>
@@ -80,6 +80,7 @@
                                 href="@if ($lang == App::getLocale()) javascript:; @else {{ route('lang.switch', $lang) }} @endif">
                                 <img src="{{ asset($language['flag']) }}" alt="language" width="20">
                                 <span class="ml-1">{{ $language['name'] }}</span>
+                                
                                 @if ($lang == App::getLocale())
                                     <span class="float-right my-auto">
                                         <i class="fa fa-check text-success" aria-hidden="true"></i>
@@ -89,7 +90,7 @@
                         @endforeach
                     </li>
                 </ul>
-            </li> --}}
+            </li>
         </ul>
         <!-- Left navbar-header end -->
     </div>
